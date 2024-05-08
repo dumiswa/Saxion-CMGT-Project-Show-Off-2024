@@ -10,6 +10,7 @@ public struct Data
     {
         DecodingType = data.GetType();
         EncodedData = data;
+
         IsDirty = false;
     }
 

@@ -6,7 +6,7 @@ public static class DataBridge
     public static void UpdateData(string key, object data)
     {
         if (_data.ContainsKey(key))
-            _data[key] = new(data);
+            _data[key] = new(data) { IsDirty = true };
         else
             _data.Add(key, new(data));
     }
