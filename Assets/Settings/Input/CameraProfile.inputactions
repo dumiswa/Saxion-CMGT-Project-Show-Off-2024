@@ -1,0 +1,34 @@
+{
+    "name": "CameraProfile",
+    "maps": [
+        {
+            "name": "CameraRotationMap",
+            "id": "c15eaf89-d610-40d2-83d3-98cb59e6a300",
+            "actions": [
+                {
+                    "name": "Rotate",
+                    "type": "Button",
+                    "id": "365f94d8-529d-482f-9865-99bf7718d47c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "11ee31ef-dd76-4067-ac90-7f7847b825f6",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
