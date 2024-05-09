@@ -25,6 +25,7 @@ public abstract class AbstractVisualisator<DataPacket> : Monolith where DataPack
             {
                 if (!_isActive) base.Init();
                 Display(data.EncodedData);
+                DataBridge.MarkDataClean<DataPacket>(_dataID);
             }
             else if (_isActive)
             {

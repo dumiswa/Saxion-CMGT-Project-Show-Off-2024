@@ -17,6 +17,8 @@ public class MonolithMaster : MonoBehaviour
     private OnPlayerLoop _onUpdate;
     private OnPlayerLoop _onLateUpdate;
     private OnPlayerLoop _onFixedUpdate;
+    private OnPlayerLoop _onEnable;
+    private OnPlayerLoop _onDisable;
 
     private void Awake()
     {
@@ -47,6 +49,7 @@ public class MonolithMaster : MonoBehaviour
         }
         DontDestroyOnLoad(this);
 
+        _onEnable?.Invoke();
         _onAwake?.Invoke();
     }
 
@@ -77,6 +80,12 @@ public class MonolithMaster : MonoBehaviour
                 case "FixedUpdate":
                     _onFixedUpdate += action;
                     break;
+                case "OnEnable":
+                    _onEnable += action;
+                    break;
+                case "OnDisable":
+                    _onDisable += action;
+                    break;
                 default:
                     break;
             }
@@ -87,4 +96,7 @@ public class MonolithMaster : MonoBehaviour
     private void Update() => _onUpdate?.Invoke();
     private void LateUpdate() => _onLateUpdate?.Invoke();
     private void FixedUpdate() => _onFixedUpdate?.Invoke();
+
+    private void OnEnable() => _onEnable?.Invoke();
+    private void OnDisable() => _onDisable?.Invoke();
 }

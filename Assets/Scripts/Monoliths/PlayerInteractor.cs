@@ -12,7 +12,7 @@ public class PlayerInteractor : Monolith
         _player = GameObject.FindGameObjectWithTag("Player");
         if (_player == null)
         {
-            MonolithStatus = "Couldn't Find Player";
+            _status = "Couldn't Find Player";
             return false;
         }
 

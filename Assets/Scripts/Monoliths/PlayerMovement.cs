@@ -13,7 +13,7 @@ public class PlayerMovement : Monolith
         _player = GameObject.FindGameObjectWithTag("Player");
         if (_player is null)
         {
-            MonolithStatus = "Couldn't Find Player";
+            _status = "Couldn't Find Player";
             return false;
         }
         _player.TryGetComponent(out _rigidbody);
@@ -26,8 +26,6 @@ public class PlayerMovement : Monolith
         }
 
         _controls = new PlayerProfile();
-        _controls.PlayerMovemenMap.Move.performed += OnMovementInput;
-        _controls.PlayerMovemenMap.Move.canceled += OnMovementInputCanceled;
         _controls.PlayerMovemenMap.Move.Enable();
 
         return base.Init();
@@ -51,12 +49,13 @@ public class PlayerMovement : Monolith
 
     private void OnEnable()
     {
-        _controls.Enable();
+        _controls.PlayerMovemenMap.Move.performed += OnMovementInput;
+        _controls.PlayerMovemenMap.Move.canceled += OnMovementInputCanceled;
     }
-
     private void OnDisable()
     {
-        _controls.Disable();
+        _controls.PlayerMovemenMap.Move.performed -= OnMovementInput;
+        _controls.PlayerMovemenMap.Move.canceled -= OnMovementInputCanceled;
     }
 
     private void Update()
