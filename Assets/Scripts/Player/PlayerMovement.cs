@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Monoliths.Player
 {
@@ -7,6 +6,7 @@ namespace Monoliths.Player
     {
         private GameObject _player;
         private Rigidbody _rigidbody;
+        private Collider _collider;
 
         public override bool Init()
         {
@@ -23,6 +23,12 @@ namespace Monoliths.Player
                 _rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX;
                 _rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
                 _rigidbody.collisionDetectionMode = CollisionDetectionMode.Continuous;
+            }
+            _player.TryGetComponent(out _collider);
+            if(_collider is null)
+            {
+                _collider = _player.AddComponent<CapsuleCollider>();
+                _collider.material = new PhysicMaterial("PlayerPhysicMaterial") { dynamicFriction = 1f, staticFriction = 0f };
             }
 
             return base.Init();

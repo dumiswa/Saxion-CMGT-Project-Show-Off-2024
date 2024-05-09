@@ -3688,7 +3688,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2927c4d36e15a944d93ab9736674191c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _monolithStatuses: []
+  _monoliths: []
 --- !u!4 &808201444
 Transform:
   m_ObjectHideFlags: 0
@@ -8497,7 +8497,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2099153119}
-  - component: {fileID: 2099153122}
   - component: {fileID: 2099153121}
   - component: {fileID: 2099153120}
   m_Layer: 0
@@ -8572,29 +8571,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &2099153122
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2099153118}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2.0564458
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.020484291, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

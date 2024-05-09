@@ -13,7 +13,7 @@ namespace Monoliths.Mechanisms
             _activeMask = 1 << LayerMask.NameToLayer("Interactable");
 
             base.Init();
-            _status = $"Successfully Inititated, with active mask \"{_activeMask.ToString()}\"";
+            _status = $"Successfully Inititated, with active mask \"{_activeMask}\"";
             return true;
         }
         public static void Register(Actuator actuator)
@@ -44,34 +44,5 @@ namespace Monoliths.Mechanisms
                 mechanism?.Invoke();
             }
         }
-    }
-
-    public abstract class Actuator : MonoBehaviour
-    {
-        [SerializeField]
-        private string _identifier;
-        public string Identifier { get; protected set; }
-
-        public abstract void Invoke();
-
-        public void ChangeIdentifier(string newIdentifier)
-        {
-            _identifier = newIdentifier;
-            Identifier = newIdentifier;
-        }
-        private void OnEnable()
-        {
-            Identifier = string.IsNullOrEmpty(_identifier) ? "Unnamed" : _identifier;
-            MechanismsObserver.Register(this);
-        }
-        private void OnDisable() => MechanismsObserver.Remove(Identifier);
-    }
-
-    public abstract class Activator : Actuator
-    {
-        [SerializeField]
-        private string[] _actuators;
-
-        public override void Invoke() => MechanismsObserver.Invoke(_actuators);
     }
 }
