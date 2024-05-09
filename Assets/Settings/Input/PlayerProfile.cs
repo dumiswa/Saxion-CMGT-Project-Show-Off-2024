@@ -24,7 +24,7 @@ public partial class @PlayerProfile: IInputActionCollection2, IDisposable
     ""name"": ""PlayerProfile"",
     ""maps"": [
         {
-            ""name"": ""PlayerMovemenMap"",
+            ""name"": ""PlayerMovementMap"",
             ""id"": ""d0519041-a0f5-4433-9ec3-95df1acd1094"",
             ""actions"": [
                 {
@@ -126,9 +126,9 @@ public partial class @PlayerProfile: IInputActionCollection2, IDisposable
     ],
     ""controlSchemes"": []
 }");
-        // PlayerMovemenMap
-        m_PlayerMovemenMap = asset.FindActionMap("PlayerMovemenMap", throwIfNotFound: true);
-        m_PlayerMovemenMap_Move = m_PlayerMovemenMap.FindAction("Move", throwIfNotFound: true);
+        // PlayerMovementMap
+        m_PlayerMovementMap = asset.FindActionMap("PlayerMovementMap", throwIfNotFound: true);
+        m_PlayerMovementMap_Move = m_PlayerMovementMap.FindAction("Move", throwIfNotFound: true);
         // PlayerInteractionMap
         m_PlayerInteractionMap = asset.FindActionMap("PlayerInteractionMap", throwIfNotFound: true);
         m_PlayerInteractionMap_Interact = m_PlayerInteractionMap.FindAction("Interact", throwIfNotFound: true);
@@ -190,51 +190,51 @@ public partial class @PlayerProfile: IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // PlayerMovemenMap
-    private readonly InputActionMap m_PlayerMovemenMap;
-    private List<IPlayerMovemenMapActions> m_PlayerMovemenMapActionsCallbackInterfaces = new List<IPlayerMovemenMapActions>();
-    private readonly InputAction m_PlayerMovemenMap_Move;
-    public struct PlayerMovemenMapActions
+    // PlayerMovementMap
+    private readonly InputActionMap m_PlayerMovementMap;
+    private List<IPlayerMovementMapActions> m_PlayerMovementMapActionsCallbackInterfaces = new List<IPlayerMovementMapActions>();
+    private readonly InputAction m_PlayerMovementMap_Move;
+    public struct PlayerMovementMapActions
     {
         private @PlayerProfile m_Wrapper;
-        public PlayerMovemenMapActions(@PlayerProfile wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Move => m_Wrapper.m_PlayerMovemenMap_Move;
-        public InputActionMap Get() { return m_Wrapper.m_PlayerMovemenMap; }
+        public PlayerMovementMapActions(@PlayerProfile wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Move => m_Wrapper.m_PlayerMovementMap_Move;
+        public InputActionMap Get() { return m_Wrapper.m_PlayerMovementMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(PlayerMovemenMapActions set) { return set.Get(); }
-        public void AddCallbacks(IPlayerMovemenMapActions instance)
+        public static implicit operator InputActionMap(PlayerMovementMapActions set) { return set.Get(); }
+        public void AddCallbacks(IPlayerMovementMapActions instance)
         {
-            if (instance == null || m_Wrapper.m_PlayerMovemenMapActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_PlayerMovemenMapActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_PlayerMovementMapActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_PlayerMovementMapActionsCallbackInterfaces.Add(instance);
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
         }
 
-        private void UnregisterCallbacks(IPlayerMovemenMapActions instance)
+        private void UnregisterCallbacks(IPlayerMovementMapActions instance)
         {
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
         }
 
-        public void RemoveCallbacks(IPlayerMovemenMapActions instance)
+        public void RemoveCallbacks(IPlayerMovementMapActions instance)
         {
-            if (m_Wrapper.m_PlayerMovemenMapActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_PlayerMovementMapActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IPlayerMovemenMapActions instance)
+        public void SetCallbacks(IPlayerMovementMapActions instance)
         {
-            foreach (var item in m_Wrapper.m_PlayerMovemenMapActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_PlayerMovementMapActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_PlayerMovemenMapActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_PlayerMovementMapActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public PlayerMovemenMapActions @PlayerMovemenMap => new PlayerMovemenMapActions(this);
+    public PlayerMovementMapActions @PlayerMovementMap => new PlayerMovementMapActions(this);
 
     // PlayerInteractionMap
     private readonly InputActionMap m_PlayerInteractionMap;
@@ -281,7 +281,7 @@ public partial class @PlayerProfile: IInputActionCollection2, IDisposable
         }
     }
     public PlayerInteractionMapActions @PlayerInteractionMap => new PlayerInteractionMapActions(this);
-    public interface IPlayerMovemenMapActions
+    public interface IPlayerMovementMapActions
     {
         void OnMove(InputAction.CallbackContext context);
     }
