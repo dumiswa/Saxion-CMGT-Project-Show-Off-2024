@@ -1,11 +1,19 @@
-﻿public abstract class Monolith
+﻿using System;
+using UnityEngine;
+
+[Serializable]
+public class Monolith
 {
-    public bool IsActive { get; protected set; } = false;
-    public string MonolithStatus { get; protected set; } = "Not Initialised";
+    [HideInInspector][SerializeField] private string _name = "None";
+    [SerializeField] protected string _status = "Not Initialised";
+
+    protected bool _isActive = false;
+
     public virtual bool Init()
     {
-        IsActive = true;
-        MonolithStatus = "Successfully Initiated";
+        _name = GetType().Name;
+        _isActive = true;
+        _status = "Successfully Initiated";
         return true;
     }
 }

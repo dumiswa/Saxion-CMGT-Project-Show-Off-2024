@@ -1,18 +1,38 @@
 ﻿using System;
+using System.Collections.Generic;
 
-public struct Data
+public struct Data<T> where T : new()
 {
-    public Type DecodingType;
-    public object EncodedData;
+    public T EncodedData;
     public bool IsDirty;
+    public bool IsEmpty;
 
-    public Data (object data)
+    public Data(T data)
     {
-        DecodingType = data.GetType();
         EncodedData = data;
-
         IsDirty = false;
+        IsEmpty = false;
     }
 
-    public static readonly Data Empty = new(null);
+    public Data(bool _ = false)
+    {
+        EncodedData = new T();
+        IsDirty = false;
+        IsEmpty = true;
+    }
+
+    public static readonly Data<T> Empty = new();
+
+    public static bool operator ==(Data<T> a, Data<T> b) 
+        =>  a.Equals(b);
+    public static bool operator !=(Data<T> a, Data<T> b) 
+        => !a.Equals(b);
+
+    public override bool Equals(object obj) 
+        => obj is Data<T> data &&
+            EqualityComparer<T>.Default.Equals(EncodedData, data.EncodedData) &&
+            IsDirty == data.IsDirty;
+
+    public override int GetHashCode() 
+        => HashCode.Combine(EncodedData, IsDirty);
 }

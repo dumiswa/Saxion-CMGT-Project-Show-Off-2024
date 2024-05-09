@@ -7,11 +7,7 @@ public class MonolithMaster : MonoBehaviour
 {
     public static MonolithMaster Instance { get; private set; }
 
-#if UNITY_EDITOR
     [SerializeField]
-    private string[] _monolithStatuses;
-#endif
-
     private List<Monolith> _monoliths = new();
 
     private delegate void OnPlayerLoop();
@@ -34,22 +30,21 @@ public class MonolithMaster : MonoBehaviour
 
         foreach (Type type in assembly.GetTypes())
         {
-            if (!typeof(Monolith).IsAssignableFrom(type) || type.IsAbstract)
+            if (!typeof(Monolith).IsAssignableFrom(type) || type.IsAbstract || type == typeof(Monolith))
                 continue;
-
-            try{
+            try
+            {
                 var monolith = (Monolith)Activator.CreateInstance(type);
                 monolith.Init();
                 SubscribeToPlayerLoop(monolith);
 
                 _monoliths.Add(monolith);
-            }catch { 
+            }
+            catch (Exception ex){
+                Debug.Log($"Couldn't Init \"{type.Name}\" due to {ex.Message}");
                 continue; 
             }
         }
-#if UNITY_EDITOR
-        _monolithStatuses = new string[_monoliths.Count];
-#endif
         DontDestroyOnLoad(this);
 
         _onAwake?.Invoke();
@@ -57,12 +52,13 @@ public class MonolithMaster : MonoBehaviour
 
     private void SubscribeToPlayerLoop(Monolith monolith)
     {
-        foreach (MethodInfo info in monolith.GetType().GetMethods
-            (BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+        foreach (MethodInfo info in monolith.GetType().GetMethods(
+            BindingFlags.Instance | BindingFlags.NonPublic | 
+            BindingFlags.Public   | BindingFlags.FlattenHierarchy))
         {
             if (info.ReturnType != typeof(void) || info.GetParameters().Length != 0)
                 continue;
-
+            
             OnPlayerLoop action = () => info.Invoke(monolith, null);
             switch (info.Name)
             {
@@ -88,14 +84,7 @@ public class MonolithMaster : MonoBehaviour
     }
 
     private void Start() => _onStart?.Invoke();
-    private void Update()
-    {
-#if UNITY_EDITOR
-        for (int i = 0; i < _monolithStatuses.Length; i++)
-            _monolithStatuses[i] = $"[{_monoliths[i].GetType().Name}] {_monoliths[i].MonolithStatus}";
-#endif
-        _onUpdate?.Invoke();
-    }
+    private void Update() => _onUpdate?.Invoke();
     private void LateUpdate() => _onLateUpdate?.Invoke();
     private void FixedUpdate() => _onFixedUpdate?.Invoke();
 }

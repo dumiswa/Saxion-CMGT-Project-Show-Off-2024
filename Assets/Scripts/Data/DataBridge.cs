@@ -2,14 +2,31 @@
 
 public static class DataBridge
 {
-    private static Dictionary<string, Data> _data = new();
-    public static void UpdateData(string key, object data)
+    private static Dictionary<string, object> _data = new();
+
+    public static void MarkDataClean<T>(string key) where T : new()
+    {
+        if (!_data.ContainsKey(key))
+            return;
+
+        _data.TryGetValue(key, out var value);
+        var unboxedData = (Data<T>)value;
+        unboxedData.IsDirty = false;
+        _data[key] = unboxedData;
+    }
+    public static void UpdateData<T>(string key, T data) where T : new()
     {
         if (_data.ContainsKey(key))
-            _data[key] = new(data) { IsDirty = true };
+            _data[key] = new Data<T>(data) { IsDirty = true };
         else
-            _data.Add(key, new(data));
+            _data.Add(key, new Data<T>(data));
     }
-    public static Data TryGetData(string key) 
-        => _data.ContainsKey(key)? _data[key] : Data.Empty;
+
+    public static Data<T> TryGetData<T>(string key) where T : new()
+    {
+        if (_data.ContainsKey(key))
+            return (Data<T>)_data[key];
+        else
+            return Data<T>.Empty;
+    }
 }
