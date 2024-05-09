@@ -30,8 +30,8 @@ public class StateRegistrar : Monolith
             return base.Init();
         else 
         {
-            IsActive = true;
-            MonolithStatus = $"Initiated with problems, couldn't register {faultyTypes} states";
+            _isActive = true;
+            _status = $"Initiated with problems, couldn't register {faultyTypes} states";
             return true;
         }
     }
