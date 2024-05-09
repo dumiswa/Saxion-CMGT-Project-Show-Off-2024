@@ -34,10 +34,10 @@ namespace Monoliths.Player
             return base.Init();
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
             Vector2 movementInput = InputManager.Movement;
-            Vector3 move = new Vector3(movementInput.x, 0, movementInput.y) * Time.fixedDeltaTime * 5.0f;
+            Vector3 move = new Vector3(movementInput.x, 0, movementInput.y) * Time.deltaTime * 5.0f;
             _rigidbody.MovePosition(_rigidbody.position + move);
         }
     }

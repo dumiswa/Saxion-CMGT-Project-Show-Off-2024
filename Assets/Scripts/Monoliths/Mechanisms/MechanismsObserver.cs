@@ -13,7 +13,7 @@ namespace Monoliths.Mechanisms
             _activeMask = 1 << LayerMask.NameToLayer("Interactable");
 
             base.Init();
-            _status = $"Successfully Inititated, with active mask \"{_activeMask}\"";
+            _status = $"Successfully Inititated, with active mask \"{LayerMask.LayerToName(_activeMask.value)}\"";
             return true;
         }
         public static void Register(Actuator actuator)
