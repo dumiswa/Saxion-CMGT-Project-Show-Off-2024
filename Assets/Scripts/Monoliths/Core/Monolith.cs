@@ -1,19 +1,22 @@
 ﻿using System;
 using UnityEngine;
 
-[Serializable]
-public class Monolith
+namespace Monoliths
 {
-    [HideInInspector][SerializeField] private string _name = "None";
-    [SerializeField] protected string _status = "Not Initialised";
-
-    protected bool _isActive = false;
-
-    public virtual bool Init()
+    [Serializable]
+    public class Monolith
     {
-        _name = GetType().Name;
-        _isActive = true;
-        _status = "Successfully Initiated";
-        return true;
+        [HideInInspector][SerializeField] private string _name = "None";
+        [SerializeField] protected string _status = "Not Initialised";
+
+        protected bool _isActive = false;
+
+        public virtual bool Init()
+        {
+            _name = GetType().Name;
+            _isActive = true;
+            _status = "Successfully Initiated";
+            return true;
+        }
     }
 }

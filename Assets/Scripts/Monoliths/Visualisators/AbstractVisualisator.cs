@@ -1,47 +1,50 @@
 ﻿using System;
 
-public abstract class AbstractVisualisator<DataPacket> : Monolith where DataPacket : new()
+namespace Monoliths.Visualisators
 {
-    protected readonly string _dataID;
-    protected bool _autoDisplay;
-
-    public AbstractVisualisator(bool autoDisplay = true)
+    public abstract class AbstractVisualisator<DataPacket> : Monolith where DataPacket : new()
     {
-        _autoDisplay = autoDisplay;
-        _dataID = typeof(DataPacket).Name;
-    }
+        protected readonly string _dataID;
+        protected bool _autoDisplay;
 
-    public override bool Init() 
-        => base.Init();
-
-    protected void Update()
-    {
-        if (!_autoDisplay) return;
-
-        try
+        public AbstractVisualisator(bool autoDisplay = true)
         {
-            var data = DataBridge.TryGetData<DataPacket>(_dataID);
-            if (data != Data<DataPacket>.Empty)
+            _autoDisplay = autoDisplay;
+            _dataID = typeof(DataPacket).Name;
+        }
+
+        public override bool Init()
+            => base.Init();
+
+        protected void Update()
+        {
+            if (!_autoDisplay) return;
+
+            try
             {
-                if (!_isActive) base.Init();
-                Display(data.EncodedData);
-                DataBridge.MarkDataClean<DataPacket>(_dataID);
+                var data = DataBridge.TryGetData<DataPacket>(_dataID);
+                if (data != Data<DataPacket>.Empty)
+                {
+                    if (!_isActive) base.Init();
+                    Display(data.EncodedData);
+                    DataBridge.MarkDataClean<DataPacket>(_dataID);
+                }
+                else if (_isActive)
+                {
+                    _isActive = false;
+                    _status = $"Couldn't get \"{_dataID}\" data packet";
+                }
             }
-            else if (_isActive)
+            catch (InvalidCastException)
             {
-                _isActive = false;
-                _status = $"Couldn't get \"{_dataID}\" data packet";
+                if (_isActive)
+                {
+                    _isActive = false;
+                    _status = $"Stored data was not of type Data<{typeof(DataPacket)}>.";
+                }
             }
         }
-        catch (InvalidCastException)
-        {
-            if (_isActive)
-            {
-                _isActive = false;
-                _status = $"Stored data was not of type Data<{typeof(DataPacket)}>.";
-            }
-        }
-    }
 
-    protected abstract void Display(DataPacket data);
+        protected abstract void Display(DataPacket data);
+    }
 }

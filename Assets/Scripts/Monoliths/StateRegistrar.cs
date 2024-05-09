@@ -2,47 +2,53 @@
 using System.Collections.Generic;
 using System.Reflection;
 
-public class StateRegistrar : Monolith 
+namespace Monoliths
 {
-    private readonly static Dictionary<Type, GameState> _registeredStates = new();
-    public static GameState Get(Type type) 
-        => _registeredStates[type];
-    
-    public override bool Init()
+    public class StateRegistrar : Monolith
     {
-        GameStateMachine.Instance = new();
+        private readonly static Dictionary<Type, GameState> _registeredStates = new();
+        public static GameState Get(Type type)
+            => _registeredStates[type];
 
-        Assembly assembly = Assembly.GetExecutingAssembly();
-        Type gameStateType = typeof(GameState);
-
-        int faultyTypes = 0;
-
-        foreach (Type type in assembly.GetTypes())
+        public override bool Init()
         {
-            if (!gameStateType.IsAssignableFrom(type) || type.IsAbstract)
-                continue;
+            GameStateMachine.Instance = new();
 
-            if (!TryCreateAndRegister(type))
-                faultyTypes++;
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            Type gameStateType = typeof(GameState);
+
+            int faultyTypes = 0;
+
+            foreach (Type type in assembly.GetTypes())
+            {
+                if (!gameStateType.IsAssignableFrom(type) || type.IsAbstract)
+                    continue;
+
+                if (!TryCreateAndRegister(type))
+                    faultyTypes++;
+            }
+
+            if (faultyTypes == 0)
+                return base.Init();
+            else
+            {
+                _isActive = true;
+                _status = $"Initiated with problems, couldn't register {faultyTypes} states";
+                return true;
+            }
         }
 
-        if(faultyTypes == 0)
-            return base.Init();
-        else 
+        public bool TryCreateAndRegister(Type type)
         {
-            _isActive = true;
-            _status = $"Initiated with problems, couldn't register {faultyTypes} states";
-            return true;
-        }
-    }
-
-    public bool TryCreateAndRegister(Type type)
-    {
-        try {
-            _registeredStates.Add(type, (GameState)Activator.CreateInstance(type));
-            return true;
-        } catch {
-            return false;
+            try
+            {
+                _registeredStates.Add(type, (GameState)Activator.CreateInstance(type));
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }
