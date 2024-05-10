@@ -90,5 +90,15 @@ namespace Monoliths.Player
                 }
             }
         }
+        
+        private void OnEnable()
+        {
+
+        }
+
+        private void OnDisable()
+        {
+            Controls.Player.
+        }
     }
 }

@@ -36,7 +36,7 @@ namespace Monoliths.Player
 
         private void Update()
         {
-            Vector2 movementInput = InputManager.Movement;
+            Vector2 movementInput = Controls.Movement;
             Vector3 move = new Vector3(movementInput.x, 0, movementInput.y) * Time.deltaTime * 5.0f;
             _rigidbody.MovePosition(_rigidbody.position + move);
         }
