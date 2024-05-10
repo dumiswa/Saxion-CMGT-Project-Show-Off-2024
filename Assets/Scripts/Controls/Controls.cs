@@ -8,8 +8,6 @@ public static class Controls
     public static Vector2 Movement => Player.PlayerMovementMap.Move.ReadValue<Vector2>();
     public static Vector2 CameraRotation => Camera.CameraRotationMap.Rotate.ReadValue<Vector2>();
 
-    public static bool JumpPressed => Player.PlayerMovementMap.Jump.triggered;
-
     static Controls()
     {
         Player = new();

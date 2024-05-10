@@ -75,8 +75,6 @@ namespace Monoliths.Player
             var yaw = _cameraOrigin.localEulerAngles.y;
             yaw = yaw <= 180 ? Mathf.Clamp(yaw, 0, horizontalMax) : Mathf.Clamp(yaw, 360 + horizontalMin, 360);
             _cameraOrigin.localEulerAngles = new(0, yaw, 0);
-
-           // _cameraPitch.localPosition = Vector3.zero;
         }
 
         private void TrySyncData()

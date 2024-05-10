@@ -61,7 +61,7 @@ public partial class @PlayerProfile: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""up"",
                     ""id"": ""9fe82dfd-61ff-4162-81df-d712feb226b5"",
-                    ""path"": ""Keyboard/w"",
+                    ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -72,7 +72,7 @@ public partial class @PlayerProfile: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""down"",
                     ""id"": ""ee063168-5fe8-483a-8fe7-d4d9cbc0b2d0"",
-                    ""path"": ""Keyboard/s"",
+                    ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -83,7 +83,7 @@ public partial class @PlayerProfile: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""left"",
                     ""id"": ""c2f5f63a-ac39-439e-b8eb-9294b15a1580"",
-                    ""path"": ""Keyboard/a"",
+                    ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -94,7 +94,7 @@ public partial class @PlayerProfile: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""right"",
                     ""id"": ""3676c95d-14d0-4189-8eb9-55f11d0cc4b3"",
-                    ""path"": ""Keyboard/d"",
+                    ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -105,7 +105,7 @@ public partial class @PlayerProfile: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""c8e03e9f-bbdf-42c2-89fc-f789b471d656"",
-                    ""path"": ""keyboard/space"",
+                    ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

@@ -3,27 +3,27 @@ using System;
 
 public class AbstractStateMachine<StateType> where StateType : GameState
 {
-    public StateType Current { get; private set; }
-    public StateType Previous { get; private set; }
+    public StateType Current { get; protected set; }
+    public StateType Previous { get; protected set; }
 
-    public void Next(Type stateType)
+    public virtual void Next(Type stateType)
     {
         Current.Exit();
         NextNoExit(stateType);
     }
-    public void NextNoExit(Type stateType)
+    public virtual void NextNoExit(Type stateType)
     {
         Previous = Current;
         Current = (StateType)StateRegistrar.Get(stateType);
         Current.Enter();
     }
 
-    public void Next<State>() where State : StateType
+    public virtual void Next<State>() where State : StateType
     {
         Current.Exit();
         NextNoExit<State>();
     }
-    public void NextNoExit<State>()
+    public virtual void NextNoExit<State>()
     {
         Previous = Current;
         Current = (StateType)StateRegistrar.Get(typeof(State));
