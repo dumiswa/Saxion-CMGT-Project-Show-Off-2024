@@ -35,6 +35,15 @@ public partial class @PlayerProfile: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""d5f5aa6a-3d42-46da-bf3b-6b57191d5fea"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -92,6 +101,17 @@ public partial class @PlayerProfile: IInputActionCollection2, IDisposable
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c8e03e9f-bbdf-42c2-89fc-f789b471d656"",
+                    ""path"": ""keyboard/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -113,7 +133,7 @@ public partial class @PlayerProfile: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""7a6616d3-a724-4c9c-aaad-b81a63bdc8de"",
-                    ""path"": ""<Keyboard>/space"",
+                    ""path"": ""board>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -129,6 +149,7 @@ public partial class @PlayerProfile: IInputActionCollection2, IDisposable
         // PlayerMovementMap
         m_PlayerMovementMap = asset.FindActionMap("PlayerMovementMap", throwIfNotFound: true);
         m_PlayerMovementMap_Move = m_PlayerMovementMap.FindAction("Move", throwIfNotFound: true);
+        m_PlayerMovementMap_Jump = m_PlayerMovementMap.FindAction("Jump", throwIfNotFound: true);
         // PlayerInteractionMap
         m_PlayerInteractionMap = asset.FindActionMap("PlayerInteractionMap", throwIfNotFound: true);
         m_PlayerInteractionMap_Interact = m_PlayerInteractionMap.FindAction("Interact", throwIfNotFound: true);
@@ -194,11 +215,13 @@ public partial class @PlayerProfile: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_PlayerMovementMap;
     private List<IPlayerMovementMapActions> m_PlayerMovementMapActionsCallbackInterfaces = new List<IPlayerMovementMapActions>();
     private readonly InputAction m_PlayerMovementMap_Move;
+    private readonly InputAction m_PlayerMovementMap_Jump;
     public struct PlayerMovementMapActions
     {
         private @PlayerProfile m_Wrapper;
         public PlayerMovementMapActions(@PlayerProfile wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_PlayerMovementMap_Move;
+        public InputAction @Jump => m_Wrapper.m_PlayerMovementMap_Jump;
         public InputActionMap Get() { return m_Wrapper.m_PlayerMovementMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -211,6 +234,9 @@ public partial class @PlayerProfile: IInputActionCollection2, IDisposable
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
+            @Jump.started += instance.OnJump;
+            @Jump.performed += instance.OnJump;
+            @Jump.canceled += instance.OnJump;
         }
 
         private void UnregisterCallbacks(IPlayerMovementMapActions instance)
@@ -218,6 +244,9 @@ public partial class @PlayerProfile: IInputActionCollection2, IDisposable
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
+            @Jump.started -= instance.OnJump;
+            @Jump.performed -= instance.OnJump;
+            @Jump.canceled -= instance.OnJump;
         }
 
         public void RemoveCallbacks(IPlayerMovementMapActions instance)
@@ -284,6 +313,7 @@ public partial class @PlayerProfile: IInputActionCollection2, IDisposable
     public interface IPlayerMovementMapActions
     {
         void OnMove(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
     }
     public interface IPlayerInteractionMapActions
     {

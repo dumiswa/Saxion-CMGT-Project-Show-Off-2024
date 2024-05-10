@@ -3,7 +3,7 @@ using System;
 
 public class AbstractStateMachine<StateType> where StateType : GameState
 {
-    public StateType Current  { get; private set; }
+    public StateType Current { get; private set; }
     public StateType Previous { get; private set; }
 
     public void Next(Type stateType)
