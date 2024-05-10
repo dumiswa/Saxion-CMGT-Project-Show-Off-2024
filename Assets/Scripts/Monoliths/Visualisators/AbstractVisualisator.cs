@@ -27,7 +27,7 @@ namespace Monoliths.Visualisators
                 {
                     if (!_isActive) base.Init();
                     Display(data.EncodedData);
-                    DataBridge.MarkDataClean<DataPacket>(_dataID);
+                    DataBridge.MarkUpdateProcessed<DataPacket>(_dataID);
                 }
                 else if (_isActive)
                 {

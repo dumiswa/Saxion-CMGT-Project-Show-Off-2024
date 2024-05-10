@@ -5,8 +5,8 @@ namespace Monoliths.Player
     public struct CameraConstraints
     {
         private byte _movementLockInfo;
-        public Vector2Int _rotationHorizontalConstraints;
-        public Vector2Int _rotationVerticalConstraints;
+        public Vector2Int RotationHorizontal;
+        public Vector2Int RotationVertical;
 
         public CameraConstraints(
             Vector2Int rotationHorizontalConstraints, 
@@ -14,15 +14,15 @@ namespace Monoliths.Player
             byte initialLockInfo = 0b0000_0000)
         {
             _movementLockInfo = initialLockInfo;
-            _rotationHorizontalConstraints = rotationHorizontalConstraints;
-            _rotationVerticalConstraints = rotationVerticalConstraints; 
+            RotationHorizontal = rotationHorizontalConstraints;
+            RotationVertical = rotationVerticalConstraints; 
         }
 
         public CameraConstraints(bool _ = false)
         {
             _movementLockInfo = 0b0000_0000;
-            _rotationHorizontalConstraints = Vector2Int.zero;
-            _rotationVerticalConstraints = Vector2Int.zero;
+            RotationHorizontal = Vector2Int.zero;
+            RotationVertical = Vector2Int.zero;
         }
 
         public bool IsXAxisLocked() => (_movementLockInfo & 0b0000_0001) != 0;
@@ -65,8 +65,8 @@ namespace Monoliths.Player
         }
 
         public void SetVerticalRotationConstraints(Vector2Int vertical) 
-            => _rotationVerticalConstraints = vertical;
+            => RotationVertical = vertical;
         public void SetHorizontalRotationConstraints(Vector2Int horizontal) 
-            => _rotationHorizontalConstraints = horizontal;
+            => RotationHorizontal = horizontal;
     }
 }

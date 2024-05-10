@@ -4,20 +4,20 @@ using System.Collections.Generic;
 public struct Data<T> where T : new()
 {
     public T EncodedData;
-    public bool IsDirty;
+    public bool WasUpdated;
     public bool IsEmpty;
 
     public Data(T data)
     {
         EncodedData = data;
-        IsDirty = false;
+        WasUpdated = false;
         IsEmpty = false;
     }
 
     public Data(bool _ = false)
     {
         EncodedData = new T();
-        IsDirty = false;
+        WasUpdated = false;
         IsEmpty = true;
     }
 
@@ -31,8 +31,8 @@ public struct Data<T> where T : new()
     public override bool Equals(object obj) 
         => obj is Data<T> data &&
             EqualityComparer<T>.Default.Equals(EncodedData, data.EncodedData) &&
-            IsDirty == data.IsDirty;
+            WasUpdated == data.WasUpdated;
 
     public override int GetHashCode() 
-        => HashCode.Combine(EncodedData, IsDirty);
+        => HashCode.Combine(EncodedData, WasUpdated);
 }
