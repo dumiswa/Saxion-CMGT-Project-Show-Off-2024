@@ -39,7 +39,7 @@ public partial class @PlayerProfile: IInputActionCollection2, IDisposable
             ],
             ""bindings"": [
                 {
-                    ""name"": ""2D Vector"",
+                    ""name"": ""Keyboard"",
                     ""id"": ""39b275bc-55b3-4263-a472-246e7a952361"",
                     ""path"": ""2DVector"",
                     ""interactions"": """",
@@ -113,7 +113,7 @@ public partial class @PlayerProfile: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""7a6616d3-a724-4c9c-aaad-b81a63bdc8de"",
-                    ""path"": "" Space"",
+                    ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
