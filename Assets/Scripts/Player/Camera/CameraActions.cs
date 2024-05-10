@@ -50,6 +50,11 @@ namespace Monoliths.Player
             );
         }
 
+        private void Rotate()
+        {
+            var direction = Controls.CameraRotation;
+        }
+
         private void TrySyncData()
         {
             try
@@ -89,16 +94,6 @@ namespace Monoliths.Player
                     _status = $"Stored data was not of appropriate types";
                 }
             }
-        }
-        
-        private void OnEnable()
-        {
-
-        }
-
-        private void OnDisable()
-        {
-            Controls.Player.
         }
     }
 }

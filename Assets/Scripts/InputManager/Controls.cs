@@ -6,6 +6,7 @@ public static class Controls
     public static PlayerProfile Player { get; private set; }
 
     public static Vector2 Movement => Player.PlayerMovementMap.Move.ReadValue<Vector2>();
+    public static Vector2 CameraRotation => Camera.CameraRotationMap.Rotate.ReadValue<Vector2>();
 
     static Controls()
     {
