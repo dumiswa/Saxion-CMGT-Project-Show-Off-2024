@@ -1,39 +1,29 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public static class InputManager
 {
-    private static PlayerProfile _controls;
+    public static PlayerProfile Controls { get; private set; }
+    public static Vector2 Movement => Controls.PlayerMovementMap.Move.ReadValue<Vector2>();
 
     static InputManager()
     {
-        _controls = new PlayerProfile();
-        _controls.Enable();
+        Controls = new PlayerProfile();
+        Controls.Enable();
+
+        SetAllControlsTo(true);
     }
 
-    public static Vector2 Movement => _controls.PlayerMovementMap.Move.ReadValue<Vector2>();
-
-    public static void RegisterInteractAction(System.Action<InputAction.CallbackContext> callback)
+    public static void SetAllControlsTo(bool state)
     {
-        _controls.PlayerInteractionMap.Interact.performed += callback;
-        _controls.PlayerInteractionMap.Interact.Enable();
-    }
-
-    public static void UnregisterInteractAction(System.Action<InputAction.CallbackContext> callback)
-    {
-        _controls.PlayerInteractionMap.Interact.performed -= callback;
-        _controls.PlayerInteractionMap.Interact.Disable();
-    }
-
-    public static void RegisterMovementAction(System.Action<InputAction.CallbackContext> callback)
-    {
-        _controls.PlayerMovementMap.Move.performed += callback;
-        _controls.PlayerMovementMap.Move.Enable();
-    }
-
-    public static void UnregisterMovementAction(System.Action<InputAction.CallbackContext> callback)
-    {
-        _controls.PlayerMovementMap.Move.performed -= callback;
-        _controls.PlayerMovementMap.Move.Disable();
+        if (state)
+        {
+            Controls.PlayerInteractionMap.Interact.Enable();
+            Controls.PlayerMovementMap.Move.Enable();
+        }
+        else
+        {
+            Controls.PlayerInteractionMap.Interact.Disable();
+            Controls.PlayerMovementMap.Move.Disable();
+        }
     }
 }
