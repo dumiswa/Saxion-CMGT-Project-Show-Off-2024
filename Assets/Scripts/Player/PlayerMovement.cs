@@ -13,6 +13,7 @@ namespace Monoliths.Player
         private Collider _collider;
 
         private Transform _playerOrigin;
+        private Transform _cameraOrigin;
 
         private bool _lockMovement = false;
 
@@ -28,8 +29,6 @@ namespace Monoliths.Player
 
         public override bool Init()
         {
-            DataBridge.UpdateData(GLIDING_UNLOCKED_DATA_ID, true); //DEBUG
-
             _stateMachine = new(this);
             _player = GameObject.FindGameObjectWithTag("Player");
             if (_player is null)
@@ -53,6 +52,7 @@ namespace Monoliths.Player
                 _collider = _player.AddComponent<CapsuleCollider>();
                 _collider.material = new PhysicMaterial("PlayerPhysicMaterial") { dynamicFriction = 1f, staticFriction = 0f };
             }
+            _cameraOrigin = Camera.main.transform.parent.parent;
 
             InitializeStates();
             return base.Init();
@@ -82,6 +82,7 @@ namespace Monoliths.Player
 
             _stateMachine.Current?.Update();
         }
+
         private void FixedUpdate()
         {
             if (_rigidbody.velocity.y <= -_cutOffSpeed)
@@ -95,20 +96,13 @@ namespace Monoliths.Player
             try
             {
                 var constraints = DataBridge.TryGetData<bool>(GLIDING_UNLOCKED_DATA_ID);
-
                 if (constraints.WasUpdated)
                 {
-                    if (constraints != Data<bool>.Empty)
-                    {
-                        if (!_isActive) base.Init();
-                        IsGlidingUnlocked = constraints.EncodedData;
-                        DataBridge.MarkUpdateProcessed<bool>(GLIDING_UNLOCKED_DATA_ID);
-                    }
-                    else if (_isActive)
-                    {
-                        _isActive = false;
-                        _status = $"Couldn't get \"{GLIDING_UNLOCKED_DATA_ID}\" data packet";
-                    }
+                    if (!_isActive) 
+                        base.Init();
+
+                    IsGlidingUnlocked = constraints.EncodedData;
+                    DataBridge.MarkUpdateProcessed<bool>(GLIDING_UNLOCKED_DATA_ID);
                 }
             }
             catch (InvalidCastException)
@@ -124,8 +118,8 @@ namespace Monoliths.Player
         private void Move()
         {
             Vector2 direction = Controls.Movement;
-            Vector3 move = _speed * _movementMultiplier * Time.deltaTime * new Vector3(direction.x, 0, direction.y);
-            _rigidbody.MovePosition(_rigidbody.position + move);
+            float directionMultiplier = _speed * _movementMultiplier * Time.deltaTime;
+            _rigidbody.MovePosition(_rigidbody.position + directionMultiplier * (_cameraOrigin.right * direction.x + _cameraOrigin.forward * direction.y));
         }
 
         private bool IsLanded()
