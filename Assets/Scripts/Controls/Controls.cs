@@ -2,20 +2,16 @@ using UnityEngine;
 
 public static class Controls
 {
-    public static CameraProfile Camera { get; private set; }
-    public static PlayerProfile Player { get; private set; }
+    public static InputProfile Profile { get; private set; }
 
-    public static Vector2 Movement => Player.PlayerMovementMap.Move.ReadValue<Vector2>();
-    public static Vector2 CameraRotation => Camera.CameraRotationMap.Rotate.ReadValue<Vector2>();
+    public static Vector2 LeftDirectional => Profile.Map.LeftDirectional.ReadValue<Vector2>();
+    public static Vector2 RightDirectional => Profile.Map.RightDirectional.ReadValue<Vector2>();
 
     static Controls()
     {
-        Player = new();
-        Camera = new();
+        Profile = new();
 
-        Player.Enable();
-        Camera.Enable();
-
+        Profile.Enable();
         SetAllControlsTo(true);
     }
 
@@ -23,19 +19,19 @@ public static class Controls
     {
         if (state)
         {
-            Player.PlayerInteractionMap.Interact.Enable();
-            Player.PlayerMovementMap.Move.Enable();
-            Player.PlayerMovementMap.Jump.Enable();
+            Profile.Map.LeftDirectional.Enable();
+            Profile.Map.RightDirectional.Enable();
 
-            Camera.CameraRotationMap.Rotate.Enable();
+            Profile.Map.FirstContextualButton.Enable();
+            Profile.Map.SecondContextualButton.Enable();
         }
         else
         {
-            Player.PlayerInteractionMap.Interact.Disable();
-            Player.PlayerMovementMap.Move.Disable();
-            Player.PlayerMovementMap.Jump.Disable();
+            Profile.Map.LeftDirectional.Disable();
+            Profile.Map.RightDirectional.Disable();
 
-            Camera.CameraRotationMap.Rotate.Disable();
+            Profile.Map.FirstContextualButton.Disable();
+            Profile.Map.SecondContextualButton.Disable();
         }
     }
 }

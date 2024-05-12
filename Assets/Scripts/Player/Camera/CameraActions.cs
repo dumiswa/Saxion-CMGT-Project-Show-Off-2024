@@ -57,7 +57,7 @@ namespace Monoliths.Player
 
         private void Rotate()
         {
-            var direction = Controls.CameraRotation;
+            var direction = Controls.RightDirectional;
             var target = _target.GetTargetPosition();
 
             var horizontalMin = Mathf.Min(_constraints.RotationHorizontal.x, _constraints.RotationHorizontal.y);

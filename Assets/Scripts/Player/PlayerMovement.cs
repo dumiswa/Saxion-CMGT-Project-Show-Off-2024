@@ -149,7 +149,7 @@ namespace Monoliths.Player
             _accelerationMultiplier /= 1f + _acceleration;
             if (!_lockMovement)
             {
-                Vector2 direction = Controls.Movement;
+                Vector2 direction = Controls.LeftDirectional;
 
                 _accelerationMultiplier += _acceleration * 2f * direction;
                 _accelerationMultiplier = new
@@ -196,15 +196,15 @@ namespace Monoliths.Player
         {
             Defaults();
 
-            Controls.Player.PlayerMovementMap.Jump.started += ctx => OnGlideButtonPressed();
-            Controls.Player.PlayerMovementMap.Jump.canceled += ctx => OnGlideButtonReleased();
+            Controls.Profile.Map.FirstContextualButton.started += ctx => OnGlideButtonPressed();
+            Controls.Profile.Map.FirstContextualButton.canceled += ctx => OnGlideButtonReleased();
         }
         private void OnDisable()
         {
             Defaults();
 
-            Controls.Player.PlayerMovementMap.Jump.started -= ctx => OnGlideButtonPressed();
-            Controls.Player.PlayerMovementMap.Jump.performed -= ctx => OnGlideButtonReleased();
+            Controls.Profile.Map.FirstContextualButton.started -= ctx => OnGlideButtonPressed();
+            Controls.Profile.Map.FirstContextualButton.performed -= ctx => OnGlideButtonReleased();
         }
     }
 }

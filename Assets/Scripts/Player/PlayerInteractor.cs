@@ -55,13 +55,13 @@ namespace Monoliths.Player
         {
             Defaults();
 
-            Controls.Player.PlayerInteractionMap.Interact.started += ctx => InteractWithObject(_closest);
+            Controls.Profile.Map.FirstContextualButton.started += ctx => InteractWithObject(_closest);
         }
         private void OnDisable()
         {
             Defaults();
 
-            Controls.Player.PlayerInteractionMap.Interact.started -= ctx => InteractWithObject(_closest);
+            Controls.Profile.Map.FirstContextualButton.started -= ctx => InteractWithObject(_closest);
         }
     }
 }
