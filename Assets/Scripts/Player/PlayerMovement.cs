@@ -1,5 +1,8 @@
 ﻿using System;
 using UnityEngine;
+using System.Linq;
+using System.Collections;
+
 namespace Monoliths.Player
 {
     public class PlayerMovement : Monolith
@@ -20,12 +23,35 @@ namespace Monoliths.Player
         public bool IsGlidingUnlocked { get; private set; }
         public bool IsGliding { get; private set; }
 
-        private float _speed = 5.0f;
+        private float _maxSpeed;
+        private float _acceleration;
 
-        private float _gravityMultiplier = 1.0f;
-        private float _movementMultiplier = 1.0f;
+        private Vector2 _accelerationMultiplier;
 
-        private float _cutOffSpeed = 15f;
+        private float _gravityMultiplier;
+        private float _movementMultiplier;
+
+        private float _cutOffSpeed;
+
+        private float _fallStartPosition;
+        private float _hardLandedTime;
+        private bool _isHardLanding;
+
+        private void Defaults()
+        {
+            _maxSpeed = 3.6f;
+            _acceleration = 0.32f;
+
+            _accelerationMultiplier = Vector2.zero;
+
+            _gravityMultiplier = 1.0f;
+            _movementMultiplier = 1.0f;
+
+            _cutOffSpeed = 15.0f;
+
+            _fallStartPosition = 0.0f;
+            _hardLandedTime = 0.4f;
+        }
 
         public override bool Init()
         {
@@ -71,24 +97,27 @@ namespace Monoliths.Player
             TrySyncData();
             var isLanded = IsLanded();
 
-            if (!_lockMovement) 
-                Move();
+            Move();
 
-            if (isLanded && !_stateMachine.CurrentIs<PlayerGroundedState>())
-                _stateMachine.Next<PlayerGroundedState>();
-
-            else if(!isLanded && !_stateMachine.CurrentIs<PlayerAirState>())
+            if (isLanded && !_stateMachine.CurrentIs<PlayerGroundedState>() && !_isHardLanding)
+            {
+                if (_fallStartPosition - _rigidbody.position.y > 2f)
+                    MonolithMaster.Instance.RunCoPlayerLoop(OnHardLanded());
+                else
+                    _stateMachine.Next<PlayerGroundedState>();
+            }
+            else if (!isLanded && !_stateMachine.CurrentIs<PlayerAirState>())
+            {
+                _fallStartPosition = _rigidbody.position.y;
                 _stateMachine.Next<PlayerAirState>();
+            }
 
             _stateMachine.Current?.Update();
         }
-
         private void FixedUpdate()
         {
-            if (_rigidbody.velocity.y <= -_cutOffSpeed)
-                return;
-            
-            _rigidbody.AddForce(Vector3.down * (25f * _gravityMultiplier), ForceMode.Acceleration);
+            Accelerate();
+            ApplyGravity();
         }
 
         private void TrySyncData()
@@ -115,33 +144,65 @@ namespace Monoliths.Player
             }
         }
 
+        private void Accelerate()
+        {
+            _accelerationMultiplier /= 1f + _acceleration;
+            if (!_lockMovement)
+            {
+                Vector2 direction = Controls.Movement;
+
+                _accelerationMultiplier += _acceleration * 2f * direction;
+                _accelerationMultiplier = new
+                (
+                    Mathf.Clamp(_accelerationMultiplier.x, -1f, 1f),
+                    Mathf.Clamp(_accelerationMultiplier.y, -1f, 1f)
+                );
+            };
+        }
         private void Move()
         {
-            Vector2 direction = Controls.Movement;
-            float directionMultiplier = _speed * _movementMultiplier * Time.deltaTime;
-            _rigidbody.MovePosition(_rigidbody.position + directionMultiplier * (_cameraOrigin.right * direction.x + _cameraOrigin.forward * direction.y));
+            _rigidbody.MovePosition(_rigidbody.position + _maxSpeed * _movementMultiplier * Time.deltaTime * 
+            (
+                _accelerationMultiplier.x * _cameraOrigin.right + 
+                _accelerationMultiplier.y * _cameraOrigin.forward
+            ));
         }
 
-        private bool IsLanded()
+        private void ApplyGravity()
         {
-            foreach (var result in Physics.OverlapSphere(_playerOrigin.transform.position, 0.25f))
-            {
-                if(result.gameObject.layer == LayerMask.NameToLayer("Ground"))
-                    return true;
-            }
-            return false;
+            if (_rigidbody.velocity.y <= -_cutOffSpeed)
+                return;
+
+            _rigidbody.AddForce(Vector3.down * (25f * _gravityMultiplier), ForceMode.Acceleration);
         }
-       
+
+        private bool IsLanded() 
+            => Physics.OverlapSphere(_playerOrigin.transform.position, 0.5125f)
+                      .Where(result => result.gameObject.layer == LayerMask.NameToLayer("Ground"))
+                      .ToArray().Length > 0;
+        private IEnumerator OnHardLanded()
+        {
+            _isHardLanding = true;
+            yield return new WaitForSeconds(_hardLandedTime);
+            _isHardLanding = false;
+
+            _stateMachine.Next<PlayerGroundedState>();
+        }
+
         private void OnGlideButtonPressed() => IsGliding = true;
         private void OnGlideButtonReleased() => IsGliding = false;
 
         private void OnEnable()
         {
+            Defaults();
+
             Controls.Player.PlayerMovementMap.Jump.started += ctx => OnGlideButtonPressed();
             Controls.Player.PlayerMovementMap.Jump.canceled += ctx => OnGlideButtonReleased();
         }
         private void OnDisable()
         {
+            Defaults();
+
             Controls.Player.PlayerMovementMap.Jump.started -= ctx => OnGlideButtonPressed();
             Controls.Player.PlayerMovementMap.Jump.performed -= ctx => OnGlideButtonReleased();
         }

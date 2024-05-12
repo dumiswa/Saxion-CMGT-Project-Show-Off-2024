@@ -5,13 +5,10 @@ namespace Monoliths.Mechanisms
 {
     public class MechanismsObserver : Monolith
     {
-        private static Dictionary<string, Actuator> _mechanisms;
-        private static LayerMask _activeMask;
+        private static readonly Dictionary<string, Actuator> _mechanisms = new();
+        private static LayerMask _activeMask = LayerMask.NameToLayer("Interactable");
         public override bool Init()
         {
-            _mechanisms = new();
-            _activeMask = 1 << LayerMask.NameToLayer("Interactable");
-
             base.Init();
             _status = $"Successfully Inititated, with active mask \"{LayerMask.LayerToName(_activeMask.value)}\"";
             return true;

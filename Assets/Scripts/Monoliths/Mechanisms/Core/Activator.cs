@@ -8,5 +8,6 @@ namespace Monoliths.Mechanisms
         private string[] _actuators;
 
         public override void Invoke() => MechanismsObserver.Invoke(_actuators);
+        public override void Interact(GameObject caller) {}
     }
 }

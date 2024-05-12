@@ -2,7 +2,8 @@
 
 namespace Monoliths.Mechanisms
 {
-    public abstract class Actuator : MonoBehaviour
+
+    public abstract class Actuator : MonoBehaviour, IInteractable
     {
         [SerializeField]
         private string _identifier;
@@ -21,5 +22,7 @@ namespace Monoliths.Mechanisms
             MechanismsObserver.Register(this);
         }
         private void OnDisable() => MechanismsObserver.Remove(Identifier);
+
+        public virtual void Interact(GameObject caller) {}
     }
 }

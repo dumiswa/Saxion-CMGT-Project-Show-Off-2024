@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 using System.Reflection;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Monoliths
 {
@@ -54,6 +55,8 @@ namespace Monoliths
 
             _onEnable?.Invoke();
             _onAwake?.Invoke();
+
+            Instance = this;
         }
 
         private void SubscribeToPlayerLoop(Monolith monolith)
@@ -102,5 +105,7 @@ namespace Monoliths
 
         private void OnEnable() => _onEnable?.Invoke();
         private void OnDisable() => _onDisable?.Invoke();
+
+        public void RunCoPlayerLoop(IEnumerator coroutine) => StartCoroutine(coroutine);
     }
 }

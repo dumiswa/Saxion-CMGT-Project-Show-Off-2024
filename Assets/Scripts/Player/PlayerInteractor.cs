@@ -1,13 +1,21 @@
+using Monoliths.Mechanisms;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.InputSystem;
-
 namespace Monoliths.Player
 {
     public class PlayerInteractor : Monolith
     {
         private GameObject _player;
         private LayerMask _interactableLayer;
-        private PlayerProfile _controls;
+
+        private float _interactionRadius;
+
+        private Collider _closest;
+
+        public void Defaults()
+        {
+            _interactionRadius = 0.8f;
+        }
 
         public override bool Init()
         {
@@ -18,23 +26,42 @@ namespace Monoliths.Player
                 return false;
             }
 
-            _interactableLayer = 1 << LayerMask.NameToLayer("Interactable");
+            _interactableLayer = LayerMask.NameToLayer("Interactable");
 
             return base.Init();
         }
 
-        private void OnInteractPerformed(InputAction.CallbackContext context)
+        private void GetClosestInteractable() 
+            => _closest = Physics.OverlapSphere(_player.transform.position, _interactionRadius)
+                                 .Where(result => result.gameObject.layer == _interactableLayer)
+                                 .OrderBy(result => Vector3.Distance(_player.transform.position, result.transform.position))
+                                 .FirstOrDefault();
+        public void InteractWithObject(Collider closest)
         {
-            RaycastHit hit;
-            if (Physics.Raycast(_player.transform.position, _player.transform.forward, out hit, 2f, _interactableLayer))
-            {
-                InteractWithObject(hit.collider.gameObject);
-            }
+            if (closest is null)
+                return;
+
+            closest.TryGetComponent<IInteractable>(out var interactable);
+            
+            if (interactable is null)
+                return;
+
+            interactable.Interact(_player);
         }
 
-        public void InteractWithObject(GameObject obj)
+        private void Update() => GetClosestInteractable();
+        
+        private void OnEnable()
         {
-            //Interaction with obj logic
+            Defaults();
+
+            Controls.Player.PlayerInteractionMap.Interact.started += ctx => InteractWithObject(_closest);
+        }
+        private void OnDisable()
+        {
+            Defaults();
+
+            Controls.Player.PlayerInteractionMap.Interact.started -= ctx => InteractWithObject(_closest);
         }
     }
 }

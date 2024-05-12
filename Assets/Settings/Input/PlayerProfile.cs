@@ -133,7 +133,7 @@ public partial class @PlayerProfile: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""7a6616d3-a724-4c9c-aaad-b81a63bdc8de"",
-                    ""path"": ""board>/e"",
+                    ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
