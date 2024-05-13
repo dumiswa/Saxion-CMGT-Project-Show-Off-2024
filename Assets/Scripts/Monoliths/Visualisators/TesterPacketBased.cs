@@ -22,7 +22,7 @@ namespace Monoliths.Visualisators
         }
         protected override void Update()
         {
-            DataBridge.UpdateData<TesterPacket>(typeof(TesterPacket).Name, new() { text = "Test text" });
+            DataBridge.UpdateData<TesterPacket>(_dataID, new() { text = "Test text" });
             base.Update();
         }
         protected override void Display(TesterPacket data)
