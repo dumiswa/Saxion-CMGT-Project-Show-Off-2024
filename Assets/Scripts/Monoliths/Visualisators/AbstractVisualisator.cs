@@ -1,10 +1,12 @@
 ﻿using System;
+using UnityEngine;
 
 namespace Monoliths.Visualisators
 {
     public abstract class AbstractVisualisator<DataPacket> : Monolith where DataPacket : new()
     {
-        protected readonly string _dataID;
+        protected Transform _gui { get; private set; }
+        protected string _dataID;
         protected bool _autoDisplay;
 
         public AbstractVisualisator(bool autoDisplay = true)
@@ -13,19 +15,29 @@ namespace Monoliths.Visualisators
             _dataID = typeof(DataPacket).Name;
         }
 
-        public override bool Init()
-            => base.Init();
+        public override bool Init() 
+        {
+            _gui = GameObject.FindGameObjectWithTag("GUI").transform;
+            if(_gui is null)
+            {
+                _status = "Couldn't find GUI";
+                return false;
+            }
+            return base.Init();
+        }
 
-        protected void Update()
+        protected virtual void Update()
         {
             if (!_autoDisplay) return;
 
             try
             {
                 var data = DataBridge.TryGetData<DataPacket>(_dataID);
-                if (data != Data<DataPacket>.Empty)
+                if (data != Data<DataPacket>.Empty && data.WasUpdated)
                 {
-                    if (!_isActive) base.Init();
+                    if (!_isActive) 
+                        base.Init();
+
                     Display(data.EncodedData);
                     DataBridge.MarkUpdateProcessed<DataPacket>(_dataID);
                 }
