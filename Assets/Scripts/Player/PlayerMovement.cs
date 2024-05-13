@@ -93,8 +93,7 @@ namespace Monoliths.Player
         private void InitializeStates() => _stateMachine.NextNoExit<PlayerGroundedState>();
 
         private void Update()
-        {
-            Debug.Log($"Current state is {_stateMachine.Current} with {_collider.material.dynamicFriction} friction");
+        {           
             TrySyncData();
             var isLanded = IsLanded();
 
