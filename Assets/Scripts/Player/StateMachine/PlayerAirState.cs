@@ -4,6 +4,8 @@
     private const float GLIDING_GRAVITY_MULTIPLIER = 0.025f;
     public override void Enter()
     {
+        _playerMovement.SetFriction(0f);
+
         if (_playerMovement.IsGlidingUnlocked)
         {
             if (_playerMovement.IsGliding)
@@ -25,6 +27,6 @@
         else
             _playerMovement.SetMovementParams(1.0f, 1.0f);
     }
-    public override void Exit() { }
+    public override void Exit() => _playerMovement.SetFriction(1f);
 }
 

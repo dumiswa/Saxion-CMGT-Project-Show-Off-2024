@@ -94,6 +94,7 @@ namespace Monoliths.Player
 
         private void Update()
         {
+            Debug.Log($"Current state is {_stateMachine.Current} with {_collider.material.dynamicFriction} friction");
             TrySyncData();
             var isLanded = IsLanded();
 
@@ -103,8 +104,8 @@ namespace Monoliths.Player
             {
                 if (_fallStartPosition - _rigidbody.position.y > 2f)
                     MonolithMaster.Instance.RunCoPlayerLoop(OnHardLanded());
-                else
-                    _stateMachine.Next<PlayerGroundedState>();
+                else             
+                    _stateMachine.Next<PlayerGroundedState>();                                    
             }
             else if (!isLanded && !_stateMachine.CurrentIs<PlayerAirState>())
             {
@@ -141,6 +142,14 @@ namespace Monoliths.Player
                     _isActive = false;
                     _status = $"Stored data was not of appropriate types";
                 }
+            }
+        }
+
+        public void SetFriction(float frictionValue)
+        {
+            if (_collider != null && _collider.material != null) 
+            {
+                _collider.material.dynamicFriction = frictionValue;
             }
         }
 
