@@ -1,5 +1,4 @@
 using Monoliths;
-using Monoliths.Mechanisms;
 using System;
 using UnityEngine;
 
@@ -57,35 +56,12 @@ public class LevelProgressObserver : Monolith
 
     private void HandleStarAcquired(GameObject star)
     {
-        
+          
         Debug.Log("Star acquired" + star.name);
     }
     private void HandleTargetAcquired(GameObject levelTarget)
     {
 
         Debug.Log("LevelTarget acquired" + levelTarget.name);
-    }
-}
-
-public class OnCollisionActuator : Actuator
-{
-    public Action<GameObject> OnCollison;
-    public override void Invoke()
-    {
-        OnCollison?.Invoke(gameObject);
-    }
-
-    public override void Collide(GameObject caller)
-    {
-        Invoke();
-    }
-}
-
-public class Collectable : OnCollisionActuator
-{
-    public override void Invoke()
-    {
-        base.Invoke();
-        Destroy(gameObject);
     }
 }
