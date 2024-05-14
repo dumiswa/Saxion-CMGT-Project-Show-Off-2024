@@ -78,9 +78,7 @@ public class CutoutProxy : Monolith
         {
             if (_currentMaterialBuffer.Contains(material))
                 finished.Add(material);
-        }
-        foreach (var material in _fallOffBuffer)
-        {
+
             var opacity = material.GetFloat("_MinimumOpacity");
 
             if (opacity < 2f)

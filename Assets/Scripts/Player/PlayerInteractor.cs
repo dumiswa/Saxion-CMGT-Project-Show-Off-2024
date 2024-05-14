@@ -31,12 +31,19 @@ namespace Monoliths.Player
             return base.Init();
         }
 
-        private void GetClosestInteractable() 
-            => _closest = Physics.OverlapSphere(_player.transform.position, _interactionRadius)
-                                 .Where(result => result.gameObject.layer == _interactableLayer)
-                                 .OrderBy(result => Vector3.Distance(_player.transform.position, result.transform.position))
-                                 .FirstOrDefault();
-        public void InteractWithObject(Collider closest)
+        private void Scan()
+        {
+            var interactables = Physics.OverlapSphere(_player.transform.position, _interactionRadius)
+                                 .Where(result => result.gameObject.layer == _interactableLayer);
+
+            foreach (var interactable in interactables)
+                CollideWithObject(interactable);
+
+            _closest = interactables.OrderBy(result => Vector3.Distance(_player.transform.position, result.transform.position))
+                                    .FirstOrDefault();
+        }
+
+        public void CollideWithObject(Collider closest)
         {
             if (closest is null)
                 return;
@@ -46,11 +53,23 @@ namespace Monoliths.Player
             if (interactable is null)
                 return;
 
+            interactable.Collide(_player);
+        }
+        public void InteractWithObject(Collider closest)
+        {
+            if (closest is null)
+                return;
+
+            closest.TryGetComponent<IInteractable>(out var interactable);
+
+            if (interactable is null)
+                return;
+
             interactable.Interact(_player);
         }
 
-        private void Update() => GetClosestInteractable();
-        
+
+        private void Update() => Scan();
         private void OnEnable()
         {
             Defaults();
