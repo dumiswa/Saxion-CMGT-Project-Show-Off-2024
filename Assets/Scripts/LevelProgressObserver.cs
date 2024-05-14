@@ -1,9 +1,13 @@
 using Monoliths;
 using System;
 using UnityEngine;
+using System.Xml.Serialization;
+using System.IO;
 
 public class LevelProgressObserver : Monolith
 {
+    private const string LevelInfoKey = "currentLevelResult";
+
     private GameObject[] _stars;
     private GameObject[] _levelTargets;
 
@@ -54,14 +58,70 @@ public class LevelProgressObserver : Monolith
         levelState.FinalizeLevel();
     }
 
-    private void HandleStarAcquired(GameObject star)
-    {
-          
-        Debug.Log("Star acquired" + star.name);
-    }
-    private void HandleTargetAcquired(GameObject levelTarget)
-    {
+    ////////////////   ////////////////   ////////////////   ////////////////   ////////////////   ////////////////   ////////////////   ////////////////   ////////////////   ////////////////
+    ////////////////   ////////////////   ////////////////   ////////////////   ////////////////   ////////////////   ////////////////   ////////////////   ////////////////   ////////////////
+    //                                                          Kiril senpai pls check the abomination that I came up with ... uwu
+    ////////////////   ////////////////   ////////////////   ////////////////   ////////////////   ////////////////   ////////////////   ////////////////   ////////////////   ////////////////
+    ////////////////   ////////////////   ////////////////   ////////////////   ////////////////   ////////////////   ////////////////   ////////////////   ////////////////   ////////////////
 
-        Debug.Log("LevelTarget acquired" + levelTarget.name);
+    private void HandleStarAcquired(GameObject star) 
+    {
+        Data<LevelResult> data = DataBridge.TryGetData<LevelResult>(LevelInfoKey);
+        if (!data.IsEmpty) 
+        {
+            LevelResult levelInfo = data.EncodedData;
+            levelInfo.CollectedStars++;
+            DataBridge.UpdateData(LevelInfoKey, levelInfo);
+        }
+    }
+    private void HandleTargetAcquired(GameObject levelTarget)  => CheckCompletedLevel();
+
+    private void InitializeLevelInfo() //prob problem here!!
+    {
+        Data <LevelResult> data = DataBridge.TryGetData<LevelResult>(LevelInfoKey);
+        if (!data.IsEmpty) 
+        {
+            LevelResult levelResult = new LevelResult(0, 1, false);
+            DataBridge.UpdateData(LevelInfoKey, levelResult);
+        }
+    }
+
+    private void CheckCompletedLevel()
+    {
+        Data<LevelResult> data = DataBridge.TryGetData<LevelResult>(LevelInfoKey);
+        if (!data.IsEmpty)
+        {
+            LevelResult levelInfo = data.EncodedData;
+            levelInfo.IsCompleted = true; 
+            DataBridge.UpdateData(LevelInfoKey, levelInfo); 
+        }
+
+        SaveLevelInfoToFile();
+    }
+
+    private void SaveLevelInfoToFile()
+    {
+        var levelInfo = DataBridge.TryGetData<LevelResult>(LevelInfoKey).EncodedData;
+        XmlSerializer serializer = new XmlSerializer(typeof(LevelResult));
+        using (TextWriter writer = new StreamWriter(@"LevelResult.xml"))
+        {
+            serializer.Serialize(writer, levelInfo);   
+        }
     }
 }
+
+public struct LevelResult
+{
+    public int CollectedStars;
+    public int LevelID;
+    public bool IsCompleted;
+
+    public LevelResult(int number, int id, bool completed)
+    {
+        CollectedStars = number;
+        LevelID = id;
+        IsCompleted = completed;
+    }
+}
+
+
