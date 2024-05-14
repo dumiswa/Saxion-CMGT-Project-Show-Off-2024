@@ -1,4 +1,5 @@
 using Monoliths;
+using Monoliths.Mechanisms;
 using System;
 using UnityEngine;
 
@@ -6,6 +7,8 @@ public class LevelProgressObserver : Monolith
 {
     private GameObject[] _stars;
     private GameObject[] _levelTargets;
+
+    public static event Action OnLevelShouldFinalize;
 
     public override bool Init()
     {
@@ -16,28 +19,45 @@ public class LevelProgressObserver : Monolith
 
         foreach (var star in _stars)
         {
-            var starComponent = star.GetComponent<Star>(); 
-            if (starComponent != null)
+            var starComponent = star.GetComponent<Collectable>(); 
+            if (starComponent == null)
             {
-                starComponent.OnStarAcquired += HandleStarAcquired; 
+                starComponent = star.AddComponent<Collectable>();
             }
+            starComponent.OnCollison += HandleStarAcquired;
         }
-
+                
         foreach (var target in _levelTargets)
         {
-            var targetComponent = target.GetComponent<LevelTarget>(); 
-            if (targetComponent != null)
+            var targetComponent = target.GetComponent<Collectable>(); 
+            if (targetComponent == null)
             {
-                targetComponent.OnTargetAcquired += HandleTargetAcquired; 
+                targetComponent = target.AddComponent<Collectable>();
             }
+                targetComponent.OnCollison += HandleTargetAcquired;
         }
 
         return true;
     }
 
+    private void OnEnable()
+    {
+        OnLevelShouldFinalize += FinalizeLevel;
+    }
+    private void OnDisable()
+    {
+        OnLevelShouldFinalize -= FinalizeLevel;
+    }
+    private void FinalizeLevel()
+    {
+        if (!(GameStateMachine.Instance.Current is LevelState levelState)) return;
+
+        levelState.FinalizeLevel();
+    }
+
     private void HandleStarAcquired(GameObject star)
     {
-
+        
         Debug.Log("Star acquired" + star.name);
     }
     private void HandleTargetAcquired(GameObject levelTarget)
@@ -45,45 +65,27 @@ public class LevelProgressObserver : Monolith
 
         Debug.Log("LevelTarget acquired" + levelTarget.name);
     }
+}
 
-    private void OnDestroy()
+public class OnCollisionActuator : Actuator
+{
+    public Action<GameObject> OnCollison;
+    public override void Invoke()
     {
-        foreach (var star in _stars) 
-        {
-            var starComponent = star.GetComponent<Star>();
-            if (starComponent != null)
-                starComponent.OnStarAcquired -= HandleStarAcquired;
-        }
-        foreach (var levelTarget in _levelTargets)
-        {
-            var targetComponent = levelTarget.GetComponent<LevelTarget>();
-            if (targetComponent != null)
-                targetComponent.OnTargetAcquired -= HandleTargetAcquired;
-        }
+        OnCollison?.Invoke(gameObject);
+    }
+
+    public override void Collide(GameObject caller)
+    {
+        Invoke();
     }
 }
 
-public class Star : MonoBehaviour
+public class Collectable : OnCollisionActuator
 {
-    public Action<GameObject> OnStarAcquired;
-
-    private void OnTriggerEnter(Collider other)
+    public override void Invoke()
     {
-        if (other.CompareTag("Player"))
-        {
-            OnStarAcquired?.Invoke(this.gameObject);
-            Destroy(this.gameObject);
-        }
-    }
-}
-
-public class LevelTarget : MonoBehaviour
-{
-    public Action<GameObject> OnTargetAcquired;
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-            OnTargetAcquired?.Invoke(this.gameObject);
+        base.Invoke();
+        Destroy(gameObject);
     }
 }
