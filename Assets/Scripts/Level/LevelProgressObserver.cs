@@ -47,7 +47,6 @@ public class LevelProgressObserver : Monolith
 
     private void OnGameStateEnter(GameState current)
     {
-        Debug.Log("havent");
         if (current is not LevelStartState startState)
             return;
 
