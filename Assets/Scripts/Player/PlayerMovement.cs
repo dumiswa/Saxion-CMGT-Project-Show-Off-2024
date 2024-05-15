@@ -7,7 +7,8 @@ namespace Monoliths.Player
 {
     public class PlayerMovement : Monolith
     {
-        private const string GLIDING_UNLOCKED_DATA_ID = "GlidingIsUnlocked";
+        public const string GLIDING_UNLOCKED_DATA_ID = "GlidingIsUnlocked";
+        public const string MOVEMENT_ENABLED_DATA_ID = "MovementIsEnabled";
 
         private MovementStateMachine _stateMachine;
 
@@ -37,8 +38,10 @@ namespace Monoliths.Player
         private float _hardLandedTime;
         private bool _isHardLanding;
 
-        private void Defaults()
+        public override void Defaults()
         {
+            base.Defaults();
+
             _maxSpeed = 3.6f;
             _acceleration = 0.32f;
 
@@ -90,10 +93,11 @@ namespace Monoliths.Player
             _movementMultiplier = movementMultiplier;
         }
 
-        private void InitializeStates() => _stateMachine.NextNoExit<PlayerGroundedState>();
+        private void InitializeStates() 
+            => _stateMachine.NextNoExit<PlayerGroundedState>();
 
         private void Update()
-        {           
+        {
             TrySyncData();
             var isLanded = IsLanded();
 
@@ -124,15 +128,22 @@ namespace Monoliths.Player
         {
             try
             {
-                var constraints = DataBridge.TryGetData<bool>(GLIDING_UNLOCKED_DATA_ID);
-                if (constraints.WasUpdated)
+                var gliding = DataBridge.TryGetData<bool>(GLIDING_UNLOCKED_DATA_ID);
+                if (gliding.WasUpdated)
                 {
-                    if (!_isActive) 
-                        base.Init();
-
-                    IsGlidingUnlocked = constraints.EncodedData;
+                    IsGlidingUnlocked = gliding.EncodedData;
                     DataBridge.MarkUpdateProcessed<bool>(GLIDING_UNLOCKED_DATA_ID);
                 }
+                var movementEnabled = DataBridge.TryGetData<bool>(MOVEMENT_ENABLED_DATA_ID);
+                if (movementEnabled.WasUpdated)
+                {
+
+                    SetMovementLocked(!movementEnabled.EncodedData);
+                    DataBridge.MarkUpdateProcessed<bool>(MOVEMENT_ENABLED_DATA_ID);
+                }
+
+                if (!_isActive)
+                    base.Init();
             }
             catch (InvalidCastException)
             {

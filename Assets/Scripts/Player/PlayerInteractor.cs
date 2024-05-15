@@ -12,8 +12,10 @@ namespace Monoliths.Player
 
         private Collider _closest;
 
-        public void Defaults()
+        public override void Defaults()
         {
+            base.Defaults();
+
             _interactionRadius = 0.8f;
         }
 
@@ -67,7 +69,6 @@ namespace Monoliths.Player
 
             interactable.Interact(_player);
         }
-
 
         private void Update() => Scan();
         private void OnEnable()

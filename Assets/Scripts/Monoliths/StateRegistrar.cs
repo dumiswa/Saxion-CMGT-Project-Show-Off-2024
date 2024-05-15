@@ -10,6 +10,12 @@ namespace Monoliths
         public static GameState Get(Type type)
             => _registeredStates[type];
 
+        public override void Defaults()
+        {
+            base.Defaults();
+            _priority = 100;
+        }
+
         public override bool Init()
         {
             GameStateMachine.Instance = new();
@@ -28,6 +34,8 @@ namespace Monoliths
                     faultyTypes++;
             }
 
+            GameStateMachine.Start();
+
             if (faultyTypes == 0)
                 return base.Init();
             else
@@ -36,6 +44,7 @@ namespace Monoliths
                 _status = $"Initiated with problems, couldn't register {faultyTypes} states";
                 return true;
             }
+
         }
 
         public bool TryCreateAndRegister(Type type)

@@ -7,6 +7,12 @@ namespace Monoliths.Mechanisms
     {
         private static readonly Dictionary<string, Actuator> _mechanisms = new();
         private static LayerMask _activeMask = LayerMask.NameToLayer("Interactable");
+
+        public override void Defaults()
+        {
+            base.Defaults();
+            _priority = -1;
+        }
         public override bool Init()
         {
             base.Init();
