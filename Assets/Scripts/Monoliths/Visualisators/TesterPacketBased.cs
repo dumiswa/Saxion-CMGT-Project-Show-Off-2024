@@ -17,13 +17,9 @@ namespace Monoliths.Visualisators
         }
         private void Start()
         {
+            DataBridge.UpdateData<TesterPacket>(_dataID, new() { text = "" });
             _text = Object.Instantiate(Resources.Load<TextMeshProUGUI>("Prefabs/Tester"), _gui).GetComponent<TextMeshProUGUI>();
             _text.rectTransform.anchoredPosition = Vector3.zero;
-        }
-        protected override void Update()
-        {
-            DataBridge.UpdateData<TesterPacket>(_dataID, new() { text = "Test text" });
-            base.Update();
         }
         protected override void Display(TesterPacket data)
         {

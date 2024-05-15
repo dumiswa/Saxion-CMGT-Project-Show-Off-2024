@@ -26,6 +26,28 @@ namespace Monoliths.Visualisators
             return base.Init();
         }
 
+        protected virtual void Start()
+        {
+            if (!_autoDisplay) return;
+
+            try
+            {
+                var data = DataBridge.TryGetData<DataPacket>(_dataID);
+                if (data != Data<DataPacket>.Empty)
+                {
+                    Display(data.EncodedData);
+                    DataBridge.MarkUpdateProcessed<DataPacket>(_dataID);
+                }
+            }
+            catch (InvalidCastException)
+            {
+                if (_isActive)
+                {
+                    _isActive = false;
+                    _status = $"Stored data was not of type Data<{typeof(DataPacket)}>.";
+                }
+            }
+        }
         protected virtual void Update()
         {
             if (!_autoDisplay) return;

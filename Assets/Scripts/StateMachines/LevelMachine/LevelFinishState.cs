@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using Monoliths.Visualisators;
+using System.IO;
 using System.Xml.Serialization;
 using UnityEngine;
 
@@ -10,7 +11,13 @@ public class LevelFinishState : LevelSubState
 
         SaveLevelInfoToFile();
         //PLAY ANIM
-        Debug.Log("Level Finished, going back to the selection screen");
+        Debug.Log("Level Finished!");
+
+        //FOR TESTING PURPOSES ONLY
+        DataBridge.UpdateData("TestDataBridgeUniqueDataIDBasedOnTesterPacket", new TesterPacket() { text = "Level is finished!"});
+        Time.timeScale = 0.0f;
+        //FOR TESTING PURPOSES ONLY
+
         GameStateMachine.Instance.Return();
     }
 
