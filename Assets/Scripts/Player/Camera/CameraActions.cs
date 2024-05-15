@@ -12,7 +12,7 @@ namespace Monoliths.Player
         private CameraTarget _target;
 
         private float _interpolationFactor = 0.03f;
-        private float _rotationSpeed = 48f;
+        private float _rotationSpeed = 78f;
 
         private Transform _cameraOrigin;
         private Transform _cameraPitch;
