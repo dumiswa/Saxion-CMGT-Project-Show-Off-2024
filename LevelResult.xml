@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LevelResult xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <AssetPath>Prefabs/Levels/Level0</AssetPath>
+  <StarAmount>1</StarAmount>
+  <CollectedStars>0</CollectedStars>
+  <LevelID>0</LevelID>
+  <IsCompleted>true</IsCompleted>
+</LevelResult>

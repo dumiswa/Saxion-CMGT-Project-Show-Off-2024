@@ -3607,7 +3607,7 @@ GameObject:
   - component: {fileID: 521441821}
   m_Layer: 5
   m_Name: = GUI =
-  m_TagString: Untagged
+  m_TagString: GUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6158,7 +6158,7 @@ GameObject:
   - component: {fileID: 1474256333}
   - component: {fileID: 1474256332}
   m_Layer: 3
-  m_Name: Invisible (1)
+  m_Name: Invisible
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

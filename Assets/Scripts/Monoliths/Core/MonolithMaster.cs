@@ -31,8 +31,9 @@ namespace Monoliths
                 return;
             }
 
-            Assembly assembly = Assembly.GetExecutingAssembly();
+            List<Monolith> priorityBuffer = new();
 
+            Assembly assembly = Assembly.GetExecutingAssembly();
             foreach (Type type in assembly.GetTypes())
             {
                 if (!typeof(Monolith).IsAssignableFrom(type) || type.IsAbstract || type == typeof(Monolith))
@@ -40,20 +41,36 @@ namespace Monoliths
                 try
                 {
                     var monolith = (Monolith)Activator.CreateInstance(type);
-                    monolith.Init();
-                    SubscribeToPlayerLoop(monolith);
+                    monolith.Defaults();
 
-                    _monoliths.Add(monolith);
+                    priorityBuffer.Add(monolith);
                 }
-                catch (Exception ex)
+                catch
                 {
-                    Debug.Log($"Couldn't Init \"{type.Name}\" due to {ex.Message}");
+                    Debug.Log($"Couldn't Create Instance of \"{type.Name}\"");
                     continue;
                 }
             }
             DontDestroyOnLoad(this);
 
-            _onEnable?.Invoke();
+            priorityBuffer.Sort((a, b) => b.GetPriority().CompareTo(a.GetPriority()));
+
+            foreach (var monolith in priorityBuffer)
+            {
+                try
+                {
+                    monolith.Init();
+
+                    SubscribeToPlayerLoop(monolith);
+                    _monoliths.Add(monolith);
+                }
+                catch (Exception ex)
+                {
+                    Debug.Log($"Couldn't Init \"{monolith.GetType().Name}\" due to {ex.Message}");
+                    continue;
+                }
+            }
+
             _onAwake?.Invoke();
 
             Instance = this;

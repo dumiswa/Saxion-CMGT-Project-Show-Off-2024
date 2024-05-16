@@ -12,7 +12,7 @@ namespace Monoliths.Player
         private CameraTarget _target;
 
         private float _interpolationFactor = 0.03f;
-        private float _rotationSpeed = 0.5f;
+        private float _rotationSpeed = 78f;
 
         private Transform _cameraOrigin;
         private Transform _cameraPitch;
@@ -65,8 +65,8 @@ namespace Monoliths.Player
             var verticalMin = Mathf.Min(_constraints.RotationVertical.x, _constraints.RotationVertical.y);
             var verticalMax = Mathf.Max(_constraints.RotationVertical.x, _constraints.RotationVertical.y);
 
-            _cameraPitch.RotateAround(target, _cameraOrigin.right, direction.y * _rotationSpeed);
-            _cameraOrigin.RotateAround(target, Vector3.up, -direction.x * _rotationSpeed);
+            _cameraPitch.RotateAround(target, _cameraOrigin.right, direction.y * _rotationSpeed * Time.deltaTime);
+            _cameraOrigin.RotateAround(target, Vector3.up, -direction.x * _rotationSpeed * Time.deltaTime);
 
             var pitch = _cameraPitch.localEulerAngles.x;
             pitch = pitch <= 180? Mathf.Clamp(pitch, 0, verticalMax) : Mathf.Clamp(pitch, 360 + verticalMin, 360);
