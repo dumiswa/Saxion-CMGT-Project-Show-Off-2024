@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class LookAtCamera : MonoBehaviour
+public class LookAtCamera: MonoBehaviour
 {
     [SerializeField]
     private float _pitchMultiplier;
