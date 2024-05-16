@@ -49,7 +49,7 @@ Material:
     - _CutoutSize: 0.25
     - _FallOffSize: 0.2
     - _Fresnel: 0.15
-    - _Intensity: 1
+    - _Intensity: -1
     - _Metalicness: 0.25
     - _MinimumOpacity: 2
     - _QueueControl: 0
@@ -64,7 +64,7 @@ Material:
     - _Offset: {r: 1, g: 1, b: 0, a: 0}
     - _Offset_1: {r: 0, g: 0, b: 0, a: 0}
     - _Tiling: {r: 3, g: 3, b: 0, a: 0}
-    - _Tiling_1: {r: 4, g: 4, b: 0, a: 0}
+    - _Tiling_1: {r: 6, g: 6, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &8973236871806728260
 MonoBehaviour:

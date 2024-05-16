@@ -61,7 +61,7 @@ Material:
     - _Offset: {r: 1, g: 1, b: 0, a: 0}
     - _Offset_1: {r: 0, g: 0, b: 0, a: 0}
     - _Tiling: {r: 1, g: 1, b: 0, a: 0}
-    - _Tiling_1: {r: 3, g: 3, b: 0, a: 0}
+    - _Tiling_1: {r: 5, g: 5, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &8973236871806728260
 MonoBehaviour:
