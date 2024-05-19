@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: IceAge
-  m_Shader: {fileID: -6465566751694194690, guid: 1a12e43812d0c284b83b965aa35342bd,
+  m_Name: Ice See-through
+  m_Shader: {fileID: -6465566751694194690, guid: df876d402c6ad9a4fa86ba132347f162,
     type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -25,7 +25,11 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 92b97159c34bc16459cedacf38e5bdf6, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Normal:
+        m_Texture: {fileID: 2800000, guid: d475d884ae05edb42981416acfa05b1b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -42,13 +46,27 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _CutoutSize: 0.25
+    - _FallOffSize: 0.2
+    - _Fresnel: 0.15
+    - _Intensity: -1
+    - _Metalicness: 0.25
+    - _MinimumOpacity: 2
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _Refraction: 0.06
+    - _Smoothness: 0.5
     m_Colors:
-    - _Test1: {r: 1, g: 1, b: 1, a: 0}
-    - _Test2: {r: 1, g: 1, b: 1, a: 0}
+    - _Color: {r: 0.44909224, g: 0.67900795, b: 1.0943396, a: 0}
+    - _CutoutPosition: {r: 0.5, g: 0.5, b: 0, a: 0}
+    - _Emission: {r: 0, g: 0, b: 0, a: 0}
+    - _NormalMap: {r: 0, g: 0, b: 0, a: 0}
+    - _Offset: {r: 1, g: 1, b: 0, a: 0}
+    - _Offset_1: {r: 0, g: 0, b: 0, a: 0}
+    - _Tiling: {r: 3, g: 3, b: 0, a: 0}
+    - _Tiling_1: {r: 6, g: 6, b: 0, a: 0}
   m_BuildTextureStacks: []
---- !u!114 &8041655400319340036
+--- !u!114 &8973236871806728260
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

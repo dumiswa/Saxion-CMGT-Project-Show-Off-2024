@@ -42,7 +42,7 @@ namespace Monoliths.Player
         {
             base.Defaults();
 
-            _maxSpeed = 3.6f;
+            _maxSpeed = 6.6f;
             _acceleration = 0.32f;
 
             _accelerationMultiplier = Vector2.zero;

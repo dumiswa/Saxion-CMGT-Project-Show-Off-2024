@@ -51,7 +51,7 @@ public class CutoutProxy : Monolith
             Material[] materials = hits[i].transform.GetComponent<Renderer>().materials;
             for (int j = 0; j < materials.Length; j++)
             {
-                if (materials[j].shader.name == "Shader Graphs/SeeThrough")
+                if (materials[j].shader.name.Substring(0, 24) == "Shader Graphs/SeeThrough")
                 {
                     _currentMaterialBuffer.Add(materials[j]);
                     materials[j].SetVector("_CutoutPosition", cutoutPosition);
