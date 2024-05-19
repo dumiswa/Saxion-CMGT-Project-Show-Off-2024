@@ -9,6 +9,7 @@ namespace Monoliths.Player
     {
         public const string GLIDING_UNLOCKED_DATA_ID = "GlidingIsUnlocked";
         public const string MOVEMENT_ENABLED_DATA_ID = "MovementIsEnabled";
+        public const string SIMULATION_ENABLED_DATA_ID = "RigidbodyIsEnabled";
 
         private MovementStateMachine _stateMachine;
 
@@ -38,6 +39,8 @@ namespace Monoliths.Player
         private float _hardLandedTime;
         private bool _isHardLanding;
 
+        private bool _simulationEnabled;
+
         public override void Defaults()
         {
             base.Defaults();
@@ -54,6 +57,8 @@ namespace Monoliths.Player
 
             _fallStartPosition = 0.0f;
             _hardLandedTime = 0.4f;
+
+            _simulationEnabled = false;
         }
 
         public override bool Init()
@@ -99,6 +104,9 @@ namespace Monoliths.Player
         private void Update()
         {
             TrySyncData();
+            if (!_simulationEnabled)
+                return;
+
             var isLanded = IsLanded();
 
             Move();
@@ -120,6 +128,9 @@ namespace Monoliths.Player
         }
         private void FixedUpdate()
         {
+            if (!_simulationEnabled)
+                return;
+
             Accelerate();
             ApplyGravity();
         }
@@ -141,7 +152,13 @@ namespace Monoliths.Player
                     SetMovementLocked(!movementEnabled.EncodedData);
                     DataBridge.MarkUpdateProcessed<bool>(MOVEMENT_ENABLED_DATA_ID);
                 }
-
+                var simualtionEnabled = DataBridge.TryGetData<bool>(SIMULATION_ENABLED_DATA_ID);
+                if (simualtionEnabled.WasUpdated)
+                {
+                    _simulationEnabled = simualtionEnabled.EncodedData;
+                    Debug.Log(_simulationEnabled);
+                    DataBridge.MarkUpdateProcessed<bool>(SIMULATION_ENABLED_DATA_ID);
+                }
                 if (!_isActive)
                     base.Init();
             }

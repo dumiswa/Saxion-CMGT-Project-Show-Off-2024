@@ -19,7 +19,7 @@ public static class DataBridge
         if (_data.ContainsKey(key))
             _data[key] = new Data<T>(data) { WasUpdated = true };
         else
-            _data.Add(key, new Data<T>(data));
+            _data.Add(key, new Data<T>(data) { WasUpdated = true });
     }
 
     public static Data<T> TryGetData<T>(string key) where T : new()

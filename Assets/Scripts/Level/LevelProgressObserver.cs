@@ -62,7 +62,7 @@ public class LevelProgressObserver : Monolith
 
     private void InitializeLevelInfo() 
     {
-        var selectedLevelInfo = DataBridge.TryGetData<LevelResult>(LevelSelectionState.SELECTED_LEVEL_DATA_ID);
+        var selectedLevelInfo = DataBridge.TryGetData<LevelInfo>(LevelSelectionState.SELECTED_LEVEL_DATA_ID);
         
         if (selectedLevelInfo.IsEmpty) 
         {
@@ -76,12 +76,12 @@ public class LevelProgressObserver : Monolith
                 Init();
         }
 
-        var levelBuffer = new LevelResult(selectedLevelInfo.EncodedData);
+        var levelBuffer = new LevelInfo(selectedLevelInfo.EncodedData);
         DataBridge.UpdateData(LEVEL_INFO_BUFFER_DATA_ID, levelBuffer);
     }
     private void UpdateLevelInfo(byte addStars = 0, bool levelAccomplished = false)
     {
-        var data = DataBridge.TryGetData<LevelResult>(LEVEL_INFO_BUFFER_DATA_ID);
+        var data = DataBridge.TryGetData<LevelInfo>(LEVEL_INFO_BUFFER_DATA_ID);
         Debug.Log($"UPDATE TO [addstars: {addStars} ; levelAccomplished: {levelAccomplished}]");
         try
         {
@@ -90,7 +90,7 @@ public class LevelProgressObserver : Monolith
                 if (!_isActive)
                     base.Init();
 
-                LevelResult levelInfo = data.EncodedData;
+                LevelInfo levelInfo = data.EncodedData;
                 levelInfo.CollectedStars += addStars;
 
                 if(levelAccomplished)

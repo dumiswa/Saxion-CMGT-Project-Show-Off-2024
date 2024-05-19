@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class LevelDisplay : MonoBehaviour
 {
-    public readonly static Action<LevelDisplay> OnLevelSelected;
+    public Action<int> OnLevelSelected;
     [HideInInspector]
     public int Index;
 
-    public LevelResult LevelInfo;
+    public LevelInfo LevelInfo;
 
-    public void Select() => OnLevelSelected?.Invoke(this);
+    public void Select() => OnLevelSelected?.Invoke(Index);
     public void Clear() => Destroy(gameObject);
 }
