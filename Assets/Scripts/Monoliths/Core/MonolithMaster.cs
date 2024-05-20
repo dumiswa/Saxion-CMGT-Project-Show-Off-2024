@@ -12,6 +12,7 @@ namespace Monoliths
 
         [SerializeField]
         private List<Monolith> _monoliths = new();
+        public Dictionary<Type, Monolith> Monoliths = new();
 
         public delegate void OnPlayerLoop();
 
@@ -71,8 +72,10 @@ namespace Monoliths
                 }
             }
 
-            _onAwake?.Invoke();
+            foreach (var monolith in _monoliths)
+                Monoliths.Add(monolith.GetType(), monolith);
 
+            _onAwake?.Invoke();
             Instance = this;
         }
 
@@ -85,7 +88,11 @@ namespace Monoliths
                 if (info.ReturnType != typeof(void) || info.GetParameters().Length != 0)
                     continue;
 
-                OnPlayerLoop action = () => info.Invoke(monolith, null);
+                OnPlayerLoop action = () => 
+                {
+                    if (monolith.IsActive)
+                        info.Invoke(monolith, null);
+                };
                 switch (info.Name)
                 {
                     case "Awake":

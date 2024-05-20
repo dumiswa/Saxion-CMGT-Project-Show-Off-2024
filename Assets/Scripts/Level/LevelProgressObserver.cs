@@ -66,13 +66,13 @@ public class LevelProgressObserver : Monolith
         
         if (selectedLevelInfo.IsEmpty) 
         {
-            _isActive = false;
+            IsActive = false;
             _status = "Couldn't Find Selected Level Data";
             return;
         }
         else
         {
-            if (!_isActive)
+            if (!IsActive)
                 Init();
         }
 
@@ -86,7 +86,7 @@ public class LevelProgressObserver : Monolith
         {
             if (!data.IsEmpty)
             {
-                if (!_isActive)
+                if (!IsActive)
                     base.Init();
 
                 LevelInfo levelInfo = data.EncodedData;
@@ -99,15 +99,15 @@ public class LevelProgressObserver : Monolith
             }
             else
             {
-                _isActive = false;
+                IsActive = false;
                 _status = $"Stored data was not found";
             }
         }
         catch (InvalidCastException)
         {
-            if (_isActive)
+            if (IsActive)
             {
-                _isActive = false;
+                IsActive = false;
                 _status = $"Stored data was not of appropriate types";
             }
         }

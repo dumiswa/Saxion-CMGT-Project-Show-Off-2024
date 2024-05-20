@@ -44,7 +44,7 @@ namespace Monoliths
                 return base.Init();
             else
             {
-                _isActive = true;
+                IsActive = true;
                 _status = $"Initiated with problems, couldn't register {faultyTypes} states";
                 return true;
             }

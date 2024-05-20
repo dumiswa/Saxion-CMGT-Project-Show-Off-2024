@@ -24,7 +24,7 @@ namespace Monoliths.Player
             if (_cameraOrigin is null)
             {
                 _status = "Couldn't Find Camera";
-                _isActive = false;
+                IsActive = false;
                 return false;
             }
 
@@ -88,13 +88,13 @@ namespace Monoliths.Player
                 {
                     if (constraints != Data<CameraConstraints>.Empty)
                     {
-                        if (!_isActive) base.Init();
+                        if (!IsActive) base.Init();
                         _constraints = constraints.EncodedData;
                         DataBridge.MarkUpdateProcessed<CameraConstraints>(CONSTRAINTS_DATA_ID);
                     }
-                    else if (_isActive)
+                    else if (IsActive)
                     {
-                        _isActive = false;
+                        IsActive = false;
                         _status = $"Couldn't get \"{CONSTRAINTS_DATA_ID}\" data packet";
                     }
                 }
@@ -102,22 +102,22 @@ namespace Monoliths.Player
                 {
                     if (target != Data<CameraTarget>.Empty)
                     {
-                        if (!_isActive) base.Init();
+                        if (!IsActive) base.Init();
                         _target = target.EncodedData;
                         DataBridge.MarkUpdateProcessed<CameraTarget>(TARGET_DATA_ID);
                     }
-                    else if (_isActive)
+                    else if (IsActive)
                     {
-                        _isActive = false;
+                        IsActive = false;
                         _status = $"Couldn't get \"{TARGET_DATA_ID}\" data packet";
                     }
                 }
             }
             catch (InvalidCastException)
             {
-                if (_isActive)
+                if (IsActive)
                 {
-                    _isActive = false;
+                    IsActive = false;
                     _status = $"Stored data was not of appropriate types";
                 }
             }

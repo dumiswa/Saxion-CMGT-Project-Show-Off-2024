@@ -1,22 +1,25 @@
-﻿using Monoliths.Player;
+﻿using Monoliths;
+using Monoliths.Visualisators;
+using System.Collections;
 using UnityEngine;
 
 public class LevelStartState : LevelSubState
 {
     public override void Enter()
     {
-        DataBridge.UpdateData(PlayerMovement.MOVEMENT_ENABLED_DATA_ID, false);
-        var player = GameObject.FindGameObjectWithTag("Player").transform;
-        
-        if(player is null)
-            return;
-
-        player.position = Vector2.zero;
-
-        //PLAY ANIM
-        Debug.Log("Level Started, animation finished, enabling movement");
-        (GameStateMachine.Instance.Current as LevelState).SubStateMachine.Next<MidLevelState>();
-        
         base.Enter();
+
+        MonolithMaster.Instance.StartCoroutine(StartSequence());
+    }
+
+    private IEnumerator StartSequence()
+    {
+        var fade = Object.Instantiate(Resources.Load<GameObject>("Prefabs/Visualisators/Transitions/FadeOut"),
+                   GameObject.FindGameObjectWithTag("GUI").transform.GetChild((int)RenderingLayer.LAYER3));
+
+        yield return new WaitForSeconds(1.2f);
+
+        Object.Destroy(fade);
+        (GameStateMachine.Instance.Current as LevelState).SubStateMachine.Next<MidLevelState>();
     }
 }

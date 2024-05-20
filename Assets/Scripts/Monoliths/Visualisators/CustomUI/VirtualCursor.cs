@@ -121,7 +121,7 @@ public class VirtualCursor : MonoBehaviour
             {
                 if (!current.Contains(element))
                 {
-                    element.StopHover();
+                    element.StopHold();
                     toRemoveHold.Add(element);
                 }
             }

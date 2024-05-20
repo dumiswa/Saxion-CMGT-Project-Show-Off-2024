@@ -162,14 +162,14 @@ namespace Monoliths.Player
                     _simulationEnabled = simualtionEnabled.EncodedData;
                     DataBridge.MarkUpdateProcessed<bool>(SIMULATION_ENABLED_DATA_ID);
                 }
-                if (!_isActive)
+                if (!IsActive)
                     base.Init();
             }
             catch (InvalidCastException)
             {
-                if (_isActive)
+                if (IsActive)
                 {
-                    _isActive = false;
+                    IsActive = false;
                     _status = $"Stored data was not of appropriate types";
                 }
             }
