@@ -10,6 +10,7 @@ namespace Monoliths.Player
         public const string GLIDING_UNLOCKED_DATA_ID = "GlidingIsUnlocked";
         public const string MOVEMENT_ENABLED_DATA_ID = "MovementIsEnabled";
         public const string SIMULATION_ENABLED_DATA_ID = "RigidbodyIsEnabled";
+        public const string LADDER_INTERACTED_DATA_ID = "LadderInteracted";
 
         private MovementStateMachine _stateMachine;
 
@@ -40,7 +41,9 @@ namespace Monoliths.Player
         private bool _isHardLanding;
 
         private bool _simulationEnabled;
+
         private float _climbMultiplier;
+        public bool IsClimbing;
 
         public override void Defaults()
         {
@@ -112,7 +115,10 @@ namespace Monoliths.Player
 
             var isLanded = IsLanded();
 
-            Move();
+            if (IsClimbing)          
+                HandleVerticalClimbingInput();          
+            else Move();
+
 
             if (isLanded && !_stateMachine.CurrentIs<PlayerGroundedState>() && !_isHardLanding)
             {
@@ -160,6 +166,12 @@ namespace Monoliths.Player
                 {
                     _simulationEnabled = simualtionEnabled.EncodedData;
                     DataBridge.MarkUpdateProcessed<bool>(SIMULATION_ENABLED_DATA_ID);
+                }
+                var ladderInteracted = DataBridge.TryGetData<bool>(LADDER_INTERACTED_DATA_ID);
+                if (ladderInteracted.WasUpdated)
+                {
+                    _stateMachine.Next<PlayerClimbingState>();
+                    DataBridge.MarkUpdateProcessed<bool>(LADDER_INTERACTED_DATA_ID);
                 }
                 if (!IsActive)
                     base.Init();
@@ -236,35 +248,20 @@ namespace Monoliths.Player
         private void OnGlideButtonPressed() => IsGliding = true;
         private void OnGlideButtonReleased() => IsGliding = false;
 
+        public void EnterClimbingState() => _stateMachine.Next<PlayerClimbingState>();     
+        public void ExitClimbingState() => _stateMachine.Return();
+
         public void EnableVerticalMovement()
+            => _rigidbody.constraints = RigidbodyConstraints.FreezeRotation |
+                                        RigidbodyConstraints.FreezeRotationX|
+                                        RigidbodyConstraints.FreezeRotationZ;       
+        public void DisableVerticalMovement()
+            => _rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+        private void HandleVerticalClimbingInput()
         {
-            _rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-        }
-        public void HandleVerticalInput()
-        {
-            float verticalInput = Input.GetAxis("Vertical");
+            float verticalInput = Input.GetAxis("Vertical");  
             Vector3 climbMovement = new Vector3(0, verticalInput * _climbMultiplier * Time.deltaTime, 0);
             _rigidbody.MovePosition(_rigidbody.position + climbMovement);
-        }
-        public void DisableVerticalMovement()
-        {
-            _rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
-        }
-
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.CompareTag("Ladder"))
-            {
-                _stateMachine.NextNoExit<PlayerClimbingState>();
-            }
-        }
-
-        private void OnTriggerExit(Collider other)
-        {
-            if (other.CompareTag("Ladder"))
-            {
-                _stateMachine.NextNoExit<PlayerGroundedState>(); 
-            }
         }
 
         private void OnEnable()
