@@ -40,7 +40,6 @@ namespace Monoliths.Player
         private bool _isHardLanding;
 
         private bool _simulationEnabled;
-
         private float _climbMultiplier;
 
         public override void Defaults()
@@ -198,6 +197,7 @@ namespace Monoliths.Player
                 );
             };
         }
+
         private void Move()
         {
             _rigidbody.MovePosition(_rigidbody.position + _maxSpeed * _movementMultiplier * Time.deltaTime * 
@@ -207,6 +207,11 @@ namespace Monoliths.Player
             ));
         }
 
+        public void ResetPosition()
+        {
+            _rigidbody.velocity = Vector3.zero;
+            _rigidbody.position = Vector3.zero;
+        }
         private void ApplyGravity()
         {
             if (_rigidbody.velocity.y <= -_cutOffSpeed)

@@ -16,10 +16,7 @@ public class LevelState : GameState<LevelSubState>
     {
         base.Enter();
 
-        var player = GameObject.FindGameObjectWithTag("Player").transform;
-
-        if (player is not null)
-            player.position = Vector2.zero;
+        (MonolithMaster.Instance.Monoliths[typeof(PlayerMovement)] as PlayerMovement).ResetPosition();
 
         var selectedLevel = DataBridge.TryGetData<LevelInfo>(LevelSelectionState.SELECTED_LEVEL_DATA_ID);
 
@@ -28,10 +25,6 @@ public class LevelState : GameState<LevelSubState>
 
         var prefab = selectedLevel.EncodedData.GetAsset();
         _levelInstance = Object.Instantiate(prefab);
-
-        MonolithMaster.Instance.Monoliths[typeof(PlayerMovement)]?.SetActive(true);
-        MonolithMaster.Instance.Monoliths[typeof(PlayerInteractor)]?.SetActive(true);
-        MonolithMaster.Instance.Monoliths[typeof(LevelProgressObserver)]?.SetActive(true);
 
         DataBridge.UpdateData(PlayerMovement.SIMULATION_ENABLED_DATA_ID, true);
         SubStateMachine.NextNoExit<LevelStartState>();

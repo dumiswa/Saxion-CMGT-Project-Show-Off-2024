@@ -1,4 +1,5 @@
 ﻿using Monoliths;
+using Monoliths.Player;
 using Monoliths.Visualisators;
 using System.Collections;
 using UnityEngine;
@@ -18,6 +19,10 @@ public class LevelStartState : LevelSubState
                    GameObject.FindGameObjectWithTag("GUI").transform.GetChild((int)RenderingLayer.LAYER3));
 
         yield return new WaitForSeconds(1.2f);
+
+        MonolithMaster.Instance.Monoliths[typeof(PlayerMovement)]?.SetActive(true);
+        MonolithMaster.Instance.Monoliths[typeof(PlayerInteractor)]?.SetActive(true);
+        MonolithMaster.Instance.Monoliths[typeof(LevelProgressObserver)]?.SetActive(true);
 
         Object.Destroy(fade);
         (GameStateMachine.Instance.Current as LevelState).SubStateMachine.Next<MidLevelState>();
