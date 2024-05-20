@@ -13,7 +13,7 @@ namespace Monoliths
         [SerializeField]
         private List<Monolith> _monoliths = new();
 
-        private delegate void OnPlayerLoop();
+        public delegate void OnPlayerLoop();
 
         private OnPlayerLoop _onAwake;
         private OnPlayerLoop _onStart;
@@ -114,6 +114,9 @@ namespace Monoliths
                 }
             }
         }
+
+        public void UnsafeSubscribeUpdate(OnPlayerLoop action) => _onUpdate += action;
+        public void UnsafeUnsubscribeUpdate(OnPlayerLoop action) => _onUpdate -= action;
 
         private void Start() => _onStart?.Invoke();
         private void Update() => _onUpdate?.Invoke();

@@ -156,7 +156,6 @@ namespace Monoliths.Player
                 if (simualtionEnabled.WasUpdated)
                 {
                     _simulationEnabled = simualtionEnabled.EncodedData;
-                    Debug.Log(_simulationEnabled);
                     DataBridge.MarkUpdateProcessed<bool>(SIMULATION_ENABLED_DATA_ID);
                 }
                 if (!_isActive)

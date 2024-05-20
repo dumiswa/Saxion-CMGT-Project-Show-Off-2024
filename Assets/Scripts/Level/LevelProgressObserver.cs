@@ -82,7 +82,6 @@ public class LevelProgressObserver : Monolith
     private void UpdateLevelInfo(byte addStars = 0, bool levelAccomplished = false)
     {
         var data = DataBridge.TryGetData<LevelInfo>(LEVEL_INFO_BUFFER_DATA_ID);
-        Debug.Log($"UPDATE TO [addstars: {addStars} ; levelAccomplished: {levelAccomplished}]");
         try
         {
             if (!data.IsEmpty)

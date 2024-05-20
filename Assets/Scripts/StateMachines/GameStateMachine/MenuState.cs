@@ -1,25 +1,30 @@
 ﻿using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class MenuState : GameState
 {
-    private Transform _gui;
     private GameObject _screen;
 
     public override void Enter()
     {
-        Controls.Profile.Map.FirstContextualButton.performed += ctx => GameStateMachine.Instance.Next<LevelSelectionState>();
-        Controls.Profile.Map.SecondContextualButton.performed += ctx => GameStateMachine.Instance.Next<LevelSelectionState>();
+        Controls.Profile.Map.FirstContextualButton.performed += Next;
+        Controls.Profile.Map.SecondContextualButton.performed += Next;
 
-        _gui = GameObject.FindGameObjectWithTag("GUI").transform;
-        _screen = Object.Instantiate(Resources.Load<GameObject>("Prefabs/Screens/Menu"), _gui);
+        _screen = Object.Instantiate(
+            Resources.Load<GameObject>("Prefabs/Screens/Menu"), 
+            GameObject.FindGameObjectWithTag("GUI").transform.GetChild(0));
         
         base.Enter();
     }
 
+    public void Next(InputAction.CallbackContext ctx) 
+        => GameStateMachine.Instance.Next<LevelSelectionState>();
+
+
     public override void Exit()
     {
-        Controls.Profile.Map.FirstContextualButton.performed -= ctx => GameStateMachine.Instance.Next<LevelSelectionState>();
-        Controls.Profile.Map.SecondContextualButton.performed -= ctx => GameStateMachine.Instance.Next<LevelSelectionState>();
+        Controls.Profile.Map.FirstContextualButton.performed -= Next;
+        Controls.Profile.Map.SecondContextualButton.performed -= Next;
 
         Object.Destroy(_screen);
         base.Exit();

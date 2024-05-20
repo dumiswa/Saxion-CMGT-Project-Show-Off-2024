@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LevelSelectionState : GameState
 {
@@ -7,20 +8,29 @@ public class LevelSelectionState : GameState
 
     private List<LevelDisplay> _levels = new();
 
+    private Transform _screen;
     public override void Enter()
     {
+        var screen = Resources.Load<GameObject>("Prefabs/Screens/LevelSelection");
+        var prefab = Resources.Load<GameObject>("Prefabs/Visualisators/LevelDisplay");
+
+        _screen = Object.Instantiate(screen, GameObject.FindGameObjectWithTag("GUI").transform.GetChild(0)).transform;
+        var content = _screen.GetChild(1).GetChild(0).GetChild(0);
         foreach (var levelInfo in FileManager.Instance.GetLevelInfos())
         {
-            var levelDisplay = new GameObject("LevelDisplay").AddComponent<LevelDisplay>();
+            var levelDisplay = Object.Instantiate(prefab,content).GetComponent<LevelDisplay>();
+
             levelDisplay.Index = _levels.Count;
             levelDisplay.LevelInfo = levelInfo;
+            levelDisplay.Display();
+
             levelDisplay.OnLevelSelected += OnLevelSelected;
+
             _levels.Add(levelDisplay);
         }
 
         base.Enter();
     }
-
     private void OnLevelSelected(int index)
     {
         DataBridge.UpdateData(SELECTED_LEVEL_DATA_ID, _levels[index].LevelInfo);
@@ -30,6 +40,8 @@ public class LevelSelectionState : GameState
     public override void Exit()
     {
         ClearLevels();
+        Object.Destroy(_screen.gameObject);
+
         base.Exit();
     }
 
