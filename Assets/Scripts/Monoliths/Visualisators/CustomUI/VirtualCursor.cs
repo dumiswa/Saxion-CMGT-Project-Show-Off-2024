@@ -17,10 +17,12 @@ public class VirtualCursor : MonoBehaviour
 
     private Vector2 _cursorPosition;
     private bool _clicked;
-    private bool _hold;
+    private bool _startedHold;
+    private bool _stoppedHold;
     private bool _hidden;
 
     private HashSet<ICustomUIElement> _hoverStack;
+    private HashSet<ICustomUIElement> _holdStack;
 
     public Vector2 GetPosition() => _cursorPosition;
 
@@ -29,6 +31,8 @@ public class VirtualCursor : MonoBehaviour
         Instance = this;
 
         _hoverStack = new();
+        _holdStack = new();
+
         _cursorPosition = new Vector2(Screen.width / 2f, Screen.height / 2f);
         _cursorTransform = GetComponent<RectTransform>();
         _image = GetComponent<Image>();
@@ -65,8 +69,8 @@ public class VirtualCursor : MonoBehaviour
         _cursorTransform.anchoredPosition = canvasPosition;
     }
     private void Click(InputAction.CallbackContext ctx) => _clicked = true;
-    private void StartHold(InputAction.CallbackContext ctx) => _hold = true;
-    private void StopHold(InputAction.CallbackContext ctx) => _hold = false;
+    private void StartHold(InputAction.CallbackContext ctx) => _startedHold = true;
+    private void StopHold(InputAction.CallbackContext ctx) => _stoppedHold = true;
     private void RaycastGUI()
     {
         var pointerData = new PointerEventData(EventSystem.current) {position = _cursorPosition,};
@@ -81,8 +85,13 @@ public class VirtualCursor : MonoBehaviour
             if (element is null)
                 continue;
 
-            if (_hold)
-                element.Hold();
+            if (_startedHold)
+            {
+                element.StartHold();
+                _holdStack.Add(element);
+            }
+            if (_stoppedHold && _holdStack.Contains(element))
+                element.StopHold();
 
             if(_clicked)
                 element.Click();
@@ -96,7 +105,39 @@ public class VirtualCursor : MonoBehaviour
             current.Add(element);
         }
 
-        List<ICustomUIElement> toRemove = new();
+        ManageHoverStack(ref current);
+        ManageHoldStack(ref current);
+
+        _startedHold = false;
+        _stoppedHold = false;
+        _clicked = false;
+    }
+    private void ManageHoldStack(ref HashSet<ICustomUIElement> current)
+    {
+        List<ICustomUIElement> toRemoveHold = new();
+        foreach (var element in _holdStack)
+        {
+            try
+            {
+                if (!current.Contains(element))
+                {
+                    element.StopHover();
+                    toRemoveHold.Add(element);
+                }
+            }
+            catch
+            {
+                toRemoveHold.Add(element);
+            }
+        }
+
+        foreach (var element in toRemoveHold)
+            _holdStack.Remove(element);
+
+    }
+    private void ManageHoverStack(ref HashSet<ICustomUIElement> current)
+    {
+        List<ICustomUIElement> toRemoveHover = new();
         foreach (var element in _hoverStack)
         {
             try
@@ -104,19 +145,17 @@ public class VirtualCursor : MonoBehaviour
                 if (!current.Contains(element))
                 {
                     element.StopHover();
-                    toRemove.Add(element);
+                    toRemoveHover.Add(element);
                 }
             }
             catch
             {
-                toRemove.Add(element);
+                toRemoveHover.Add(element);
             }
         }
 
-        foreach (var element in toRemove)
+        foreach (var element in toRemoveHover)
             _hoverStack.Remove(element);
-
-        _clicked = false;
     }
 
     private void OnStateChanged(GameState state)

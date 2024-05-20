@@ -2,8 +2,9 @@
 {
     public void Click();
 
-    public void Hold();
+    public void StartHold();
+    public void StopHold();
 
-    public bool StartHover();
-    public bool StopHover();
+    public void StartHover();
+    public void StopHover();
 }

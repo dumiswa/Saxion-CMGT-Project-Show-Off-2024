@@ -5,39 +5,31 @@ using UnityEngine.UI;
 public class ButtonCustomUIElement : MonoBehaviour, ICustomUIElement
 {
     private Button _button;
+    private bool _hold = false;
+
     private void Start() 
         => _button = GetComponent<Button>();
 
+    private void Update()
+    {
+        if (_hold)
+            Click();
+    }
+
     public void Click() => _button.onClick.Invoke();
 
-    public bool StartHover()
+    public void StartHover()
     {
-        try 
-        {
-            _button.OnPointerEnter(new PointerEventData(EventSystem.current)
-            { position = VirtualCursor.Instance.GetPosition() });
-            return true;
-        }
-        catch
-        {
-            return false;
-        }
+        _button.OnPointerEnter(new PointerEventData(EventSystem.current)
+        { position = VirtualCursor.Instance.GetPosition() });
     }
 
-    public bool StopHover()
+    public void StopHover()
     {
-        try
-        {
-            _button.OnPointerExit(new PointerEventData(EventSystem.current)
-            { position = VirtualCursor.Instance.GetPosition() });
-            return true;
-        }
-        catch
-        {
-            return false;
-        }
+        _button.OnPointerExit(new PointerEventData(EventSystem.current)
+        { position = VirtualCursor.Instance.GetPosition() });
     }
 
-    public void Hold() => Click();
-
+    public void StartHold() => _hold = true;
+    public void StopHold() => _hold = false;
 }
