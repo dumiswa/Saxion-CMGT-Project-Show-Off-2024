@@ -16,7 +16,7 @@ public class LevelFinishState : LevelSubState
     {
         var fade = Object.Instantiate(Resources.Load<GameObject>("Prefabs/Visualisators/Transitions/FadeIn"), 
                    GameObject.FindGameObjectWithTag("GUI").transform.GetChild((int)RenderingLayer.LAYER3));
-
+        
         yield return new WaitForSeconds(0.8f);
 
         Object.Destroy(fade);
