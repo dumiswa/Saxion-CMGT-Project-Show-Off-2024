@@ -41,6 +41,8 @@ namespace Monoliths.Player
 
         private bool _simulationEnabled;
 
+        private float _climbMultiplier;
+
         public override void Defaults()
         {
             base.Defaults();
@@ -59,6 +61,8 @@ namespace Monoliths.Player
             _hardLandedTime = 0.4f;
 
             _simulationEnabled = false;
+
+            _climbMultiplier = 4.0f;
         }
 
         public override bool Init()
@@ -226,6 +230,37 @@ namespace Monoliths.Player
 
         private void OnGlideButtonPressed() => IsGliding = true;
         private void OnGlideButtonReleased() => IsGliding = false;
+
+        public void EnableVerticalMovement()
+        {
+            _rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+        }
+        public void HandleVerticalInput()
+        {
+            float verticalInput = Input.GetAxis("Vertical");
+            Vector3 climbMovement = new Vector3(0, verticalInput * _climbMultiplier * Time.deltaTime, 0);
+            _rigidbody.MovePosition(_rigidbody.position + climbMovement);
+        }
+        public void DisableVerticalMovement()
+        {
+            _rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("Ladder"))
+            {
+                _stateMachine.NextNoExit<PlayerClimbingState>();
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.CompareTag("Ladder"))
+            {
+                _stateMachine.NextNoExit<PlayerGroundedState>(); 
+            }
+        }
 
         private void OnEnable()
         {
