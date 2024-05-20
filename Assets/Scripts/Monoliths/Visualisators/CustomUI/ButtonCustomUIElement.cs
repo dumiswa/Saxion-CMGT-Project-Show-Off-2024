@@ -8,18 +8,34 @@ public class ButtonCustomUIElement : MonoBehaviour, ICustomUIElement
     private void Start() 
         => _button = GetComponent<Button>();
 
-    public void Click() =>_button.onClick.Invoke();
+    public void Click() => _button.onClick.Invoke();
 
-    public void StartHover()
+    public bool StartHover()
     {
-        _button.OnPointerEnter(new PointerEventData(EventSystem.current) 
-        { position = VirtualCursor.Instance.GetPosition()});
+        try 
+        {
+            _button.OnPointerEnter(new PointerEventData(EventSystem.current)
+            { position = VirtualCursor.Instance.GetPosition() });
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
     }
 
-    public void StopHover()
+    public bool StopHover()
     {
-        _button.OnPointerExit(new PointerEventData(EventSystem.current)
-        { position = VirtualCursor.Instance.GetPosition() });
+        try
+        {
+            _button.OnPointerExit(new PointerEventData(EventSystem.current)
+            { position = VirtualCursor.Instance.GetPosition() });
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
     }
 
     public void Hold() => Click();

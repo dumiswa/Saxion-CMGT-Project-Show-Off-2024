@@ -99,21 +99,17 @@ public class VirtualCursor : MonoBehaviour
         List<ICustomUIElement> toRemove = new();
         foreach (var element in _hoverStack)
         {
-            if(element is null)
+            try
             {
-                toRemove.Add(element);
-                continue;
-            }
-            if (!current.Contains(element))
-            {
-                try
+                if (!current.Contains(element))
                 {
                     element.StopHover();
-                }
-                finally
-                {
                     toRemove.Add(element);
                 }
+            }
+            catch
+            {
+                toRemove.Add(element);
             }
         }
 

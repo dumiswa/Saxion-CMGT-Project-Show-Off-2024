@@ -4,6 +4,6 @@
 
     public void Hold();
 
-    public void StartHover();
-    public void StopHover();
+    public bool StartHover();
+    public bool StopHover();
 }

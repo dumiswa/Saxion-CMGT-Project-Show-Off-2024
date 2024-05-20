@@ -33,6 +33,9 @@ public class LevelSelectionState : GameState
     }
     private void OnLevelSelected(int index)
     {
+        if (_levels.Count <= index)
+            return;
+
         DataBridge.UpdateData(SELECTED_LEVEL_DATA_ID, _levels[index].LevelInfo);
         GameStateMachine.Instance.Next<LevelState>();
     }
