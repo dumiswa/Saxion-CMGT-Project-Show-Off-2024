@@ -1,7 +1,6 @@
 ﻿using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 
 public class LevelDisplay : MonoBehaviour
@@ -20,7 +19,7 @@ public class LevelDisplay : MonoBehaviour
 
     public void Display()
     {
-        _levelName.text = LevelInfo.AssetName;
+        _levelName.text = LevelInfo.LevelName;
         _levelInfo.text = $"\n" +
             $"<size=75%><b><color=#ababff>Snowflakes</color></b> : [ {LevelInfo.CollectedStars} / {LevelInfo.StarAmount} ]\n" +
             $"<b>{(!LevelInfo.IsCompleted? "<color=#ff6767>Not Complete" : "<color=#67ff67>Complete" )}</b>";

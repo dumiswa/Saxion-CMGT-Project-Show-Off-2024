@@ -5,14 +5,18 @@ public struct LevelInfo : ISerializable
 {
     public const string AssetPath = "Prefabs/Levels/";
     public string AssetName;
-    public byte StarAmount;
 
+    public string LevelName;
+
+    public byte StarAmount;
     public byte CollectedStars;
     public byte LevelID;
     public bool IsCompleted;
 
-    public LevelInfo(string assetPath, byte starAmount, byte collectedStars, byte id, bool completed)
+    public LevelInfo(string levelName, string assetPath, byte starAmount, byte collectedStars, byte id, bool completed)
     {
+        LevelName = levelName;
+
         AssetName = assetPath;
         StarAmount = starAmount;
         
@@ -22,6 +26,8 @@ public struct LevelInfo : ISerializable
     }
     public LevelInfo(LevelInfo other)
     {
+        LevelName = other.LevelName;
+
         AssetName = other.AssetName;
         StarAmount = other.StarAmount;
 
@@ -31,6 +37,8 @@ public struct LevelInfo : ISerializable
     }
     public LevelInfo(bool _ = false)
     {
+        LevelName = "";
+
         AssetName = "";
         StarAmount = 0;
 
@@ -46,6 +54,7 @@ public struct LevelInfo : ISerializable
         using var memoryStream = new MemoryStream();
         using var writer = new BinaryWriter(memoryStream);
 
+        writer.Write(LevelName);
         writer.Write(AssetName);
         writer.Write(StarAmount);
         writer.Write(CollectedStars);
@@ -60,6 +69,7 @@ public struct LevelInfo : ISerializable
         using var memoryStream = new MemoryStream(bytes);
         using var reader = new BinaryReader(memoryStream);
 
+        LevelName =      reader.ReadString();
         AssetName =      reader.ReadString();
         StarAmount =     reader.ReadByte();
         CollectedStars = reader.ReadByte();
