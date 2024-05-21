@@ -20,11 +20,11 @@ public class LevelStartState : LevelSubState
 
         var cameraSequence = DataBridge.TryGetData<CameraSequence>(CameraActions.SEQUENCE_DATA_ID).EncodedData;
 
-        cameraSequence.Add(new Vector3(0, 2, 0), 1.5f);
-        cameraSequence.Add(new Vector3(0, 0, 0), 0f);
+        cameraSequence.Add(new Vector3(0, 2, 0), 0.75f);
+        cameraSequence.Add(new Vector3(0, 0, 0), 0.75f);
 
-        cameraSequence.Add(new Vector2(30, 60), 1.5f);
-        cameraSequence.Add(new Vector2(30, 45), 0f);
+        cameraSequence.Add(new Vector2(45, -45), 0.75f);
+        cameraSequence.Add(new Vector2(30, -45), 0.75f);
 
         cameraSequence.Play();
 

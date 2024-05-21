@@ -50,16 +50,16 @@ Material:
     - _FallOffSize: 0.2
     - _Fresnel: 0.15
     - _Intensity: -1
-    - _Metalicness: 0.25
+    - _Metalicness: 0.01
     - _MinimumOpacity: 2
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Refraction: 0.06
-    - _Smoothness: 0.5
+    - _Smoothness: 0.7
     m_Colors:
-    - _Color: {r: 0.44909224, g: 0.67900795, b: 1.0943396, a: 0}
+    - _Color: {r: 0.06652725, g: 0.2621811, b: 0.6132076, a: 0}
     - _CutoutPosition: {r: 0.5, g: 0.5, b: 0, a: 0}
-    - _Emission: {r: 0, g: 0, b: 0, a: 0}
+    - _Emission: {r: 0.05882353, g: 0.074585825, b: 0.11372549, a: 0}
     - _NormalMap: {r: 0, g: 0, b: 0, a: 0}
     - _Offset: {r: 1, g: 1, b: 0, a: 0}
     - _Offset_1: {r: 0, g: 0, b: 0, a: 0}
