@@ -9,7 +9,7 @@ namespace Monoliths
         [HideInInspector][SerializeField] private string _name = "None";
         [SerializeField] protected string _status = "Not Initialised";
         [SerializeField] protected float _priority = 0;
-        [SerializeField] protected bool _isActive = false;
+        [SerializeField] public bool IsActive = false;
         
         public float GetPriority() 
             => _priority;
@@ -21,9 +21,12 @@ namespace Monoliths
         public virtual bool Init()
         {
             _name = GetType().Name;
-            _isActive = true;
+            IsActive = true;
             _status = "Successfully Initiated";
             return true;
         }
+
+        public bool SetActive(bool state)
+            => IsActive = state;
     }
 }

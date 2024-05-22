@@ -3,6 +3,14 @@ using UnityEngine;
 
 namespace Monoliths.Visualisators
 {
+    public enum RenderingLayer
+    {
+        SCREEN = 0,
+        LAYER1 = 1,
+        LAYER2 = 2,
+        LAYER3 = 3
+    }
+
     public abstract class AbstractVisualisator<DataPacket> : Monolith where DataPacket : new()
     {
         protected Transform _gui { get; private set; }
@@ -41,9 +49,9 @@ namespace Monoliths.Visualisators
             }
             catch (InvalidCastException)
             {
-                if (_isActive)
+                if (IsActive)
                 {
-                    _isActive = false;
+                    IsActive = false;
                     _status = $"Stored data was not of type Data<{typeof(DataPacket)}>.";
                 }
             }
@@ -57,23 +65,23 @@ namespace Monoliths.Visualisators
                 var data = DataBridge.TryGetData<DataPacket>(_dataID);
                 if (data != Data<DataPacket>.Empty && data.WasUpdated)
                 {
-                    if (!_isActive) 
+                    if (!IsActive) 
                         base.Init();
 
                     Display(data.EncodedData);
                     DataBridge.MarkUpdateProcessed<DataPacket>(_dataID);
                 }
-                else if (_isActive)
+                else if (IsActive)
                 {
-                    _isActive = false;
+                    IsActive = false;
                     _status = $"Couldn't get \"{_dataID}\" data packet";
                 }
             }
             catch (InvalidCastException)
             {
-                if (_isActive)
+                if (IsActive)
                 {
-                    _isActive = false;
+                    IsActive = false;
                     _status = $"Stored data was not of type Data<{typeof(DataPacket)}>.";
                 }
             }

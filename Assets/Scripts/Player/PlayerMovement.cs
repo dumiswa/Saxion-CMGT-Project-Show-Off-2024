@@ -10,6 +10,7 @@ namespace Monoliths.Player
         public const string GLIDING_UNLOCKED_DATA_ID = "GlidingIsUnlocked";
         public const string MOVEMENT_ENABLED_DATA_ID = "MovementIsEnabled";
         public const string SIMULATION_ENABLED_DATA_ID = "RigidbodyIsEnabled";
+        public const string ON_LADDER_DATA_ID = "LadderInteracted";
 
         private MovementStateMachine _stateMachine;
 
@@ -21,14 +22,20 @@ namespace Monoliths.Player
         private Transform _cameraOrigin;
 
         private bool _lockMovement = false;
+        private bool _lockX = false;
+        private bool _lockZ = false;
+        private bool _swapZtoY = false;
 
         public bool IsGlidingUnlocked { get; private set; }
         public bool IsGliding { get; private set; }
 
         private float _maxSpeed;
-        private float _acceleration;
 
+        private float _acceleration;
         private Vector2 _accelerationMultiplier;
+
+        private float _climbAcceleration;
+        private float _climbMultiplier;
 
         private float _gravityMultiplier;
         private float _movementMultiplier;
@@ -40,8 +47,6 @@ namespace Monoliths.Player
         private bool _isHardLanding;
 
         private bool _simulationEnabled;
-
-        private float _climbMultiplier;
 
         public override void Defaults()
         {
@@ -62,7 +67,7 @@ namespace Monoliths.Player
 
             _simulationEnabled = false;
 
-            _climbMultiplier = 4.0f;
+            _climbAcceleration = 4.0f;
         }
 
         public override bool Init()
@@ -95,7 +100,13 @@ namespace Monoliths.Player
             InitializeStates();
             return base.Init();
         }
-        public void SetMovementLocked(bool locked) => _lockMovement = locked;
+        public void SetMovementLocked(bool locked = false, bool lockX = false, bool lockZ = false, bool swapZtoY = false) 
+        { 
+            _lockMovement = locked;
+            _lockX = lockX;
+            _lockZ = lockZ;
+            _swapZtoY = swapZtoY;
+        }
         public void SetMovementParams(float gravityMultiplier = 1.0f, float movementMultiplier = 1.0f)
         {
             _gravityMultiplier = gravityMultiplier;
@@ -115,17 +126,20 @@ namespace Monoliths.Player
 
             Move();
 
-            if (isLanded && !_stateMachine.CurrentIs<PlayerGroundedState>() && !_isHardLanding)
+            if (!_swapZtoY)
             {
-                if (_fallStartPosition - _rigidbody.position.y > 2f)
-                    MonolithMaster.Instance.RunCoPlayerLoop(OnHardLanded());
-                else             
-                    _stateMachine.Next<PlayerGroundedState>();                                    
-            }
-            else if (!isLanded && !_stateMachine.CurrentIs<PlayerAirState>())
-            {
-                _fallStartPosition = _rigidbody.position.y;
-                _stateMachine.Next<PlayerAirState>();
+                if (isLanded && !_stateMachine.CurrentIs<PlayerGroundedState>() && !_isHardLanding)
+                {
+                    if (_fallStartPosition - _rigidbody.position.y > 2f)
+                        MonolithMaster.Instance.RunCoPlayerLoop(OnHardLanded());
+                    else
+                        _stateMachine.Next<PlayerGroundedState>();
+                }
+                else if (!isLanded && !_stateMachine.CurrentIs<PlayerAirState>())
+                {
+                    _fallStartPosition = _rigidbody.position.y;
+                    _stateMachine.Next<PlayerAirState>();
+                }
             }
 
             _stateMachine.Current?.Update();
@@ -136,7 +150,8 @@ namespace Monoliths.Player
                 return;
 
             Accelerate();
-            ApplyGravity();
+            if(!_swapZtoY)
+                ApplyGravity();
         }
 
         private void TrySyncData()
@@ -152,60 +167,102 @@ namespace Monoliths.Player
                 var movementEnabled = DataBridge.TryGetData<bool>(MOVEMENT_ENABLED_DATA_ID);
                 if (movementEnabled.WasUpdated)
                 {
-
+                    ResetVelocity();
                     SetMovementLocked(!movementEnabled.EncodedData);
                     DataBridge.MarkUpdateProcessed<bool>(MOVEMENT_ENABLED_DATA_ID);
                 }
                 var simualtionEnabled = DataBridge.TryGetData<bool>(SIMULATION_ENABLED_DATA_ID);
                 if (simualtionEnabled.WasUpdated)
                 {
+                    ResetVelocity();
                     _simulationEnabled = simualtionEnabled.EncodedData;
                     DataBridge.MarkUpdateProcessed<bool>(SIMULATION_ENABLED_DATA_ID);
                 }
-                if (!_isActive)
+                var ladderInteracted = DataBridge.TryGetData<bool>(ON_LADDER_DATA_ID);
+                if (ladderInteracted.WasUpdated)
+                {
+                    if (ladderInteracted.EncodedData)
+                        _stateMachine.Next<PlayerClimbingState>();
+                    else
+                        _stateMachine.Next<PlayerGroundedState>();
+
+                    DataBridge.MarkUpdateProcessed<bool>(ON_LADDER_DATA_ID);
+                }
+                if (!IsActive)
                     base.Init();
             }
             catch (InvalidCastException)
             {
-                if (_isActive)
+                if (IsActive)
                 {
-                    _isActive = false;
+                    IsActive = false;
                     _status = $"Stored data was not of appropriate types";
                 }
             }
         }
 
-        public void SetFriction(float frictionValue)
-        {
-            if (_collider != null && _collider.material != null) 
-            {
-                _collider.material.dynamicFriction = frictionValue;
-            }
-        }
-
         private void Accelerate()
         {
-            _accelerationMultiplier /= 1f + _acceleration;
             if (!_lockMovement)
             {
-                Vector2 direction = Controls.LeftDirectional;
+                if (_swapZtoY)
+                {
+                    _climbMultiplier /= 1f + _climbAcceleration;
 
-                _accelerationMultiplier += _acceleration * 2f * direction;
-                _accelerationMultiplier = new
-                (
-                    Mathf.Clamp(_accelerationMultiplier.x, -1f, 1f),
-                    Mathf.Clamp(_accelerationMultiplier.y, -1f, 1f)
-                );
-            };
+                    Vector2 direction = Controls.LeftDirectional;
+
+                    _climbMultiplier += _climbAcceleration * 2f * direction.y;
+                    _climbMultiplier = Mathf.Clamp(_climbMultiplier, -1f, 1f);
+                }
+                else
+                {
+                    _accelerationMultiplier /= 1f + _acceleration;
+
+                    Vector2 direction = Controls.LeftDirectional;
+
+                    _accelerationMultiplier += _acceleration * 2f * direction;
+                    _accelerationMultiplier = new
+                    (
+                        Mathf.Clamp(_accelerationMultiplier.x, -1f, 1f),
+                        Mathf.Clamp(_accelerationMultiplier.y, -1f, 1f)
+                    );
+                }
+            }
         }
         private void Move()
         {
             _rigidbody.MovePosition(_rigidbody.position + _maxSpeed * _movementMultiplier * Time.deltaTime * 
             (
-                _accelerationMultiplier.x * _cameraOrigin.right + 
-                _accelerationMultiplier.y * _cameraOrigin.forward
+                (_lockX? 0 : _accelerationMultiplier.x) * _cameraOrigin.right + 
+                (_lockZ? 0 : (_swapZtoY? _climbMultiplier : _accelerationMultiplier.y)) * (_swapZtoY? _cameraOrigin.up : _cameraOrigin.forward)
             ));
         }
+
+        public void SetFriction(float frictionValue)
+        {
+            if (_collider is null || _collider.material is null)
+                return;
+
+            _collider.material.dynamicFriction = frictionValue;
+        }
+
+        public void ResetVelocity()
+        {
+            _accelerationMultiplier = Vector2.zero;
+            _climbMultiplier = 0;
+
+            _rigidbody.velocity = Vector3.zero;
+        }
+        public void ResetPosition()
+        {
+            ResetVelocity();
+            _rigidbody.position = Vector3.zero;
+        }
+
+        public void Translate(Vector3 position) 
+            => _rigidbody.position = position;
+        public Vector3 GetPosition()
+             => _rigidbody.position;
 
         private void ApplyGravity()
         {
@@ -230,37 +287,6 @@ namespace Monoliths.Player
 
         private void OnGlideButtonPressed() => IsGliding = true;
         private void OnGlideButtonReleased() => IsGliding = false;
-
-        public void EnableVerticalMovement()
-        {
-            _rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-        }
-        public void HandleVerticalInput()
-        {
-            float verticalInput = Input.GetAxis("Vertical");
-            Vector3 climbMovement = new Vector3(0, verticalInput * _climbMultiplier * Time.deltaTime, 0);
-            _rigidbody.MovePosition(_rigidbody.position + climbMovement);
-        }
-        public void DisableVerticalMovement()
-        {
-            _rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
-        }
-
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.CompareTag("Ladder"))
-            {
-                _stateMachine.NextNoExit<PlayerClimbingState>();
-            }
-        }
-
-        private void OnTriggerExit(Collider other)
-        {
-            if (other.CompareTag("Ladder"))
-            {
-                _stateMachine.NextNoExit<PlayerGroundedState>(); 
-            }
-        }
 
         private void OnEnable()
         {
