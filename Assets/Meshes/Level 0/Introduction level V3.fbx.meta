@@ -1,9 +1,39 @@
 fileFormatVersion: 2
-guid: 723492ba5a8d0684891f94a80fab47af
+guid: 4dd5e94658a7f994997b3d1acc088438
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Ice
+    second: {fileID: 2100000, guid: e00d9884d3a2f8941919a12aac48e7ec, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Path
+    second: {fileID: 2100000, guid: abe05eff73211d64bb2f7693141174c6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: PlatformMaterial1
+    second: {fileID: 2100000, guid: 59cdf018796988848ad5e9c4f5010b62, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Snow
+    second: {fileID: 2100000, guid: abe05eff73211d64bb2f7693141174c6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TreeLeaf
+    second: {fileID: 2100000, guid: 39d35353669fa7649b7836955d41418c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wood
+    second: {fileID: 2100000, guid: e3f4431175bd2544db198bb8de1a1725, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
