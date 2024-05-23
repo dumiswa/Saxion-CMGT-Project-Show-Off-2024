@@ -5,38 +5,36 @@ using UnityEngine;
 public class LevelProgressObserver : Monolith
 {
     public const string LEVEL_INFO_BUFFER_DATA_ID = "CurrentLevelInfoBuffer";
+    public const string CURRENT_SNOWFLAKES_DATA_ID = "CurrentCollectedSnowflakes";
 
-    private GameObject[] _stars;
-    private GameObject[] _levelTargets;
+    private GameObject[] _snowflakes;
+    private GameObject[] _iceCrystals;
 
     public override void Defaults()
     {
         base.Defaults();
-        _priority = 101;                        // DUE TO TESTING SESSION, SHOULDNT BE 101, SET TO BE -1,
-                                                // WHEN STARTING STATE WILL SWITCH TO MENU STATE
+        _priority = -1;
     }
-
     public override bool Init()
     {
-        GameState.OnEnter += OnGameStateEnter;  // DUE TO TESTING SESSION, SHOULDN"T BE THERE,
-                                                // REMOVE THE ROW WHEN STARTING STATE WILL SWITCH TO MENU STATE
         return base.Init();
     }
+
     private void Scan()
     {
-        _stars = GameObject.FindGameObjectsWithTag("Star");
-        _levelTargets = GameObject.FindGameObjectsWithTag("IceCrystal");
+        _snowflakes = GameObject.FindGameObjectsWithTag("Snowflake");
+        _iceCrystals = GameObject.FindGameObjectsWithTag("IceCrystal");
 
-        foreach (var star in _stars)
+        foreach (var star in _snowflakes)
         {
             (star.GetComponent<Collectable>() ??
-             star.AddComponent<Collectable>()).OnCollison += HandleStarAcquired;
+             star.AddComponent<Collectable>()).OnCollison += HandleSnowflakeAcquired;
         }
 
-        foreach (var target in _levelTargets)
+        foreach (var target in _iceCrystals)
         {
             (target.GetComponent<Collectable>() ??
-             target.AddComponent<Collectable>()).OnCollison += HandleTargetAcquired;
+             target.AddComponent<Collectable>()).OnCollison += HandleIceCrystalAcquired;
         }
 
         InitializeLevelInfo();
@@ -53,8 +51,9 @@ public class LevelProgressObserver : Monolith
         Scan();
     }
 
-    private void HandleStarAcquired(GameObject star) => UpdateLevelInfo(addStars: 1);
-    private void HandleTargetAcquired(GameObject levelTarget)
+    private void HandleSnowflakeAcquired(GameObject star) 
+        => UpdateLevelInfo(addSnowflakes: 1);
+    private void HandleIceCrystalAcquired(GameObject levelTarget)
     {
         UpdateLevelInfo(levelAccomplished: true);
         FinalizeLevel();
@@ -79,7 +78,7 @@ public class LevelProgressObserver : Monolith
         var levelBuffer = new LevelInfo(selectedLevelInfo.EncodedData);
         DataBridge.UpdateData(LEVEL_INFO_BUFFER_DATA_ID, levelBuffer);
     }
-    private void UpdateLevelInfo(byte addStars = 0, bool levelAccomplished = false)
+    private void UpdateLevelInfo(byte addSnowflakes = 0, bool levelAccomplished = false)
     {
         var data = DataBridge.TryGetData<LevelInfo>(LEVEL_INFO_BUFFER_DATA_ID);
         try
@@ -90,12 +89,13 @@ public class LevelProgressObserver : Monolith
                     base.Init();
 
                 LevelInfo levelInfo = data.EncodedData;
-                levelInfo.CollectedStars += addStars;
+                levelInfo.CollectedSnowflakes += addSnowflakes;
 
                 if(levelAccomplished)
                     levelInfo.IsCompleted = true;
 
                 DataBridge.UpdateData(LEVEL_INFO_BUFFER_DATA_ID, levelInfo);
+                DataBridge.UpdateData(CURRENT_SNOWFLAKES_DATA_ID, levelInfo.CollectedSnowflakes);
             }
             else
             {

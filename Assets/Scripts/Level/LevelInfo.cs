@@ -8,19 +8,24 @@ public struct LevelInfo : ISerializable
 
     public string LevelName;
 
-    public byte StarAmount;
-    public byte CollectedStars;
+    public byte SnowflakeAmount;
+    public byte CollectedSnowflakes;
     public byte LevelID;
     public bool IsCompleted;
 
-    public LevelInfo(string levelName, string assetPath, byte starAmount, byte collectedStars, byte id, bool completed)
+    public LevelInfo(string levelName, 
+                     string assetPath,
+                     byte snowflakeAmount, 
+                     byte collectedSnowflakes,
+                     byte id, 
+                     bool completed)
     {
         LevelName = levelName;
 
         AssetName = assetPath;
-        StarAmount = starAmount;
+        SnowflakeAmount = snowflakeAmount;
         
-        CollectedStars = collectedStars;
+        CollectedSnowflakes = collectedSnowflakes;
         LevelID = id;
         IsCompleted = completed;
     }
@@ -29,9 +34,9 @@ public struct LevelInfo : ISerializable
         LevelName = other.LevelName;
 
         AssetName = other.AssetName;
-        StarAmount = other.StarAmount;
+        SnowflakeAmount = other.SnowflakeAmount;
 
-        CollectedStars= other.CollectedStars;
+        CollectedSnowflakes= other.CollectedSnowflakes;
         LevelID= other.LevelID;
         IsCompleted= other.IsCompleted;
     }
@@ -40,9 +45,9 @@ public struct LevelInfo : ISerializable
         LevelName = "";
 
         AssetName = "";
-        StarAmount = 0;
+        SnowflakeAmount = 0;
 
-        CollectedStars = 0;
+        CollectedSnowflakes = 0;
         LevelID = 0;
         IsCompleted = false;
     }
@@ -56,8 +61,8 @@ public struct LevelInfo : ISerializable
 
         writer.Write(LevelName);
         writer.Write(AssetName);
-        writer.Write(StarAmount);
-        writer.Write(CollectedStars);
+        writer.Write(SnowflakeAmount);
+        writer.Write(CollectedSnowflakes);
         writer.Write(LevelID);
         writer.Write(IsCompleted);
 
@@ -69,12 +74,12 @@ public struct LevelInfo : ISerializable
         using var memoryStream = new MemoryStream(bytes);
         using var reader = new BinaryReader(memoryStream);
 
-        LevelName =      reader.ReadString();
-        AssetName =      reader.ReadString();
-        StarAmount =     reader.ReadByte();
-        CollectedStars = reader.ReadByte();
-        LevelID =        reader.ReadByte();
-        IsCompleted =    reader.ReadBoolean();
+        LevelName =           reader.ReadString();
+        AssetName =           reader.ReadString();
+        SnowflakeAmount =     reader.ReadByte();
+        CollectedSnowflakes = reader.ReadByte();
+        LevelID =             reader.ReadByte();
+        IsCompleted =         reader.ReadBoolean();
     }
 }
 

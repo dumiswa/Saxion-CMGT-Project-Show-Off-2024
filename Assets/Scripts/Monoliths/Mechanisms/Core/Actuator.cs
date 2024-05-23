@@ -8,6 +8,8 @@ namespace Monoliths.Mechanisms
         private string _identifier;
         public string Identifier { get; protected set; }
 
+        public bool Locked { get; protected set; }
+
         public abstract void Invoke();
 
         public void ChangeIdentifier(string newIdentifier)

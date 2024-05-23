@@ -21,7 +21,7 @@ public class LevelDisplay : MonoBehaviour
     {
         _levelName.text = LevelInfo.LevelName;
         _levelInfo.text = $"\n" +
-            $"<size=75%><b><color=#ababff>Snowflakes</color></b> : [ {LevelInfo.CollectedStars} / {LevelInfo.StarAmount} ]\n" +
+            $"<size=75%><b><color=#ababff>Snowflakes</color></b> : [ {LevelInfo.CollectedSnowflakes} / {LevelInfo.SnowflakeAmount} ]\n" +
             $"<b>{(!LevelInfo.IsCompleted? "<color=#ff6767>Not Complete" : "<color=#67ff67>Complete" )}</b>";
     }
 

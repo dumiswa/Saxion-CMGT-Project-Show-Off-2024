@@ -37,6 +37,7 @@ namespace Monoliths.Mechanisms
 
         private void StartClimbing()
         {
+            Locked = true;
             if (_callerRigidbody is null)
                 return;
 
@@ -53,6 +54,7 @@ namespace Monoliths.Mechanisms
 
         private void FinishClimbing(bool normal)
         {
+            Locked = false;
             if (_callerRigidbody is null)
                 return;
 

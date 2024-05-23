@@ -24,7 +24,7 @@ public class LevelFinishState : LevelSubState
         var levelBuffer = DataBridge.TryGetData<LevelInfo>(LevelProgressObserver.LEVEL_INFO_BUFFER_DATA_ID);
         if (!levelBuffer.IsEmpty)
             FileManager.Instance.SaveData(
-                levelBuffer.EncodedData.AssetName,
+                LevelInfo.AssetPath + levelBuffer.EncodedData.AssetName,
                 "leveldata",
                 levelBuffer.EncodedData.Serialize());
 

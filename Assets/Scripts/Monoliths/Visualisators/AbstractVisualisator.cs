@@ -34,28 +34,6 @@ namespace Monoliths.Visualisators
             return base.Init();
         }
 
-        protected virtual void Start()
-        {
-            if (!_autoDisplay) return;
-
-            try
-            {
-                var data = DataBridge.TryGetData<DataPacket>(_dataID);
-                if (data != Data<DataPacket>.Empty)
-                {
-                    Display(data.EncodedData);
-                    DataBridge.MarkUpdateProcessed<DataPacket>(_dataID);
-                }
-            }
-            catch (InvalidCastException)
-            {
-                if (IsActive)
-                {
-                    IsActive = false;
-                    _status = $"Stored data was not of type Data<{typeof(DataPacket)}>.";
-                }
-            }
-        }
         protected virtual void Update()
         {
             if (!_autoDisplay) return;
@@ -63,18 +41,10 @@ namespace Monoliths.Visualisators
             try
             {
                 var data = DataBridge.TryGetData<DataPacket>(_dataID);
-                if (data != Data<DataPacket>.Empty && data.WasUpdated)
+                if (!data.IsEmpty)
                 {
-                    if (!IsActive) 
-                        base.Init();
-
                     Display(data.EncodedData);
                     DataBridge.MarkUpdateProcessed<DataPacket>(_dataID);
-                }
-                else if (IsActive)
-                {
-                    IsActive = false;
-                    _status = $"Couldn't get \"{_dataID}\" data packet";
                 }
             }
             catch (InvalidCastException)

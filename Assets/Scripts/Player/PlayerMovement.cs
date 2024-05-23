@@ -5,12 +5,13 @@ using System.Collections;
 
 namespace Monoliths.Player
 {
+
     public class PlayerMovement : Monolith
     {
         public const string GLIDING_UNLOCKED_DATA_ID = "GlidingIsUnlocked";
         public const string MOVEMENT_ENABLED_DATA_ID = "MovementIsEnabled";
         public const string SIMULATION_ENABLED_DATA_ID = "RigidbodyIsEnabled";
-        public const string ON_LADDER_DATA_ID = "LadderInteracted";
+        public const string ON_LADDER_DATA_ID = "IsClimbingLadder";
 
         private MovementStateMachine _stateMachine;
 
@@ -69,7 +70,6 @@ namespace Monoliths.Player
 
             _climbAcceleration = 4.0f;
         }
-
         public override bool Init()
         {
             _stateMachine = new(this);
@@ -100,6 +100,7 @@ namespace Monoliths.Player
             InitializeStates();
             return base.Init();
         }
+
         public void SetMovementLocked(bool locked = false, bool lockX = false, bool lockZ = false, bool swapZtoY = false) 
         { 
             _lockMovement = locked;

@@ -7,8 +7,8 @@
         (
             "Tutorial",
             "Level0",
-            starAmount: 1,
-            collectedStars: 0,
+            snowflakeAmount: 1,
+            collectedSnowflakes: 0,
             id: 0,
             completed: false
         ).Serialize());
@@ -17,8 +17,8 @@
         (
             "Level 1",
             "Level1",
-            starAmount: 1,
-            collectedStars: 0,
+            snowflakeAmount: 1,
+            collectedSnowflakes: 0,
             id: 1,
             completed: false
         ).Serialize());
@@ -28,8 +28,8 @@
         (
             "Level 2",
             "Level2",
-            starAmount: 3,
-            collectedStars: 0,
+            snowflakeAmount: 3,
+            collectedSnowflakes: 0,
             id: 2,
             completed: false
         ).Serialize());
@@ -39,8 +39,8 @@
         (
             "Level 3", 
             "Level3",
-            starAmount: 3,
-            collectedStars: 0,
+            snowflakeAmount: 3,
+            collectedSnowflakes: 0,
             id: 3,
             completed: false
         ).Serialize());
@@ -50,8 +50,8 @@
         (
             "Dev [Dumi]",
             "LevelDevDumi",
-            starAmount: 3,
-            collectedStars: 0,
+            snowflakeAmount: 3,
+            collectedSnowflakes: 0,
             id: 3,
             completed: false
         ).Serialize());
@@ -61,8 +61,8 @@
         (
             "Dev [Kirserd]",
             "LevelDevKirserd",
-            starAmount: 3,
-            collectedStars: 0,
+            snowflakeAmount: 3,
+            collectedSnowflakes: 0,
             id: 3,
             completed: false
         ).Serialize());
