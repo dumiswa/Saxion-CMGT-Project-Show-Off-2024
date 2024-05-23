@@ -2,7 +2,7 @@
 {
     public static void ResetSaveData()
     {
-        FileManager.Instance.SaveData("Level0",
+        FileManager.Instance.SaveData("Levels/Level0", "leveldata",
         new LevelInfo
         (
             "Tutorial",
@@ -12,7 +12,7 @@
             id: 0,
             completed: false
         ).Serialize());
-        FileManager.Instance.SaveData("Level1",
+        FileManager.Instance.SaveData("Levels/Level1", "leveldata",
         new LevelInfo
         (
             "Level 1",
@@ -23,7 +23,7 @@
             completed: false
         ).Serialize());
 
-        FileManager.Instance.SaveData("Level2",
+        FileManager.Instance.SaveData("Levels/Level2", "leveldata",
         new LevelInfo
         (
             "Level 2",
@@ -34,7 +34,7 @@
             completed: false
         ).Serialize());
 
-        FileManager.Instance.SaveData("Level3",
+        FileManager.Instance.SaveData("Levels/Level3", "leveldata",
         new LevelInfo
         (
             "Level 3", 
@@ -45,7 +45,7 @@
             completed: false
         ).Serialize());
 
-        FileManager.Instance.SaveData("LevelDevDumi",
+        FileManager.Instance.SaveData("Levels/LevelDevDumi", "leveldata",
         new LevelInfo
         (
             "Dev [Dumi]",
@@ -56,7 +56,7 @@
             completed: false
         ).Serialize());
 
-        FileManager.Instance.SaveData("LevelDevKirserd",
+        FileManager.Instance.SaveData("Levels/LevelDevKirserd", "leveldata",
         new LevelInfo
         (
             "Dev [Kirserd]",

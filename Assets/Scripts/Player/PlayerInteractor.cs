@@ -36,7 +36,7 @@ namespace Monoliths.Player
         private void Scan()
         {
             var interactables = Physics.OverlapSphere(_player.transform.position, _interactionRadius)
-                                 .Where(result => result.gameObject.layer == _interactableLayer);
+                                       .Where(result => result.gameObject.layer == _interactableLayer);
 
             foreach (var interactable in interactables)
                 CollideWithObject(interactable);

@@ -25,6 +25,7 @@ public class LevelFinishState : LevelSubState
         if (!levelBuffer.IsEmpty)
             FileManager.Instance.SaveData(
                 levelBuffer.EncodedData.AssetName,
+                "leveldata",
                 levelBuffer.EncodedData.Serialize());
 
         GameStateMachine.Instance.Return();

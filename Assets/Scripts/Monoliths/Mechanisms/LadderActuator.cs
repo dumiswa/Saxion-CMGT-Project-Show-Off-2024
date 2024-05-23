@@ -23,7 +23,6 @@ namespace Monoliths.Mechanisms
         }
         public override void Invoke() => StartClimbing();
 
-
         private void Update()
         {
             if (!_isClimbing)
@@ -41,12 +40,12 @@ namespace Monoliths.Mechanisms
             if (_callerRigidbody is null)
                 return;
 
-            _callerRigidbody.position = new
+            _callerRigidbody.position = new Vector3
             (
-                _callerRigidbody.position.x,
+                transform.position.x,
                 _callerRigidbody.position.y + 0.15f,
-                _callerRigidbody.position.z
-            );
+                transform.position.z
+            ) - transform.forward * 0.25f;
 
             _isClimbing = true;
             DataBridge.UpdateData(PlayerMovement.ON_LADDER_DATA_ID, true);
@@ -64,7 +63,7 @@ namespace Monoliths.Mechanisms
 
         private void OnDrawGizmos()
         {
-            var position1 =new Vector3(transform.position.x, _minHeight, transform.position.z) - transform.forward * 0.25f;
+            var position1 = new Vector3(transform.position.x, _minHeight, transform.position.z) - transform.forward * 0.25f;
             var position2 = new Vector3(transform.position.x, _maxHeight, transform.position.z) - transform.forward * 0.25f;
 
             Gizmos.color = Color.red;

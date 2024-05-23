@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class LevelSelectionState : GameState
 {
@@ -16,8 +15,11 @@ public class LevelSelectionState : GameState
 
         _screen = Object.Instantiate(screen, GameObject.FindGameObjectWithTag("GUI").transform.GetChild(0)).transform;
         var content = _screen.GetChild(1).GetChild(0).GetChild(0);
-        foreach (var levelInfo in FileManager.Instance.GetLevelInfos())
+        foreach (var data in FileManager.Instance.GetAllSaveDataOfExtension("leveldata"))
         {
+            var levelInfo = new LevelInfo();
+            levelInfo.Deserialize(data);
+
             var levelDisplay = Object.Instantiate(prefab,content).GetComponent<LevelDisplay>();
 
             levelDisplay.Index = _levels.Count;
