@@ -28,11 +28,11 @@ public struct Data<T> where T : new()
     public static bool operator !=(Data<T> a, Data<T> b) 
         => !a.Equals(b);
 
-    public override bool Equals(object obj) 
+    public override readonly bool Equals(object obj) 
         => obj is Data<T> data &&
             EqualityComparer<T>.Default.Equals(EncodedData, data.EncodedData) &&
             WasUpdated == data.WasUpdated;
 
-    public override int GetHashCode() 
+    public override readonly int GetHashCode() 
         => HashCode.Combine(EncodedData, WasUpdated);
 }

@@ -1,6 +1,5 @@
 using Monoliths.Mechanisms;
 using Monoliths.Visualisators;
-using System;
 using System.Linq;
 using UnityEngine;
 namespace Monoliths.Player

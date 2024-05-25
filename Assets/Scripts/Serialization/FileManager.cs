@@ -33,11 +33,6 @@ public class FileManager : Monolith
 
     public byte[] GetSaveData(string key) => _loadedSaveData[key];
     public ValueCollection GetAllSaveData() => _loadedSaveData.Values;
-    /// <summary>
-    /// Gets all save data files with the specified extension from the loaded savedata.
-    /// </summary>
-    /// <param name="extension">The file extension to search for.</param>
-    /// <returns>An array of byte arrays representing the data of the matched files.</returns>
     public byte[][] GetAllSaveDataOfExtension(string extension)
     {
         if (string.IsNullOrEmpty(extension))
@@ -50,6 +45,21 @@ public class FileManager : Monolith
         foreach (var datagramm in _loadedSaveData)
             if (datagramm.Key.Split('.')[^1] == extension)
                 result.Add(datagramm.Value);
+
+        return result.ToArray();
+    }
+    public (string key, byte[] bytes)[] GetAllSaveDataPairsOfExtension(string extension)
+    {
+        if (string.IsNullOrEmpty(extension))
+        {
+            Debug.LogWarning("File Manager | Provided extension is null or empty.");
+            return Array.Empty<(string, byte[])>();
+        }
+        List<(string key, byte[] bytes)> result = new();
+
+        foreach (var datagramm in _loadedSaveData)
+            if (datagramm.Key.Split('.')[^1] == extension)
+                result.Add((datagramm.Key, datagramm.Value));
 
         return result.ToArray();
     }
@@ -84,7 +94,7 @@ public class FileManager : Monolith
     /// </summary>
     /// <param name="fileName">The name of the file (without extension).</param>
     /// <param name="data">The byte array to save.</param>
-    public void SaveData(string fileName, string extension, byte[] data)
+    public void SaveData(string fileName, string extension, byte[] data, bool needsReload = true)
     {
         string filePath = Path.Combine(_saveDataPath, $"{fileName}.{extension}");
 
@@ -106,6 +116,7 @@ public class FileManager : Monolith
             Debug.Log($"File Manager | Failed to save data to {filePath}: {e.Message}");
         }
 
-        LoadAllSaveData(ref _loadedSaveData);
+        if(needsReload)
+            LoadAllSaveData(ref _loadedSaveData);
     }
 }

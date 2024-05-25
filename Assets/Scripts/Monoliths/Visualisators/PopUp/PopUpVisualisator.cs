@@ -1,7 +1,6 @@
 ﻿using Monoliths.Mechanisms;
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Monoliths.Visualisators
@@ -9,7 +8,7 @@ namespace Monoliths.Visualisators
     public class PopUpVisualisator : AbstractVisualisator<PopUpStackPacket>
     {
         public const string POP_UP_STACK_DATA_ID = "PopUpStackDataId";
-        private Dictionary<ushort, PopUp> _instanced = new();
+        private readonly Dictionary<ushort, PopUp> _instanced = new();
 
         public override void Defaults()
         {

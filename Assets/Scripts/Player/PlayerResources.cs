@@ -2,7 +2,7 @@
 {
     public class PlayerResources : Monolith
     {
-        public const string SAVED_LIVES_DATA_ID = "SavedPlayerLives";
+        public const string SAVED_LIVES_DATA_ID = "svdplrlives";
         public const string CURRENT_LIVES_DATA_ID = "CurrentPlayerLives";
 
         private byte _currentLives
@@ -39,8 +39,14 @@
             _currentLives = data.EncodedData;
         }
         private void OnLevelFinish()
-            => DataBridge.UpdateData<byte>(SAVED_LIVES_DATA_ID, _currentLives);
-
+        {
+            DataBridge.UpdateData<byte>(SAVED_LIVES_DATA_ID, _currentLives);
+            FileManager.Instance.SaveData(
+                "Resources/" + SAVED_LIVES_DATA_ID, 
+                "resource", new byte[1] { _currentLives}, 
+                needsReload: false
+            );
+        }
         private void OnGameStateEnter(GameState state)
         {
             switch (state)
