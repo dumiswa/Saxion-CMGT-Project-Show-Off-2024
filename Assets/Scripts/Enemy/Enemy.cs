@@ -8,14 +8,7 @@ public abstract class Enemy : MonoBehaviour
 
     protected virtual void Awake() => StateMachine = new EnemyStateMachine(this);
     protected virtual void Start() => InitializeStates();
+    protected virtual void Update() => StateMachine.CurrentState?.Execute();
     protected abstract void InitializeStates();
-    protected virtual void Update()
-    {
-        if (StateMachine.CurrentState == null)       
-            Debug.Log("No current state active");       
-        else   
-            StateMachine.CurrentState.Execute();
-    }
-    protected virtual void Patrol() {}
-    public void ChangeState(EnemyState newState) {}
+
 }

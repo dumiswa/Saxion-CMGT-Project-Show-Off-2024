@@ -1,4 +1,4 @@
-﻿public abstract class EnemyState
+﻿public abstract class EnemyState 
 {
     protected Enemy _enemy;
 

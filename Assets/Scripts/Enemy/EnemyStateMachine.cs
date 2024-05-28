@@ -8,18 +8,13 @@ public class EnemyStateMachine
     public EnemyStateMachine(Enemy enemy)
     {
         this._enemy = enemy;
-        Debug.Log("State machine created for: " + _enemy.gameObject.name);
     }
 
     public void ChangeState(EnemyState newState)
     {
-        if (CurrentState != null)
-        {
-            Debug.Log("Exiting State: " + CurrentState.GetType().Name);
-            CurrentState.Exit();
-        }
+        if (CurrentState != null)      
+            CurrentState.Exit();       
         CurrentState = newState;
-        Debug.Log("Changing to New State: " + CurrentState.GetType().Name);
         CurrentState.Enter();
     }
 }
