@@ -9,9 +9,14 @@ public class EnemyStateMachine
 
     public void ChangeState(EnemyState newState)
     {
-        if (CurrentState != null)      
-            CurrentState.Exit();       
+        if (CurrentState != null)       
+            CurrentState.Exit();
+        
         CurrentState = newState;
-        CurrentState.Enter();
+        if (CurrentState != null)   
+            CurrentState.Enter();    
+        else      
+            Debug.LogError("Failed to change state: newState is null");
+        
     }
 }
