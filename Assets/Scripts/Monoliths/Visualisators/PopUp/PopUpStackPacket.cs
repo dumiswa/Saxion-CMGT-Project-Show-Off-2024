@@ -6,7 +6,7 @@ namespace Monoliths.Visualisators
     {
         public enum PopUpTypes
         {
-            PRESS_BUTTON_SMALL,
+            IN_WORLD,
             TEXTBOX_TUTORIAL,
             PRESET
         }
@@ -14,8 +14,17 @@ namespace Monoliths.Visualisators
         public Dictionary<ushort, PopUpData> PopUps = new();
         private Queue<ushort> _releasedIds = new();
 
+        private bool _locked = true;
+
+        public bool IsLocked() => _locked;
+        public void SetLock(bool state) 
+            => _locked = state;
+
         public ushort Add(PopUpData data)
         {
+            if (_locked)
+                return ushort.MaxValue;
+
             ushort id = (ushort)(PopUps.Count + 1);
             if (_releasedIds.Count > 0)
                 id = _releasedIds.Dequeue();
@@ -24,10 +33,16 @@ namespace Monoliths.Visualisators
             return id;
         }
 
-        public void Remove(ushort id)
-        {
-            PopUps.Remove(id);
-            _releasedIds.Enqueue(id);
-        }
+        public void Remove(ushort id) 
+            => PopUps.Remove(id);
+
+        public void ReleaseId(ushort id) 
+            => _releasedIds.Enqueue(id);
+
+        public bool Contains(PopUpData data) 
+          => PopUps.ContainsValue(data);
+
+        public bool Contains(ushort id)
+          => PopUps.ContainsKey(id);
     }
 }

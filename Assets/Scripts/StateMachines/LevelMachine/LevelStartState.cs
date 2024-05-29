@@ -28,7 +28,7 @@ public class LevelStartState : LevelSubState
 
         cameraSequence.Play();
 
-        yield return new WaitForSeconds(0.8f);
+        yield return new WaitForSeconds(3.0f);
 
         MonolithMaster.Instance.Monoliths[typeof(PlayerMovement)]?.SetActive(true);
         MonolithMaster.Instance.Monoliths[typeof(PlayerInteractor)]?.SetActive(true);
@@ -36,5 +36,7 @@ public class LevelStartState : LevelSubState
 
         Object.Destroy(fade);
         (GameStateMachine.Instance.Current as LevelState).SubStateMachine.Next<MidLevelState>();
+
+        DataBridge.TryGetData<PopUpStackPacket>(PopUpVisualisator.POP_UP_STACK_DATA_ID).EncodedData.SetLock(false);
     }
 }

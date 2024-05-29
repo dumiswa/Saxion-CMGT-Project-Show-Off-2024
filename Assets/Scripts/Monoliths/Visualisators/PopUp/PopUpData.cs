@@ -1,5 +1,8 @@
-﻿namespace Monoliths.Visualisators
+﻿using System;
+
+namespace Monoliths.Visualisators
 {
+    [Serializable]
     public struct PopUpData
     {
         public PopUpStackPacket.PopUpTypes Type;
@@ -18,6 +21,7 @@
             AssetName = "";
             _encapsulatedData = null;
         }
+        public void SetEncapsulatedData(object data) => _encapsulatedData = data;
         public readonly T GetData<T>() => (T)_encapsulatedData;
     }
 }

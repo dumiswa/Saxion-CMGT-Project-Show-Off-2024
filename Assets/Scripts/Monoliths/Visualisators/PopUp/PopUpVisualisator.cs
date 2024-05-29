@@ -41,7 +41,10 @@ namespace Monoliths.Visualisators
                 }
             }
             foreach (var popUp in toRemove)
+            {
+                data.ReleaseId(popUp);
                 _instanced.Remove(popUp);
+            }
         }
         private void Create(in PopUpStackPacket data)
         {
@@ -60,26 +63,50 @@ namespace Monoliths.Visualisators
             {
                 switch (data.Type)
                 {
-                    case PopUpStackPacket.PopUpTypes.PRESS_BUTTON_SMALL:
-                        var closest = data.GetData<Actuator>();
+                    case PopUpStackPacket.PopUpTypes.IN_WORLD:
+                        {
+                            var closest = data.GetData<Actuator>();
 
-                        Type interactableType = null;
-                        if (closest is not null)
-                            interactableType = closest.GetType();
+                            Type interactableType = null;
+                            if (closest is not null)
+                                interactableType = closest.GetType();
 
-                        if (typeof(OnCollisionActuator).IsAssignableFrom(interactableType))
-                            break;
+                            if (typeof(OnCollisionActuator).IsAssignableFrom(interactableType))
+                                break;
 
-                        var prefab = Resources.Load<PopUp>("Prefabs/PopUps/" + data.AssetName);
-                        var instance = UnityEngine.Object.Instantiate(prefab, _gui.GetChild(1));
+                            var prefab = Resources.Load<PopUpInWorld>("Prefabs/PopUps/" + data.AssetName);
+                            var instance = UnityEngine.Object.Instantiate(prefab, _gui.GetChild(1));
 
-                        instance.WorldPoint = closest.transform;
+                            instance.WorldPoint = closest.transform;
 
-                        _instanced.Add(id, instance);
+                            if (instance.GetType().IsAssignableFrom(typeof(IManagedPopUp)))
+                                ((IManagedPopUp)instance).SetID(id);
+
+                            _instanced.Add(id, instance);
+                        }
                         break;
                     case PopUpStackPacket.PopUpTypes.TEXTBOX_TUTORIAL:
+                        {
+
+                            var prefab = Resources.Load<PopUp>("Prefabs/PopUps/" + data.AssetName);
+                            var instance = UnityEngine.Object.Instantiate(prefab, _gui.GetChild(1));
+
+                            if (typeof(IManagedPopUp).IsAssignableFrom(instance.GetType()))
+                                ((IManagedPopUp)instance).SetID(id);
+
+                            _instanced.Add(id, instance);
+                        }
                         break;
                     case PopUpStackPacket.PopUpTypes.PRESET:
+                        {
+                            var prefab = Resources.Load<PopUp>("Prefabs/PopUps/" + data.AssetName);
+                            var instance = UnityEngine.Object.Instantiate(prefab, _gui.GetChild(1));
+
+                            if (typeof(IManagedPopUp).IsAssignableFrom(instance.GetType()))
+                                ((IManagedPopUp)instance).SetID(id);
+
+                            _instanced.Add(id, instance);
+                        }
                         break;
                     default:
                         break;

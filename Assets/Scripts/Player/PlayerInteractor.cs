@@ -45,8 +45,11 @@ namespace Monoliths.Player
             foreach (var interactable in interactables)
                 CollideWithObject(interactable);
 
-            var collider = interactables.OrderBy(result => Vector3.Distance(_player.transform.position, result.transform.position))
-                                        .FirstOrDefault();
+            var collider = interactables.OrderBy(
+                result => Vector3.Distance(
+                    _player.transform.position, 
+                    result.transform.position
+                )).FirstOrDefault();
 
             if (collider is null)
                 _closest = null;
@@ -79,7 +82,7 @@ namespace Monoliths.Player
             if (_closest is not null && !_closest.Locked)
             {
                 _popUpId = stack.EncodedData.Add(new PopUpData(
-                   PopUpStackPacket.PopUpTypes.PRESS_BUTTON_SMALL,
+                   PopUpStackPacket.PopUpTypes.IN_WORLD,
                    "InteractButtonPopUp",
                    _closest
                ));
@@ -91,12 +94,12 @@ namespace Monoliths.Player
                 stack.EncodedData.Remove(idBuffer);
         }
 
-        public void CollideWithObject(Collider closest)
+        public void CollideWithObject(Collider other)
         {
-            if (closest is null)
+            if (other is null)
                 return;
 
-            closest.TryGetComponent<IInteractable>(out var interactable);
+            other.TryGetComponent<IInteractable>(out var interactable);
             
             if (interactable is null)
                 return;

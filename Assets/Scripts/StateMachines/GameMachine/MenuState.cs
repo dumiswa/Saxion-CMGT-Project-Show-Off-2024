@@ -25,8 +25,8 @@ public class MenuState : GameState
     private void LoadData()
     {
         var (key, bytes) = FileManager.Instance.GetAllSaveDataPairsOfExtension("resource")
-                                .Where(pair => pair.key == PlayerResources.SAVED_LIVES_DATA_ID)
-                                .FirstOrDefault();
+                            .Where(pair => pair.key == PlayerResources.SAVED_LIVES_DATA_ID)
+                            .FirstOrDefault();
 
         if (bytes is not null)
             DataBridge.UpdateData(PlayerResources.SAVED_LIVES_DATA_ID, bytes[0]);
