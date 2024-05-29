@@ -3,8 +3,8 @@
 public class EnemyStateMachine
 {
     private Enemy _enemy;
-    public EnemyState CurrentState { get; private set; }
 
+    public EnemyState CurrentState { get; private set; }
     public EnemyStateMachine(Enemy enemy) => this._enemy = enemy; 
 
     public void ChangeState(EnemyState newState)
@@ -13,10 +13,10 @@ public class EnemyStateMachine
             CurrentState.Exit();
         
         CurrentState = newState;
+
         if (CurrentState != null)   
             CurrentState.Enter();    
         else      
-            Debug.LogError("Failed to change state: newState is null");
-        
+            Debug.LogError("Failed to change state: newState is null");      
     }
 }

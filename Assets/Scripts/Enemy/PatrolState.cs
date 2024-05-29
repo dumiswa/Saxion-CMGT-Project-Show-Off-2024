@@ -17,7 +17,8 @@ public class PatrolState : EnemyState
         _waypointIndex = waypointIndex;
     }
 
-    private void MoveToNextWaypoint() => _enemy.transform.position = Vector3.MoveTowards(_enemy.transform.position, _lastWaypointTransform.position, _enemy.MovementSpeed * Time.deltaTime);
+    private void MoveToNextWaypoint() 
+        => _enemy.transform.position = Vector3.MoveTowards(_enemy.transform.position, _lastWaypointTransform.position, _enemy.MovementSpeed * Time.deltaTime);
 
     public override void Enter()
     {

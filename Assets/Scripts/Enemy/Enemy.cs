@@ -10,14 +10,11 @@ public abstract class Enemy : MonoBehaviour
     protected virtual void Start() => InitializeStates();
     protected virtual void Update()
     {
-        if (StateMachine.CurrentState != null)
-        {
-            StateMachine.CurrentState.Execute();
-        }
-        else
-        {
+        if (StateMachine.CurrentState != null)   
+            StateMachine.CurrentState.Execute();    
+        else       
             Debug.LogError("No active state during Update.");
-        }
+        
     }
     protected abstract void InitializeStates();
 }
