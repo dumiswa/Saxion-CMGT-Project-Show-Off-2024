@@ -8,6 +8,7 @@ TagManager:
   - IceCrystal
   - Ladder
   - Snowflake
+  - 2DCharacter
   layers:
   - Default
   - TransparentFX

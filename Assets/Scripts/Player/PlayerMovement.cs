@@ -5,7 +5,6 @@ using System.Collections;
 
 namespace Monoliths.Player
 {
-
     public class PlayerMovement : Monolith
     {
         public const string GLIDING_UNLOCKED_DATA_ID = "GlidingIsUnlocked";

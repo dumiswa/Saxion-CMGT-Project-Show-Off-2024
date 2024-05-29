@@ -87,12 +87,15 @@ namespace Monoliths.Visualisators
                         break;
                     case PopUpStackPacket.PopUpTypes.TEXTBOX_TUTORIAL:
                         {
+                            string text = data.GetData<string>();
 
-                            var prefab = Resources.Load<PopUp>("Prefabs/PopUps/" + data.AssetName);
+                            var prefab = Resources.Load<PopUpWithText>("Prefabs/PopUps/" + data.AssetName);
                             var instance = UnityEngine.Object.Instantiate(prefab, _gui.GetChild(1));
 
                             if (typeof(IManagedPopUp).IsAssignableFrom(instance.GetType()))
                                 ((IManagedPopUp)instance).SetID(id);
+
+                            instance.SetText(text);
 
                             _instanced.Add(id, instance);
                         }

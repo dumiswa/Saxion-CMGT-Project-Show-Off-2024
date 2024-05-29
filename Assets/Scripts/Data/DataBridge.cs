@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 public static class DataBridge
 {
@@ -28,5 +29,16 @@ public static class DataBridge
             return (Data<T>)_data[key];
         else
             return Data<T>.Empty;
+    }
+
+    public static void ReleaseData(string key, bool fullRelease = false)
+    {
+        if (!_data.ContainsKey(key))
+            return;
+
+        _data.Remove(key);
+        
+        if(fullRelease)
+            GC.Collect();
     }
 }
