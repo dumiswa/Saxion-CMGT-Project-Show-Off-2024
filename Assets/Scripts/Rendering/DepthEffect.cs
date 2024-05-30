@@ -23,6 +23,8 @@ public class DepthEffect : MonoBehaviour
                 continue;
 
             layer.sprite = sprite;
+            layer.material.SetColor("_Color",
+                _renderer.material.GetColor("_Color").a < 0.75f ? new Color(1, 1, 1, 0) : new Color(1, 1, 1, 1));
         }
     }
 }

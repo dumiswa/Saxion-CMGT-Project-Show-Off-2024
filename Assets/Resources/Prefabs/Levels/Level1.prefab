@@ -2022,11 +2022,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a40b0b9851835c845b104e2e2789e401, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _identifier: Invizibilo1
+  _identifier: Invizibilo
   _state: 0
-  _followingRadius: 3.2
+  _followingRadius: 2.8
   _maxSpeed: 6
   _accelerationMultiplier: 4
+  _renderer: {fileID: 4145472551774787208}
+  _changeStep: 0.75
+  _visibleDistance: 7
 --- !u!1 &2696505249679707232
 GameObject:
   m_ObjectHideFlags: 0
@@ -3111,11 +3114,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a40b0b9851835c845b104e2e2789e401, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _identifier: Invizibilo1
+  _identifier: Invizibilo
   _state: 0
-  _followingRadius: 3.2
+  _followingRadius: 2.8
   _maxSpeed: 6
   _accelerationMultiplier: 4
+  _renderer: {fileID: 841446973964221879}
+  _changeStep: 0.75
+  _visibleDistance: 7
 --- !u!1 &4122674689597070355
 GameObject:
   m_ObjectHideFlags: 0
@@ -3357,11 +3363,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a40b0b9851835c845b104e2e2789e401, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _identifier: Invizibilo1
+  _identifier: Invizibilo
   _state: 0
-  _followingRadius: 3.2
+  _followingRadius: 2.8
   _maxSpeed: 6
   _accelerationMultiplier: 4
+  _renderer: {fileID: 536190661684308858}
+  _changeStep: 0.75
+  _visibleDistance: 7
 --- !u!1 &4487142257864186216
 GameObject:
   m_ObjectHideFlags: 0
@@ -4581,11 +4590,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a40b0b9851835c845b104e2e2789e401, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _identifier: Invizibilo1
+  _identifier: Invizibilo
   _state: 0
-  _followingRadius: 3.2
+  _followingRadius: 2.8
   _maxSpeed: 6
   _accelerationMultiplier: 4
+  _renderer: {fileID: 2177825536407913047}
+  _changeStep: 0.75
+  _visibleDistance: 7
 --- !u!1 &6293314758660020058
 GameObject:
   m_ObjectHideFlags: 0
@@ -5689,11 +5701,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a40b0b9851835c845b104e2e2789e401, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _identifier: Invizibilo1
+  _identifier: Invizibilo
   _state: 0
-  _followingRadius: 3.2
+  _followingRadius: 2.8
   _maxSpeed: 6
   _accelerationMultiplier: 4
+  _renderer: {fileID: 5298792079914418262}
+  _changeStep: 0.75
+  _visibleDistance: 7
 --- !u!1 &7574907028898856227
 GameObject:
   m_ObjectHideFlags: 0
@@ -6094,11 +6109,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a40b0b9851835c845b104e2e2789e401, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _identifier: Invizibilo1
+  _identifier: Invizibilo
   _state: 0
-  _followingRadius: 3.2
+  _followingRadius: 2.8
   _maxSpeed: 6
   _accelerationMultiplier: 4
+  _renderer: {fileID: 6862491869349356827}
+  _changeStep: 0.75
+  _visibleDistance: 7
 --- !u!1 &8351495284582689882
 GameObject:
   m_ObjectHideFlags: 0
