@@ -62,7 +62,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 92b97159c34bc16459cedacf38e5bdf6, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 6, y: 6}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -70,7 +70,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Normal:
-        m_Texture: {fileID: 2800000, guid: d475d884ae05edb42981416acfa05b1b, type: 3}
+        m_Texture: {fileID: 2800000, guid: 85bfd30f252d1bf459573c14801ec601, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -118,7 +118,7 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _Intensity: 1
+    - _Intensity: 0.15
     - _Metalicness: 0
     - _Metallic: 0
     - _MinimumOpacity: 2
@@ -137,13 +137,13 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 0.42138356, g: 0.33231977, b: 0.23189344, a: 1}
-    - _Color: {r: 0.42138353, g: 0.33231974, b: 0.23189339, a: 1}
+    - _Color: {r: 0.3679245, g: 0.25956467, b: 0.17528479, a: 1}
     - _CutoutPosition: {r: 0.5, g: 0.5, b: 0, a: 0}
-    - _Emission: {r: 0.09411765, g: 0.05490196, b: 0.07252358, a: 0}
+    - _Emission: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0.011764706, g: 0.025633816, b: 0.06666667, a: 1}
     - _Offset: {r: 0, g: 0, b: 0, a: 0}
     - _Offset_1: {r: 0, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _Tiling: {r: 0, g: 0, b: 0, a: 0}
-    - _Tiling_1: {r: 8, g: 8, b: 0, a: 0}
+    - _Tiling_1: {r: 16, g: 5, b: 0, a: 0}
   m_BuildTextureStacks: []

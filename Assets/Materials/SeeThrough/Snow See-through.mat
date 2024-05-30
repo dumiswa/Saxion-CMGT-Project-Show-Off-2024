@@ -53,15 +53,16 @@ Material:
     - _MinimumOpacity: 2
     - _QueueControl: 0
     - _QueueOffset: -1
-    - _Smoothness: 0.5
+    - _Smoothness: 0.4
     m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _CutoutPosition: {r: 0.5, g: 0.5, b: 0, a: 0}
     - _Emission: {r: 0, g: 0.027084842, b: 0.09433961, a: 0}
     - _NormalMap: {r: 0, g: 0, b: 0, a: 0}
     - _Offset: {r: 1, g: 1, b: 0, a: 0}
     - _Offset_1: {r: 0, g: 0, b: 0, a: 0}
     - _Tiling: {r: 1, g: 1, b: 0, a: 0}
-    - _Tiling_1: {r: 5, g: 5, b: 0, a: 0}
+    - _Tiling_1: {r: 9, g: 9, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &8973236871806728260
 MonoBehaviour:
