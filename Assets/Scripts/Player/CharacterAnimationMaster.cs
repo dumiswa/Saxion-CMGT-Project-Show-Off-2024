@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Monoliths.Player
@@ -34,34 +33,48 @@ namespace Monoliths.Player
 
         private void LateUpdate()
         {
+            List<string> toRemove = new();
             foreach (var pair in _dataPacket.Rotational) 
             {
-                int turn = Mathf.RoundToInt(_cameraYaw.rotation.eulerAngles.y / 52f);
-                turn -= DataBridge.TryGetData<CharacterAnimatorData>(pair.Key).EncodedData.Direction;
-
-                if(turn < 0)
-                    turn += 7;
-
-                turn = 7 - turn + 1;
-
-                var prevTurn = pair.Value.GetInteger("Turn");
-                if(prevTurn != turn)
+                try
                 {
-                    pair.Value.SetFloat
-                    (
-                        "CycleOffset", 
-                        pair.Value.GetFloat("CycleOffsetBuffer")
-                    );
-                }
-                pair.Value.SetInteger("Turn", turn);
-                
-                var offset = pair.Value.GetFloat("CycleOffsetBuffer");
-                if (offset > 32)
-                    offset = 0;
+                    int turn = Mathf.RoundToInt(_cameraYaw.rotation.eulerAngles.y / (360f / 7f));
+                    turn -= DataBridge.TryGetData<CharacterAnimatorData>(pair.Key).EncodedData.Direction;
 
-                offset += Time.deltaTime;
-                pair.Value.SetFloat("CycleOffsetBuffer", offset);
+                    if (turn < 0)
+                        turn += 7;
+
+                    turn = 7 - turn + 1;
+
+                    var prevTurn = pair.Value.GetInteger("Turn");
+                    if (prevTurn != turn)
+                    {
+                        pair.Value.SetFloat
+                        (
+                            "CycleOffset",
+                            pair.Value.GetFloat("CycleOffsetBuffer")
+                        );
+                    }
+                    pair.Value.SetInteger("Turn", turn);
+
+                    var offset = pair.Value.GetFloat("CycleOffsetBuffer");
+                    if (offset >= int.MaxValue - 1)
+                        offset = 0;
+
+                    offset += Time.deltaTime;
+                    pair.Value.SetFloat("CycleOffsetBuffer", offset);
+                }
+                catch (MissingReferenceException)
+                {
+                    toRemove.Add(pair.Key);
+                }
+                catch (NullReferenceException)
+                {
+                    toRemove.Add(pair.Key);
+                }
             }
+            foreach (var key in toRemove)
+                _dataPacket.Rotational.Remove(key);
         }
 
         private void Scan()

@@ -21,7 +21,7 @@ namespace Monoliths.Player
             base.Defaults();
 
             _popUpId = ushort.MaxValue;
-            _interactionRadius = 0.8f;
+            _interactionRadius = 1.25f;
         }
         public override bool Init()
         {
@@ -45,41 +45,34 @@ namespace Monoliths.Player
             foreach (var interactable in interactables)
                 CollideWithObject(interactable);
 
-            var collider = interactables.OrderBy(
-                result => Vector3.Distance(
-                    _player.transform.position, 
-                    result.transform.position
-                )).FirstOrDefault();
-
+            var collider = interactables.Where(result => result is not null && !result.gameObject.GetComponent<Actuator>().Locked)
+                                        .OrderBy(result => Vector3.Distance(
+                                            _player.transform.position, 
+                                            result.transform.position
+                                        )).FirstOrDefault();
             if (collider is null)
                 _closest = null;
             else
-                collider.TryGetComponent(out _closest);       
+                collider.TryGetComponent(out _closest);
 
-            if (_prevClosest != _closest)
+            if (_prevClosest != _closest || _closest is null &&
+                _popUpId != ushort.MaxValue)
             {
                 UpdateVisualisatorData();
                 _prevClosest = _closest;
-            }
-
-            if(_closest is not null && _closest.Locked && _popUpId != ushort.MaxValue)
-            {           
-                DataBridge.TryGetData<PopUpStackPacket>(PopUpVisualisator.POP_UP_STACK_DATA_ID)
-                    .EncodedData.Remove(_popUpId);
-                _popUpId = ushort.MaxValue;
             }
         }
 
         private void UpdateVisualisatorData()
         {
             var stack = DataBridge.TryGetData<PopUpStackPacket>(PopUpVisualisator.POP_UP_STACK_DATA_ID);
-            
+
             if (stack.IsEmpty)
                 return;
 
             var idBuffer = _popUpId;
 
-            if (_closest is not null && !_closest.Locked)
+            if (_closest is not null)
             {
                 _popUpId = stack.EncodedData.Add(new PopUpData(
                    PopUpStackPacket.PopUpTypes.IN_WORLD,
@@ -114,7 +107,10 @@ namespace Monoliths.Player
             closest.Interact(_player);
         }
 
-        private void Update() => Scan();
+        private void Update()
+        {
+            Scan();
+        }
 
         private void OnEnable()
         {

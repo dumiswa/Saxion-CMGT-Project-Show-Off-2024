@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-
 namespace Monoliths.Visualisators
 {
     public class PopUpStackPacket

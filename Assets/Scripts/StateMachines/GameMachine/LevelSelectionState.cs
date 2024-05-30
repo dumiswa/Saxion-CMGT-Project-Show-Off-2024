@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Monoliths;
+using Monoliths.Player;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelSelectionState : GameState
@@ -30,6 +32,10 @@ public class LevelSelectionState : GameState
 
             _levels.Add(levelDisplay);
         }
+
+        MonolithMaster.Instance.Monoliths[typeof(PlayerMovement)]?.SetActive(false);
+        MonolithMaster.Instance.Monoliths[typeof(PlayerInteractor)]?.SetActive(false);
+        MonolithMaster.Instance.Monoliths[typeof(LevelProgressObserver)]?.SetActive(false);
 
         base.Enter();
     }

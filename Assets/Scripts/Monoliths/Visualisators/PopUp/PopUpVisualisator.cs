@@ -115,7 +115,10 @@ namespace Monoliths.Visualisators
                         break;
                 }
             }
-            catch{}
+            catch(Exception ex)
+            {
+                Debug.LogError(ex.Message);
+            }
         }
     }
 }

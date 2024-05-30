@@ -15,14 +15,18 @@ namespace Monoliths.Visualisators
         {
             if (WorldPoint is not null)
             {
-                RectTransformUtility.ScreenPointToLocalPointInRectangle
-                (
-                    _rect.parent as RectTransform,
-                    Camera.main.WorldToScreenPoint((WorldPoint.position + _player.position) * 0.5f),
-                    null,
-                    out Vector2 canvasPosition
-                );
-                _rect.localPosition = canvasPosition;
+                try
+                {
+                    RectTransformUtility.ScreenPointToLocalPointInRectangle
+                    (
+                        _rect.parent as RectTransform,
+                        Camera.main.WorldToScreenPoint((WorldPoint.position + _player.position) * 0.5f),
+                        null,
+                        out Vector2 canvasPosition
+                    );
+                    _rect.localPosition = canvasPosition;
+                }
+                catch{}
             }
         }
     }

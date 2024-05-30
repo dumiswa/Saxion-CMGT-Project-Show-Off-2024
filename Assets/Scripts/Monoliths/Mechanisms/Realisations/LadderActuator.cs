@@ -17,6 +17,9 @@ namespace Monoliths.Mechanisms
 
         public override void Interact(GameObject caller)
         {
+            if (Locked)
+                return;
+
             _caller = caller;
             _caller.TryGetComponent(out _callerRigidbody);
             Invoke();

@@ -9,7 +9,6 @@ public class LevelStartState : LevelSubState
     public override void Enter()
     {
         base.Enter();
-
         MonolithMaster.Instance.StartCoroutine(StartSequence());
     }
 
