@@ -1,12 +1,13 @@
 using UnityEngine;
 using UnityEditor;
 using System.Linq;
+using System.Collections;
 
 public class ToggleVolumeVisibility : EditorWindow
 {
     private static bool _isActive = false;
 
-    [MenuItem("Window/Volume Visibility")]
+    [MenuItem("Tools/Volume Visibility")]
     public static void ShowWindow()
     {
         GetWindow<ToggleVolumeVisibility>("Volume Visibility");

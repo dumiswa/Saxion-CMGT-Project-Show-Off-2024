@@ -22,8 +22,8 @@ public class ChaseState : EnemyState
 
         if(_enemy is WalkingEnemy walkingEnemy)
         {
-            Transform lastWaypointTransform = walkingEnemy.Waypoints[_lastWaypointIndex];
-            float distanceToLastWaypoint = Vector3.Distance(_enemy.transform.position, lastWaypointTransform.position);
+            Vector3 lastWaypointTransform = walkingEnemy.Waypoints[_lastWaypointIndex];
+            float distanceToLastWaypoint = Vector3.Distance(_enemy.transform.position, lastWaypointTransform);
 
             if(distanceToLastWaypoint > _loseInterestRange)
             {

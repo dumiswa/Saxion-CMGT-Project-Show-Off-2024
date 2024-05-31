@@ -3,13 +3,13 @@ using UnityEngine;
 
 public class PatrolState : EnemyState
 {
-    private Transform[] _waypoints;
+    private Vector3[] _waypoints;
     private int _waypointIndex = 0;
     private float _chaseRange;
     private Transform _playerTransform;
-    private Transform _lastWaypointTransform;
+    private Vector3 _lastWaypoint;
 
-    public PatrolState(WalkingEnemy enemy, Transform[] waypoints, Transform playerTransform, float chaseRange, int waypointIndex = 0) : base(enemy)
+    public PatrolState(WalkingEnemy enemy, Vector3[] waypoints, Transform playerTransform, float chaseRange, int waypointIndex = 0) : base(enemy)
     {
         _waypoints = waypoints;  
         _playerTransform = playerTransform;
@@ -18,11 +18,11 @@ public class PatrolState : EnemyState
     }
 
     private void MoveToNextWaypoint() 
-        => _enemy.transform.position = Vector3.MoveTowards(_enemy.transform.position, _lastWaypointTransform.position, _enemy.MovementSpeed * Time.deltaTime);
+        => _enemy.transform.position = Vector3.MoveTowards(_enemy.transform.position, _lastWaypoint, _enemy.MovementSpeed * Time.deltaTime);
 
     public override void Enter()
     {
-        _lastWaypointTransform = _waypoints[_waypointIndex].transform;
+        _lastWaypoint = _waypoints[_waypointIndex];
         MoveToNextWaypoint();
     }
     public override void Execute()
@@ -32,10 +32,10 @@ public class PatrolState : EnemyState
             _enemy.StateMachine.ChangeState(new ChaseState(_enemy, _playerTransform, _chaseRange, 10.0f, _waypointIndex));
             return;
         }
-        if (Vector3.Distance(_enemy.transform.position, _waypoints[_waypointIndex].position) < 0.01f)       
+        if (Vector3.Distance(_enemy.transform.position, _waypoints[_waypointIndex]) < 0.01f)       
             _waypointIndex = (_waypointIndex + 1) % _waypoints.Length;
         
-        _enemy.transform.position = Vector3.MoveTowards(_enemy.transform.position, _waypoints[_waypointIndex].position, _enemy.MovementSpeed * Time.deltaTime);   
+        _enemy.transform.position = Vector3.MoveTowards(_enemy.transform.position, _waypoints[_waypointIndex], _enemy.MovementSpeed * Time.deltaTime);   
     }
     public override void Exit() {}
 }
