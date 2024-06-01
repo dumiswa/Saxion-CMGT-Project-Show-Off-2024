@@ -17,6 +17,7 @@ public class LevelStartState : LevelSubState
         var fade = Object.Instantiate(Resources.Load<GameObject>("Prefabs/Visualisators/Transitions/FadeOut"),
                    GameObject.FindGameObjectWithTag("GUI").transform.GetChild((int)RenderingLayer.LAYER3));
 
+        DataBridge.UpdateData<CameraConstraints>(CameraActions.CONSTRAINTS_DATA_ID, new(new(-180,180),new(-1,30),new(-32,-48)));
         var cameraSequence = DataBridge.TryGetData<CameraSequence>(CameraActions.SEQUENCE_DATA_ID).EncodedData;
 
         cameraSequence.Add(new Vector3(0, 2, 0), 0.75f);

@@ -4,7 +4,7 @@ using UnityEngine;
 public class CameraEvent : OnCollisionActuator
 {
     [SerializeField]
-    private CameraConstraints _constraints = new(new(-180, 180), new(0, 45));
+    private CameraConstraints _constraints = new(new(-180, 180), new(0, 45), new(-32, -48));
 
     [Header("Null = Player")]
     [SerializeField]

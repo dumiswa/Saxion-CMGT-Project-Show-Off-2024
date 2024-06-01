@@ -1,5 +1,4 @@
-﻿using SneakySquirrelLabs.MinMaxRangeAttribute;
-using System;
+﻿using System;
 using UnityEngine;
 
 namespace Monoliths.Player
@@ -11,14 +10,18 @@ namespace Monoliths.Player
         public Vector2Int RotationHorizontal;
         public Vector2Int RotationVertical;
 
+        public Vector2Int Distance;
+
         public CameraConstraints(
             Vector2Int rotationHorizontalConstraints, 
-            Vector2Int rotationVerticalConstraints, 
+            Vector2Int rotationVerticalConstraints,
+            Vector2Int distance,
             byte initialLockInfo = 0b0000_0000)
         {
             _movementLockInfo = initialLockInfo;
             RotationHorizontal = rotationHorizontalConstraints;
-            RotationVertical = rotationVerticalConstraints; 
+            RotationVertical = rotationVerticalConstraints;
+            Distance = distance;
         }
 
         public CameraConstraints(bool _ = false)
@@ -26,6 +29,7 @@ namespace Monoliths.Player
             _movementLockInfo = 0b0000_0000;
             RotationHorizontal = Vector2Int.zero;
             RotationVertical = Vector2Int.zero;
+            Distance = Vector2Int.zero;
         }
 
         public bool IsXAxisLocked() => (_movementLockInfo & 0b0000_0001) != 0;

@@ -13,16 +13,20 @@ namespace Monoliths.Player
         private CameraTarget _target;
         private CameraSequence _sequence;
 
-        private float _interpolationFactor = 0.03f;
+        private float _interpolationFactor = 0.025f;
         private float _rotationSpeed = 78f;
 
         private Transform _cameraOrigin;
         private Transform _cameraPitch;
+        private Camera _cameraZoom;
+
+        private bool _zoomedOut;
 
         public override bool Init()
         {
             _cameraOrigin = Camera.main.transform.parent.parent;
             _cameraPitch  = Camera.main.transform.parent;
+            _cameraZoom = Camera.main;
             if (_cameraOrigin is null)
             {
                 _status = "Couldn't Find Camera";
@@ -32,13 +36,14 @@ namespace Monoliths.Player
 
             var initialTarget = GameObject.FindGameObjectWithTag("Player").transform;
 
-            _constraints = new CameraConstraints(new(-180,180), new(0,45));
+            _constraints = new CameraConstraints(new(-180,180), new(0,45), new(-32,-48));
             _target = new CameraTarget(initialTarget);
             _sequence = new CameraSequence();
 
             DataBridge.UpdateData(CONSTRAINTS_DATA_ID, _constraints);
             DataBridge.UpdateData(TARGET_DATA_ID, _target);
             DataBridge.UpdateData(SEQUENCE_DATA_ID, _sequence);
+
             return base.Init();
         }
 
@@ -48,6 +53,19 @@ namespace Monoliths.Player
 
             Rotate();
             Move();
+            Zoom();
+        }
+
+        private void Zoom()
+        { 
+            _cameraZoom.transform.localPosition = new Vector3(
+                _cameraZoom.transform.localPosition.x,
+                _cameraZoom.transform.localPosition.y,
+                Mathf.Lerp(
+                    _cameraZoom.transform.localPosition.z,
+                    _zoomedOut ? _constraints.Distance.y : _constraints.Distance.x,
+                    _interpolationFactor
+                ));
         }
 
         private void Move()
@@ -178,6 +196,22 @@ namespace Monoliths.Player
                     _status = $"Stored data was not of appropriate types";
                 }
             }
+        }
+
+
+        private void ChangeZoomState() => _zoomedOut = !_zoomedOut;
+ 
+        private void OnEnable()
+        {
+            Defaults();
+
+            Controls.Profile.Map.SecondContextualButton.started += ctx => ChangeZoomState();
+        }
+        private void OnDisable()
+        {
+            Defaults();
+
+            Controls.Profile.Map.SecondContextualButton.started -= ctx => ChangeZoomState();
         }
     }
 }
