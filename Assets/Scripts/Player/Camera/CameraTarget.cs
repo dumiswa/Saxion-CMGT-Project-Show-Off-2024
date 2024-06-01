@@ -1,7 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Monoliths.Player
 {
+    [Serializable]
     public struct CameraTarget
     {
         public Transform X;

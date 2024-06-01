@@ -10,6 +10,10 @@ namespace Monoliths.Mechanisms
         [SerializeField]
         private float _minHeight;
 
+        [Space(5)]
+        [SerializeField]
+        private bool _fwdOffset = true;
+
         private GameObject _caller;
         private Rigidbody _callerRigidbody;
 
@@ -49,7 +53,7 @@ namespace Monoliths.Mechanisms
                 transform.position.x,
                 _callerRigidbody.position.y + 0.15f,
                 transform.position.z
-            ) - transform.forward * 0.25f;
+            ) - (_fwdOffset ? 1f : -1f) * transform.forward * 0.25f;
 
             _isClimbing = true;
             DataBridge.UpdateData(PlayerMovement.ON_LADDER_DATA_ID, true);
@@ -61,15 +65,18 @@ namespace Monoliths.Mechanisms
             if (_callerRigidbody is null)
                 return;
 
-            _callerRigidbody.position += (normal? 1f : -1f) * transform.forward * 0.5f;
+            _callerRigidbody.position += (_fwdOffset? 1f : -1f) * (normal? 1f : -1f) * 0.5f * transform.forward;
             _isClimbing = false;
             DataBridge.UpdateData(PlayerMovement.ON_LADDER_DATA_ID, false);
         }
 
         private void OnDrawGizmos()
         {
-            var position1 = new Vector3(transform.position.x, _minHeight, transform.position.z) - transform.forward * 0.25f;
-            var position2 = new Vector3(transform.position.x, _maxHeight, transform.position.z) - transform.forward * 0.25f;
+            var position1 = new Vector3(transform.position.x, _minHeight, transform.position.z) 
+                - (_fwdOffset ? 1 : -1) * 0.25f * transform.forward;
+
+            var position2 = new Vector3(transform.position.x, _maxHeight, transform.position.z) 
+                - (_fwdOffset ? 1 : -1) * 0.25f * transform.forward;
 
             Gizmos.color = Color.red;
             Gizmos.DrawLine(position1, position2);

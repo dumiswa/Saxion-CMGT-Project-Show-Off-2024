@@ -12,6 +12,7 @@ namespace Monoliths.Visualisators
 
         public Dictionary<ushort, PopUpData> PopUps = new();
         private Queue<ushort> _releasedIds = new();
+        private ushort _counter;
 
         private bool _locked = true;
 
@@ -19,12 +20,18 @@ namespace Monoliths.Visualisators
         public void SetLock(bool state) 
             => _locked = state;
 
+        public void Clear()
+        { 
+            PopUps.Clear();
+            _releasedIds.Clear();
+        }
+
         public ushort Add(PopUpData data)
         {
             if (_locked)
                 return ushort.MaxValue;
 
-            ushort id = (ushort)(PopUps.Count + 1);
+            ushort id = _counter++;
             if (_releasedIds.Count > 0)
                 id = _releasedIds.Dequeue();
 

@@ -14,7 +14,9 @@ public class LevelFinishState : LevelSubState
 
     private IEnumerator FinishSequence()
     {
-        DataBridge.TryGetData<PopUpStackPacket>(PopUpVisualisator.POP_UP_STACK_DATA_ID).EncodedData.SetLock(true);
+        var stack = DataBridge.TryGetData<PopUpStackPacket>(PopUpVisualisator.POP_UP_STACK_DATA_ID).EncodedData;
+        stack.SetLock(true);
+        stack.Clear();
 
         var fade = Object.Instantiate (
             Resources.Load<GameObject>("Prefabs/Visualisators/Transitions/FadeIn"), 

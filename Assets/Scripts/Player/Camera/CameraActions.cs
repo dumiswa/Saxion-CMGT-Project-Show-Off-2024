@@ -32,7 +32,7 @@ namespace Monoliths.Player
 
             var initialTarget = GameObject.FindGameObjectWithTag("Player").transform;
 
-            _constraints = new CameraConstraints(new(-180,180), new(-45,45));
+            _constraints = new CameraConstraints(new(-180,180), new(0,45));
             _target = new CameraTarget(initialTarget);
             _sequence = new CameraSequence();
 
@@ -52,24 +52,18 @@ namespace Monoliths.Player
 
         private void Move()
         {
+            Vector3 destination;
             if (!_sequence.IsPlaying)
-            {
-                _cameraOrigin.transform.position = Vector3.Lerp
-                (
-                    _cameraOrigin.transform.position,
-                    _target.GetTargetPosition(),
-                    _interpolationFactor
-                );
-            }
+                destination = _target.GetTargetPosition();
             else
-            {
-                _cameraOrigin.transform.position = Vector3.Lerp
-                (
-                    _cameraOrigin.transform.position,
-                    _sequence.CurrentTargetDestination,
-                    _interpolationFactor
-                );
-            }
+                destination = _sequence.CurrentTargetDestination;
+
+            _cameraOrigin.transform.position = Vector3.Lerp
+            (
+                _cameraOrigin.transform.position,
+                destination,
+                _interpolationFactor
+            );
         }
 
         private void Rotate()
@@ -79,21 +73,16 @@ namespace Monoliths.Player
                 var direction = Controls.RightDirectional;
                 var target = _target.GetTargetPosition();
 
-                var horizontalMin = Mathf.Min(_constraints.RotationHorizontal.x, _constraints.RotationHorizontal.y);
-                var horizontalMax = Mathf.Max(_constraints.RotationHorizontal.x, _constraints.RotationHorizontal.y);
-                var verticalMin = Mathf.Min(_constraints.RotationVertical.x, _constraints.RotationVertical.y);
-                var verticalMax = Mathf.Max(_constraints.RotationVertical.x, _constraints.RotationVertical.y);
-
                 _cameraPitch.RotateAround(target, _cameraOrigin.right, direction.y * _rotationSpeed * Time.deltaTime);
                 _cameraOrigin.RotateAround(target, Vector3.up, -direction.x * _rotationSpeed * Time.deltaTime);
 
                 var pitch = _cameraPitch.localEulerAngles.x;
-                pitch = pitch <= 180 ? Mathf.Clamp(pitch, 0, verticalMax) : Mathf.Clamp(pitch, 360 + verticalMin, 360);
-                _cameraPitch.localEulerAngles = new(pitch, 0, 0);
+                ClampAngle(ref pitch, _constraints.RotationVertical.x, _constraints.RotationVertical.y);
+                _cameraPitch.localEulerAngles = new(Mathf.LerpAngle(_cameraPitch.localEulerAngles.x, pitch, _interpolationFactor), 0, 0);
 
                 var yaw = _cameraOrigin.localEulerAngles.y;
-                yaw = yaw <= 180 ? Mathf.Clamp(yaw, 0, horizontalMax) : Mathf.Clamp(yaw, 360 + horizontalMin, 360);
-                _cameraOrigin.localEulerAngles = new(0, yaw, 0);
+                ClampAngle(ref yaw, _constraints.RotationHorizontal.x, _constraints.RotationHorizontal.y);
+                _cameraOrigin.localEulerAngles = new(0, Mathf.LerpAngle(_cameraOrigin.localEulerAngles.y, yaw, _interpolationFactor), 0);
             }
             else
             {
@@ -101,6 +90,32 @@ namespace Monoliths.Player
                     _sequence.CurrentRotationDestination.x, _interpolationFactor * 0.4f), 0, 0);
                 _cameraOrigin.localEulerAngles = new(0, Mathf.LerpAngle(_cameraOrigin.localEulerAngles.y, 
                     _sequence.CurrentRotationDestination.y, _interpolationFactor * 0.4f), 0);
+            }
+
+            void ClampAngle(ref float angle, int min, int max)
+            {
+                if (min == max)
+                {
+                    angle = min;
+                    return;
+                }
+
+                if (min < 0)
+                    min += 360;
+                if (max < 0)
+                    max += 360;
+
+                if(min < max)
+                    angle = Mathf.Clamp(angle, min, max);
+                else if(angle > max && angle < min)
+                {
+                    angle = AngularDistance(angle, min) < AngularDistance(angle, max) ? min : max;
+                }
+            }
+            float AngularDistance(float from, float to)
+            {
+                float distance = Mathf.Abs(to - from) % 360f;
+                return distance > 180f ? 360f - distance : distance;
             }
         }
 

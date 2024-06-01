@@ -63,12 +63,11 @@ public class EnemyPathManager: EditorWindow
         }
         GUILayout.Label("List of all found objects using path:");
 
-        bool toRefresh = false;
         int i = 1;
         GUILayout.Label("--------------------------------");
-        foreach (var enemy in _enemies)
+        try
         {
-            try
+            foreach (var enemy in _enemies)
             {
                 GUILayout.Label($"[{i++}] Name: {enemy.name} // IID: {enemy.GetInstanceID()}");
                 if (GUILayout.Button("Select"))
@@ -103,15 +102,11 @@ public class EnemyPathManager: EditorWindow
                 }
                 GUILayout.Label("Waypoint count: " + enemy.Waypoints.Length);
             }
-            catch
-            {
-                toRefresh = true;
-                break;
-            }
         }
-
-        if(toRefresh)
+        catch
+        {
             Refresh();
+        }
     }
 
     private void Refresh()

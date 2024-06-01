@@ -11,6 +11,7 @@ namespace Monoliths.Player
 
         private CharacterAnimatorStackPacket _dataPacket;
         private Transform _cameraYaw;
+       
         public override void Defaults()
         {
             base.Defaults();
@@ -38,13 +39,8 @@ namespace Monoliths.Player
             {
                 try
                 {
-                    int turn = Mathf.RoundToInt(_cameraYaw.rotation.eulerAngles.y / (360f / 7f));
-                    turn -= DataBridge.TryGetData<CharacterAnimatorData>(pair.Key).EncodedData.Direction;
-
-                    if (turn < 0)
-                        turn += 7;
-
-                    turn = 7 - turn + 1;
+                    CacheAnimationData(pair.Key, pair.Value);
+                    var turn = CalculateTurn(pair.Key, pair.Value);
 
                     var prevTurn = pair.Value.GetInteger("Turn");
                     if (prevTurn != turn)
@@ -75,6 +71,40 @@ namespace Monoliths.Player
             }
             foreach (var key in toRemove)
                 _dataPacket.Rotational.Remove(key);
+        }
+
+        private void CacheAnimationData(string key, Animator animator)
+        {
+            var data = DataBridge.TryGetData<CharacterAnimatorData>(key);
+            if (data.IsEmpty)
+                return;
+
+            var cache = data.EncodedData;
+            var motion = animator.transform.position - cache.Derivative;
+
+            if (new Vector2(motion.x, motion.z).magnitude < 0.25f)
+                return;
+
+            cache.Motion = motion; 
+            cache.Derivative = animator.transform.position;
+
+            DataBridge.UpdateData(key, cache);
+        }
+
+        private int CalculateTurn(string key, Animator animator)
+        {
+            const float OFFSET = 0.251f;
+            const float INV_DOUBLE_PI = 1f / (2f * Mathf.PI);
+
+            var cache = DataBridge.TryGetData<CharacterAnimatorData>(key).EncodedData;
+            var normalizedMotion = cache.Motion.normalized;
+
+            float signedMotionAngle = ((Mathf.Atan2(normalizedMotion.z, normalizedMotion.x) +
+                                        animator.transform.eulerAngles.y * Mathf.Deg2Rad) *
+                                        INV_DOUBLE_PI + OFFSET) % 1f;
+
+            float turn = 9f - signedMotionAngle * 8f;
+            return Mathf.RoundToInt(turn > 8f ? turn - 8f : turn);
         }
 
         private void Scan()

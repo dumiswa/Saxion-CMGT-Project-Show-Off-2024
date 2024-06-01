@@ -5,11 +5,13 @@ namespace Monoliths.Player
 {
     public struct CharacterAnimatorData
     {
-        public int Direction;
+        public Vector3 Motion;
+        public Vector3 Derivative;
 
         public CharacterAnimatorData(bool _ = false)
         {
-            Direction = 0;
+            Motion = Vector3.zero;
+            Derivative = Vector3.zero;
         }
     }
     public class CharacterAnimatorStackPacket

@@ -1,7 +1,10 @@
-﻿using UnityEngine;
+﻿using SneakySquirrelLabs.MinMaxRangeAttribute;
+using System;
+using UnityEngine;
 
 namespace Monoliths.Player
 {
+    [Serializable]
     public struct CameraConstraints
     {
         private byte _movementLockInfo;
