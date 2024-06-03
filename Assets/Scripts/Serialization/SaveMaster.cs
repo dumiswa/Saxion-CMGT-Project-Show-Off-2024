@@ -34,16 +34,16 @@
             completed: false
         ).Serialize());
 
-        FileManager.Instance.SaveData("Levels/Level3", "leveldata",
-        new LevelInfo
-        (
-            "Level 3", 
-            "Level3",
-            snowflakeAmount: 3,
-            collectedSnowflakes: 0,
-            id: 3,
-            completed: false
-        ).Serialize());
+        //FileManager.Instance.SaveData("Levels/Level3", "leveldata",
+        //new LevelInfo
+        //(
+        //    "Level 3", 
+        //    "Level3",
+        //    snowflakeAmount: 3,
+        //    collectedSnowflakes: 0,
+        //    id: 3,
+        //    completed: false
+        //).Serialize());
 
         FileManager.Instance.SaveData("Levels/LevelDevDumi", "leveldata",
         new LevelInfo

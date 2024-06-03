@@ -9,7 +9,8 @@ public class PatrolState : EnemyState
     private Transform _playerTransform;
     private Vector3 _lastWaypoint;
 
-    public PatrolState(WalkingEnemy enemy, Vector3[] waypoints, Transform playerTransform, float chaseRange, int waypointIndex = 0) : base(enemy)
+    public PatrolState(WalkingEnemy enemy, Vector3[] waypoints, Transform playerTransform,
+        float chaseRange, int waypointIndex = 0) : base(enemy)
     {
         _waypoints = waypoints;  
         _playerTransform = playerTransform;
@@ -18,7 +19,8 @@ public class PatrolState : EnemyState
     }
 
     private void MoveToNextWaypoint() 
-        => _enemy.transform.position = Vector3.MoveTowards(_enemy.transform.position, _lastWaypoint, _enemy.MovementSpeed * Time.deltaTime);
+        => _enemy.transform.position = Vector3.MoveTowards(_enemy.transform.position, 
+            _lastWaypoint, _enemy.MovementSpeed * Time.deltaTime);
 
     public override void Enter()
     {
@@ -35,7 +37,8 @@ public class PatrolState : EnemyState
         if (Vector3.Distance(_enemy.transform.position, _waypoints[_waypointIndex]) < 0.01f)       
             _waypointIndex = (_waypointIndex + 1) % _waypoints.Length;
         
-        _enemy.transform.position = Vector3.MoveTowards(_enemy.transform.position, _waypoints[_waypointIndex], _enemy.MovementSpeed * Time.deltaTime);   
+        _enemy.transform.position = Vector3.MoveTowards(_enemy.transform.position, 
+            _waypoints[_waypointIndex], _enemy.MovementSpeed * Time.deltaTime);   
     }
     public override void Exit() {}
 }
