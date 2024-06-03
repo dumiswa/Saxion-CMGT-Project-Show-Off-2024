@@ -261,7 +261,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: 10
   MovementSpeed: 4
-  _shootingDirection: {x: 0, y: 0, z: -1.54}
+  _shootingDirection: {x: -0.68, y: 0, z: 0}
   _shootingFrequency: 1.2
   _projectilePrefab: {fileID: 2308075407291081639, guid: 82faadfbdfb56cf4d8ba9dbaf2d0aa1e,
     type: 3}
