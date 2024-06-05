@@ -7916,8 +7916,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _identifier: LadderActivator
-  _player: {fileID: 0}
-  _minDistance: 1
+  _distanceThreshold: 5
 --- !u!54 &7329472399131012688
 Rigidbody:
   m_ObjectHideFlags: 0
