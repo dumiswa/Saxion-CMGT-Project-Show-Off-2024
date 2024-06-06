@@ -26,7 +26,7 @@ namespace Monoliths.Player
 
             _dataPacket = new CharacterAnimatorStackPacket();
             _dataPacket.RegisterPlayerSpecific(player);
-            _dataPacket.TryRegisterRotations(player);
+            _dataPacket.TryRegisterStandardPack(player);
 
             DataBridge.UpdateData(CHARACTER_ANIMATOR_STACK_DATA_ID, _dataPacket);
             return base.Init();
@@ -35,13 +35,12 @@ namespace Monoliths.Player
         private void LateUpdate()
         {
             List<string> toRemove = new();
-            foreach (var pair in _dataPacket.Rotational) 
+            foreach (var pair in _dataPacket.StandardPack) 
             {
                 try
                 {
                     CacheAnimationData(pair.Key, pair.Value);
                     var turn = CalculateTurn(pair.Key, pair.Value);
-
                     var prevTurn = pair.Value.GetInteger("Turn");
                     if (prevTurn != turn)
                     {
@@ -59,6 +58,7 @@ namespace Monoliths.Player
 
                     offset += Time.deltaTime;
                     pair.Value.SetFloat("CycleOffsetBuffer", offset);
+                    pair.Value.SetFloat("Velocity", CalculateVelocity(pair.Key, pair.Value));
                 }
                 catch (MissingReferenceException)
                 {
@@ -70,7 +70,7 @@ namespace Monoliths.Player
                 }
             }
             foreach (var key in toRemove)
-                _dataPacket.Rotational.Remove(key);
+                _dataPacket.StandardPack.Remove(key);   
         }
 
         private void CacheAnimationData(string key, Animator animator)
@@ -82,15 +82,15 @@ namespace Monoliths.Player
             var cache = data.EncodedData;
             var motion = animator.transform.position - cache.Derivative;
 
+            cache.Derivative = animator.transform.position;
+
             if (new Vector2(motion.x, motion.z).magnitude < 0.25f)
                 return;
 
-            cache.Motion = motion; 
-            cache.Derivative = animator.transform.position;
+            cache.Motion = motion;
 
             DataBridge.UpdateData(key, cache);
         }
-
         private int CalculateTurn(string key, Animator animator)
         {
             const float OFFSET = 0.251f;
@@ -106,6 +106,12 @@ namespace Monoliths.Player
             float turn = 9f - signedMotionAngle * 8f;
             return Mathf.RoundToInt(turn > 8f ? turn - 8f : turn);
         }
+        private float CalculateVelocity(string key, Animator animator)
+        {
+            var cache = DataBridge.TryGetData<CharacterAnimatorData>(key).EncodedData;
+            var motion = animator.transform.position - cache.Derivative;
+            return new Vector2(motion.x, motion.z).magnitude;
+        }
 
         private void Scan()
         {
@@ -118,7 +124,7 @@ namespace Monoliths.Player
                     Debug.Log($"GameObject named \"{suitable.name}\" had no animator");
                     continue;
                 }
-                _dataPacket.TryRegisterRotations(animator);
+                _dataPacket.TryRegisterStandardPack(animator);
             }
         }
 

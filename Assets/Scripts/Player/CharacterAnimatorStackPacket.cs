@@ -17,13 +17,13 @@ namespace Monoliths.Player
     public class CharacterAnimatorStackPacket
     {
         private Animator _playerSpecific;
-        public Dictionary<string, Animator> Rotational;
+        public Dictionary<string, Animator> StandardPack;
 
         public bool AsyncLock;
 
         public CharacterAnimatorStackPacket()
         {
-            Rotational = new();
+            StandardPack = new();
         }
 
         public void RegisterPlayerSpecific(Animator animator) 
@@ -31,9 +31,9 @@ namespace Monoliths.Player
         public void UnregisterPlayerSpecific() 
             => _playerSpecific = null;    
 
-        public void TryRegisterRotations(Animator animator)
+        public void TryRegisterStandardPack(Animator animator)
         {
-            if (Rotational.ContainsValue(animator))
+            if (StandardPack.ContainsValue(animator))
                 return;
 
             var dataID = GetDataIDFromAnimator(animator);
@@ -42,22 +42,22 @@ namespace Monoliths.Player
                 dataID,
                 new()
             );
-            Rotational.Add(dataID, animator);
+            StandardPack.Add(dataID, animator);
         }
-        public void UnregisterRotations(Animator animator)
+        public void UnregisterStandardPack(Animator animator)
         {
-            if (!Rotational.ContainsValue(animator))
+            if (!StandardPack.ContainsValue(animator))
                 return;
 
             var dataID = GetDataIDFromAnimator(animator);
             DataBridge.ReleaseData(dataID);
-            Rotational.Remove(dataID);
+            StandardPack.Remove(dataID);
         }
 
         public void Defaults() 
         {
             _playerSpecific = null;
-            Rotational.Clear();
+            StandardPack.Clear();
         }
 
         public static string GetDataIDFromAnimator(Animator animator)
