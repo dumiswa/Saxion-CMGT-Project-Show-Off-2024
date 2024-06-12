@@ -1301,7 +1301,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3baec892e563fb4c988d8df02e60e8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _musicTracks: []
+  _musicTracks:
+  - {fileID: 11400000, guid: 8f33f3d3948d64c4f94bf1abe25c9d65, type: 2}
+  - {fileID: 11400000, guid: ac55a740c9daadc4ca0c606c0cd80f04, type: 2}
   _sounds:
   - {fileID: 11400000, guid: 539a5eeef33bf914994e87b37da5b313, type: 2}
   _ambientSounds: []
