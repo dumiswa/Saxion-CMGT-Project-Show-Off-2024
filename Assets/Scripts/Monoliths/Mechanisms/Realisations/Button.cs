@@ -5,6 +5,9 @@ namespace Monoliths.Mechanisms
     public class Button : Activator
     {
         public override void Interact(GameObject caller)
-            => Invoke();
+        {
+            Invoke();
+            AudioManager.Instance.PlaySound("SwitchSfx");
+        }          
     }
 }
