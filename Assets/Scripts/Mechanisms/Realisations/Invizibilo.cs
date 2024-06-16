@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 namespace Monoliths.Mechanisms
 {
@@ -37,19 +38,25 @@ namespace Monoliths.Mechanisms
         private Vector3 _direction;
 
         private GameObject _caller;
-
+        private Animator _animator;
         private static Transform _player;
 
         private bool _isVisible;
+        private bool _finalized;
 
         private void Start()
         {
             DataBridge.UpdateData<Invizibilo>(INVIZIBILO_ACCOMPANING, null);
-            _state = State.Inactive;
+
+            _animator = transform.Find("Display").GetComponent<Animator>();
             _player ??= GameObject.FindGameObjectWithTag("Player").transform;
+            _state = State.Inactive;
         }
         public override void Interact(GameObject caller)
         {
+            if (_finalized)
+                return;
+
             if (Locked)
                 return;
 
@@ -68,6 +75,10 @@ namespace Monoliths.Mechanisms
         }
         private void Update()
         {
+            AnimateVisibility();
+            if (_finalized)
+                return;
+
             var data = DataBridge.TryGetData<Invizibilo>(INVIZIBILO_ACCOMPANING).EncodedData;
             if (data == this)
                 _isVisible = true;
@@ -87,11 +98,13 @@ namespace Monoliths.Mechanisms
             }
 
             Move();
-            AnimateVisibility();
         }
 
         private void Move()
         {
+            if (_finalized)
+                return;
+
             _accelerationBuffer += _accelerationMultiplier * Time.deltaTime * 
                 new Vector2(_direction.x, _direction.z);
             _accelerationBuffer /= Mathf.Clamp(0.5f * Time.deltaTime, 0.001f, 5f);
@@ -107,6 +120,8 @@ namespace Monoliths.Mechanisms
                 0, 
                 _direction.z * _accelerationBuffer.y
             ) * Time.deltaTime;
+
+            _animator.SetFloat("Velocity", _accelerationBuffer.magnitude * 2f);
         }
 
         private void AnimateVisibility()
@@ -125,9 +140,15 @@ namespace Monoliths.Mechanisms
                 new Color(color.r, color.g, color.b, opacity));
         }
 
-        public void FinalizeAct()
+        public void FinalizeAct() => StartCoroutine(Finalisation());
+
+        private IEnumerator Finalisation()
         {
+            _finalized = true;
+            _animator.SetBool("IsEating", true);
             _state = State.Inactive;
+            _isVisible = false;
+            yield return new WaitForSeconds(1.4f);
             DataBridge.UpdateData<Invizibilo>(INVIZIBILO_ACCOMPANING, null);
             Destroy(gameObject);
         }

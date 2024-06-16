@@ -41,7 +41,7 @@ namespace Monoliths.Player
                 {
                     CacheAnimationData(pair.Key, pair.Value);
                     var turn = CalculateTurn(pair.Key, pair.Value);
-                    var prevTurn = pair.Value.GetInteger("Turn");
+                    var prevTurn = pair.Value.GetFloat("Turn");
                     if (prevTurn != turn)
                     {
                         pair.Value.SetFloat
@@ -50,7 +50,7 @@ namespace Monoliths.Player
                             pair.Value.GetFloat("CycleOffsetBuffer")
                         );
                     }
-                    pair.Value.SetInteger("Turn", turn);
+                    pair.Value.SetFloat("Turn", turn);
 
                     var offset = pair.Value.GetFloat("CycleOffsetBuffer");
                     if (offset >= int.MaxValue - 1)
@@ -90,7 +90,7 @@ namespace Monoliths.Player
 
             DataBridge.UpdateData(key, cache);
         }
-        private int CalculateTurn(string key, Animator animator)
+        private float CalculateTurn(string key, Animator animator)
         {
             const float OFFSET = 0.251f;
             const float INV_DOUBLE_PI = 1f / (2f * Mathf.PI);
@@ -101,9 +101,7 @@ namespace Monoliths.Player
             float signedMotionAngle = ((Mathf.Atan2(normalizedMotion.z, normalizedMotion.x) +
                                         animator.transform.eulerAngles.y * Mathf.Deg2Rad) *
                                         INV_DOUBLE_PI + OFFSET) % 1f;
-
-            float turn = 9f - signedMotionAngle * 8f;
-            return Mathf.RoundToInt(turn > 8f ? turn - 8f : turn);
+            return 1f - signedMotionAngle;
         }
 
         private void Scan()

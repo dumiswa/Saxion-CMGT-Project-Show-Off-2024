@@ -8,8 +8,15 @@ namespace Monoliths.Player
         public const string SAVED_LIVES_DATA_ID = "svdplrlives";
         public const string CURRENT_LIVES_DATA_ID = "CurrentPlayerLives";
 
+        private const float INVULNERABILITY_TIME = 0.8f;
+
         private HPContainer _managed;
         private HPContainer _prefab;
+
+        private Animator _animator;
+
+        private float _invulnerabilityCounter;
+
         private byte _currentLives
         {
             get => _currentLivesBuffer;
@@ -17,7 +24,10 @@ namespace Monoliths.Player
             {
                 DataBridge.UpdateData(CURRENT_LIVES_DATA_ID, value);
 
-                if(_managed)
+                if (value < _currentLivesBuffer)
+                    _invulnerabilityCounter = 0;
+
+                if (_managed)
                     _managed.SetCurrent(value);
 
                 _currentLivesBuffer = value;
@@ -42,23 +52,33 @@ namespace Monoliths.Player
         public override void Defaults()
         {
             _currentLives = 3;
-
+            _invulnerabilityCounter = INVULNERABILITY_TIME;
             base.Defaults();
         }
         public override bool Init()
         {
             _prefab = Resources.Load<HPContainer>("Prefabs/Visualisators/InGame GUI/HPContainer");
+            _animator = GameObject.FindGameObjectWithTag("Player").transform.Find("Display").GetComponent<Animator>();
             return base.Init();
         }
 
         protected virtual void Update()
         {
             var data = DataBridge.TryGetData<byte>(CURRENT_LIVES_DATA_ID);
+
+            if (_invulnerabilityCounter < INVULNERABILITY_TIME)
+                _invulnerabilityCounter += Time.deltaTime;
+
             if (data.WasUpdated && data.EncodedData >= 0)
             {
-                _currentLives = data.EncodedData;
-                data.EncodedData = 1;
+                if (_invulnerabilityCounter < INVULNERABILITY_TIME)
+                    DataBridge.UpdateData<byte>(CURRENT_LIVES_DATA_ID, _currentLives);
+                else
+                    _currentLives = data.EncodedData;
             }
+
+            _animator.SetBool("IsTakingDamage", _currentLives > 0 && _invulnerabilityCounter < INVULNERABILITY_TIME);
+            _animator.SetBool("IsDead", _currentLives == 0);
         }
 
         private void OnLevelStart()
@@ -86,8 +106,17 @@ namespace Monoliths.Player
                 "resource", new byte[1] { _currentLives}, 
                 needsReload: false
             );
-            Object.Destroy(_managed.gameObject);
         }
+        private void OnLevelSelectionStart()
+        {
+            if(_managed != null)
+                Object.Destroy(_managed.gameObject);
+
+            _currentLives = 1;
+            _invulnerabilityCounter = INVULNERABILITY_TIME;
+            _animator.SetTrigger("Revive");
+        }
+
         private void OnGameStateEnter(GameState state)
         {
             switch (state)
@@ -97,6 +126,9 @@ namespace Monoliths.Player
                     break;
                 case LevelFinishState:
                     OnLevelFinish();
+                    break;
+                case LevelSelectionState:
+                    OnLevelSelectionStart();
                     break;
                 default:
                     break;

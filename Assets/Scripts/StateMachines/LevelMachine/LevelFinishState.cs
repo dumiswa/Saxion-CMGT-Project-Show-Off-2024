@@ -23,6 +23,9 @@ public class LevelFinishState : LevelSubState
         stack.SetLock(true);
         stack.Clear();
 
+        if(DataBridge.TryGetData<byte>(PlayerResources.CURRENT_LIVES_DATA_ID).EncodedData == 0) 
+            yield return new WaitForSeconds(2f);
+
         var fade = Object.Instantiate (
             Resources.Load<GameObject>("Prefabs/Visualisators/Transitions/FadeIn"), 
             GameObject.FindGameObjectWithTag("GUI").transform.GetChild((int)RenderingLayer.LAYER3)

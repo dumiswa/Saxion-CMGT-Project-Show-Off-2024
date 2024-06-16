@@ -5116,7 +5116,7 @@ GameObject:
   - component: {fileID: 6214750055923445628}
   - component: {fileID: 4793845234444805719}
   - component: {fileID: 7333422875307694743}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DisplayObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5210,9 +5210,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
-  m_Height: 3.4000008
+  m_Height: 1.9495337
   m_Direction: 1
-  m_Center: {x: 0, y: 1.1999997, z: 0}
+  m_Center: {x: 0, y: 0.47476512, z: 0}
 --- !u!1 &9139440713258077929
 GameObject:
   m_ObjectHideFlags: 0

@@ -127,6 +127,7 @@ namespace Monoliths.Player
             var isLanded = IsLanded();
 
             Move();
+            Animate(isLanded);
 
             if (!_swapZtoY)
             {
@@ -146,6 +147,13 @@ namespace Monoliths.Player
 
             _stateMachine.Current?.Update();
         }
+        private void Animate(bool isLanded)
+        {
+            _animator.SetBool("IsClimbing", _swapZtoY);
+            _animator.SetBool("IsFalling", !isLanded);
+            _animator.SetBool("IsGliding", IsGlidingUnlocked && IsGliding);
+        }
+
         private void FixedUpdate()
         {
             if (!_simulationEnabled)
@@ -215,6 +223,7 @@ namespace Monoliths.Player
 
                     _climbMultiplier += _climbAcceleration * 2f * direction.y;
                     _climbMultiplier = Mathf.Clamp(_climbMultiplier, -1f, 1f);
+                    _animator.SetFloat("Velocity", _climbMultiplier * 2f);
                 }
                 else
                 {
@@ -228,7 +237,7 @@ namespace Monoliths.Player
                         Mathf.Clamp(_accelerationMultiplier.x, -1f, 1f),
                         Mathf.Clamp(_accelerationMultiplier.y, -1f, 1f)
                     );
-                    _animator.SetFloat("Velocity", _accelerationMultiplier.magnitude * 4f);
+                    _animator.SetFloat("Velocity", _accelerationMultiplier.magnitude * 2f);
                 }
             }
         }

@@ -15,8 +15,8 @@ public class Boss : MonoBehaviour
         public bool SpawnPredicate(float timestamp) => 
             timestamp >= _preparationTime;
 
-        public void Spawn() 
-            => Instantiate(_prefab);
+        public void Spawn(Transform transform) 
+            => Instantiate(_prefab, transform);
     }
 
     [SerializeField]
@@ -33,7 +33,7 @@ public class Boss : MonoBehaviour
         _counter += Time.deltaTime;
         if (_current.SpawnPredicate(_counter))
         {
-            _current.Spawn();
+            _current.Spawn(transform);
             _counter = 0;
             _current = _attacks[UnityEngine.Random.Range(0, _attacks.Count)];
         }
