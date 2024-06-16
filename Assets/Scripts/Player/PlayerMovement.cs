@@ -15,6 +15,7 @@ namespace Monoliths.Player
         private MovementStateMachine _stateMachine;
 
         private GameObject _player;
+        private Animator _animator;
         private Rigidbody _rigidbody;
         private Collider _collider;
 
@@ -80,14 +81,13 @@ namespace Monoliths.Player
             }
             _playerOrigin = _player.transform.Find("Origin");
             _player.TryGetComponent(out _rigidbody);
-            if (_rigidbody is null)
-            {
-                _rigidbody = _player.AddComponent<Rigidbody>();
-                _rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX;
-                _rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
-                _rigidbody.collisionDetectionMode = CollisionDetectionMode.Continuous;
-            }
+            _rigidbody ??= _player.AddComponent<Rigidbody>();
+
+            _rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX;
+            _rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
+            _rigidbody.collisionDetectionMode = CollisionDetectionMode.Continuous;
             _rigidbody.useGravity = false;
+
             _player.TryGetComponent(out _collider);
             if (_collider is null)
             {
@@ -95,6 +95,8 @@ namespace Monoliths.Player
                 _collider.material = new PhysicMaterial("PlayerPhysicMaterial") { dynamicFriction = 1f, staticFriction = 0f };
             }
             _cameraOrigin = Camera.main.transform.parent.parent;
+
+            _animator = _player.transform.Find("Display").GetComponent<Animator>();
 
             InitializeStates();
             return base.Init();
@@ -226,6 +228,7 @@ namespace Monoliths.Player
                         Mathf.Clamp(_accelerationMultiplier.x, -1f, 1f),
                         Mathf.Clamp(_accelerationMultiplier.y, -1f, 1f)
                     );
+                    _animator.SetFloat("Velocity", _accelerationMultiplier.magnitude * 4f);
                 }
             }
         }

@@ -32,7 +32,7 @@ public class LevelFinishState : LevelSubState
         Object.Destroy(fade);
 
         var levelBuffer = DataBridge.TryGetData<LevelInfo>(LevelProgressObserver.LEVEL_INFO_BUFFER_DATA_ID);
-        if (!levelBuffer.IsEmpty)
+        if (!levelBuffer.IsEmpty && levelBuffer.EncodedData.IsCompleted)
             FileManager.Instance.SaveData(
                 $"Levels/{levelBuffer.EncodedData.AssetName}",
                 "leveldata",

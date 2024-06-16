@@ -37,6 +37,8 @@ public class LevelSelectionState : GameState
         MonolithMaster.Instance.Monoliths[typeof(PlayerInteractor)]?.SetActive(false);
         MonolithMaster.Instance.Monoliths[typeof(LevelProgressObserver)]?.SetActive(false);
 
+        DataBridge.UpdateData<byte>(SnowflakeVisualisator.SNOWFLAKE_AMOUNT_DATA_ID, 0);
+
         base.Enter();
     }
     private void OnLevelSelected(int index)

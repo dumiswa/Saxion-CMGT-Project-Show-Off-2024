@@ -58,7 +58,6 @@ namespace Monoliths.Player
 
                     offset += Time.deltaTime;
                     pair.Value.SetFloat("CycleOffsetBuffer", offset);
-                    pair.Value.SetFloat("Velocity", CalculateVelocity(pair.Key, pair.Value));
                 }
                 catch (MissingReferenceException)
                 {
@@ -105,12 +104,6 @@ namespace Monoliths.Player
 
             float turn = 9f - signedMotionAngle * 8f;
             return Mathf.RoundToInt(turn > 8f ? turn - 8f : turn);
-        }
-        private float CalculateVelocity(string key, Animator animator)
-        {
-            var cache = DataBridge.TryGetData<CharacterAnimatorData>(key).EncodedData;
-            var motion = animator.transform.position - cache.Derivative;
-            return new Vector2(motion.x, motion.z).magnitude;
         }
 
         private void Scan()

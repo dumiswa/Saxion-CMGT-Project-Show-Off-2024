@@ -1,7 +1,6 @@
-﻿using Monoliths.Player;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Projectile : OnCollisionActuator
+public class Projectile : Damaging
 {
     [SerializeField]
     private float _speed = 0.5f;
@@ -35,16 +34,7 @@ public class Projectile : OnCollisionActuator
                 Destroy(gameObject);
         }
     }
-    public override void Invoke()
-    {
-        base.Invoke();
-        DataBridge.UpdateData
-        (
-            PlayerResources.CURRENT_LIVES_DATA_ID, 
-            (byte)(DataBridge.TryGetData<byte>(PlayerResources.CURRENT_LIVES_DATA_ID).EncodedData - 1)
-        );
-        Destroy(gameObject);
-    }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;

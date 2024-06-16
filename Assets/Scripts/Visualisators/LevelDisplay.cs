@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Monoliths.Visualisators;
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -24,5 +25,4 @@ public class LevelDisplay : MonoBehaviour
             $"<size=75%><b><color=#ababff>Snowflakes</color></b> : [ {LevelInfo.CollectedSnowflakes} / {LevelInfo.SnowflakeAmount} ]\n" +
             $"<b>{(!LevelInfo.IsCompleted? "<color=#ff6767>Not Complete" : "<color=#67ff67>Complete" )}</b>";
     }
-
 }

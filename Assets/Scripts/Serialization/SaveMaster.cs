@@ -7,7 +7,7 @@
         (
             "Tutorial",
             "Level0",
-            snowflakeAmount: 1,
+            snowflakeAmount: 0,
             collectedSnowflakes: 0,
             id: 0,
             completed: false
@@ -17,7 +17,7 @@
         (
             "Level 1",
             "Level1",
-            snowflakeAmount: 1,
+            snowflakeAmount: 3,
             collectedSnowflakes: 0,
             id: 1,
             completed: false
@@ -34,16 +34,16 @@
             completed: false
         ).Serialize());
 
-        //FileManager.Instance.SaveData("Levels/Level3", "leveldata",
-        //new LevelInfo
-        //(
-        //    "Level 3", 
-        //    "Level3",
-        //    snowflakeAmount: 3,
-        //    collectedSnowflakes: 0,
-        //    id: 3,
-        //    completed: false
-        //).Serialize());
+        FileManager.Instance.SaveData("Levels/Level3", "leveldata",
+        new LevelInfo
+        (
+            "Level 3", 
+            "Level3",
+            snowflakeAmount: 3,
+            collectedSnowflakes: 0,
+            id: 3,
+            completed: false
+        ).Serialize());
 
         FileManager.Instance.SaveData("Levels/LevelDevDumi", "leveldata",
         new LevelInfo

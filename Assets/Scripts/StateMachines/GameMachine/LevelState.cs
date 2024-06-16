@@ -26,6 +26,9 @@ public class LevelState : GameState<LevelSubState>
         var prefab = selectedLevel.EncodedData.GetAsset();
         _levelInstance = Object.Instantiate(prefab);
 
+
+        DataBridge.UpdateData(SnowflakeVisualisator.SNOWFLAKE_AMOUNT_DATA_ID, selectedLevel.EncodedData.SnowflakeAmount);
+
         DataBridge.UpdateData(PlayerMovement.SIMULATION_ENABLED_DATA_ID, true);
         SubStateMachine.NextNoExit<LevelStartState>();
     }
