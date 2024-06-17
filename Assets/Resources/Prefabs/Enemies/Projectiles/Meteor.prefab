@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5656559805555999487}
   - component: {fileID: 7851323346545749063}
   - component: {fileID: -7956315388056612662}
+  - component: {fileID: 8746725061632664664}
   m_Layer: 0
   m_Name: Meteor
   m_TagString: Untagged
@@ -69,8 +70,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8adf71d416eb58d4298f8838c12119f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _calibratingTime: 1.4
+  _identifier: Meteor
+  _calibratingTime: 1.2
   _clearTime: 28
+--- !u!135 &8746725061632664664
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1598809762540551552}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 2
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2639443338911420257
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,6 +6,7 @@ public class LevelProgressObserver : Monolith
 {
     public const string LEVEL_INFO_BUFFER_DATA_ID = "CurrentLevelInfoBuffer";
     public const string CURRENT_SNOWFLAKES_DATA_ID = "CurrentCollectedSnowflakes";
+    public const string BOSS_LEVEL_FINISHED_ID = "BossLevelFinished";
 
     private GameObject[] _snowflakes;
     private GameObject[] _iceCrystals;
@@ -38,6 +39,17 @@ public class LevelProgressObserver : Monolith
         }
 
         InitializeLevelInfo();
+    }
+
+    private void Update()
+    {
+        var bossData = DataBridge.TryGetData<bool>(BOSS_LEVEL_FINISHED_ID);
+        if (bossData.EncodedData)
+        {
+            DataBridge.UpdateData(BOSS_LEVEL_FINISHED_ID, false);
+            UpdateLevelInfo(levelAccomplished: true);
+            FinalizeLevel();
+        }
     }
 
     private void OnEnable() => GameState.OnEnter += OnGameStateEnter; 
@@ -77,6 +89,7 @@ public class LevelProgressObserver : Monolith
 
         var levelBuffer = new LevelInfo(selectedLevelInfo.EncodedData);
         DataBridge.UpdateData(LEVEL_INFO_BUFFER_DATA_ID, levelBuffer);
+        DataBridge.UpdateData(BOSS_LEVEL_FINISHED_ID, false);
     }
     private void UpdateLevelInfo(byte addSnowflakes = 0, bool levelAccomplished = false)
     {
@@ -115,9 +128,8 @@ public class LevelProgressObserver : Monolith
 
     private void FinalizeLevel()
     {
-        if (!(GameStateMachine.Instance.Current is LevelState levelState))
+        if (GameStateMachine.Instance.Current is not LevelState levelState)
             return;
-
         levelState.FinalizeLevel();
     }
 }

@@ -1592,7 +1592,7 @@ VideoPlayer:
   m_GameObject: {fileID: 1638195623}
   m_Enabled: 1
   m_VideoClip: {fileID: 32900000, guid: 841314ef24d28584395d8059d16d85ab, type: 3}
-  m_TargetCameraAlpha: 0.88
+  m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 2128503934}
   m_TargetTexture: {fileID: 0}
@@ -1608,7 +1608,7 @@ VideoPlayer:
   m_TargetAudioSources:
   - {fileID: 0}
   m_DirectAudioVolumes:
-  - 0.528
+  - 0.056
   m_Url: 
   m_EnabledAudioTracks: 01
   m_DirectAudioMutes: 00
@@ -1766,7 +1766,7 @@ MonoBehaviour:
   priority: 0
   blendDistance: 0
   weight: 1
-  sharedProfile: {fileID: 11400000, guid: a6560a915ef98420e9faacc1c7438823, type: 2}
+  sharedProfile: {fileID: 11400000, guid: 1a62faf7c77a9674491458235eca3f0d, type: 2}
 --- !u!1 &1927679148
 GameObject:
   m_ObjectHideFlags: 0

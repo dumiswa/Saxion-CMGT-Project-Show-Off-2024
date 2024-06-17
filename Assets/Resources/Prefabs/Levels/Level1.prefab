@@ -963,7 +963,7 @@ MonoBehaviour:
   _state: 0
   _followingRadius: 2.8
   _maxSpeed: 6
-  _accelerationMultiplier: 4
+  _accelerationMultiplier: 24
   _renderer: {fileID: 3248075101328105614}
   _changeStep: 0.75
   _visibleDistance: 7
@@ -10776,7 +10776,7 @@ MonoBehaviour:
   _state: 0
   _followingRadius: 2.8
   _maxSpeed: 6
-  _accelerationMultiplier: 4
+  _accelerationMultiplier: 24
   _renderer: {fileID: 8637928708029552784}
   _changeStep: 0.75
   _visibleDistance: 7
@@ -12090,7 +12090,7 @@ MonoBehaviour:
   _state: 0
   _followingRadius: 2.8
   _maxSpeed: 6
-  _accelerationMultiplier: 4
+  _accelerationMultiplier: 24
   _renderer: {fileID: 8761845549418721175}
   _changeStep: 0.75
   _visibleDistance: 7
@@ -14972,7 +14972,7 @@ MonoBehaviour:
   _state: 0
   _followingRadius: 2.8
   _maxSpeed: 6
-  _accelerationMultiplier: 4
+  _accelerationMultiplier: 24
   _renderer: {fileID: 8879599925661009616}
   _changeStep: 0.75
   _visibleDistance: 7
@@ -15513,7 +15513,7 @@ MonoBehaviour:
   _state: 0
   _followingRadius: 2.8
   _maxSpeed: 6
-  _accelerationMultiplier: 4
+  _accelerationMultiplier: 24
   _renderer: {fileID: 180739475311788801}
   _changeStep: 0.75
   _visibleDistance: 7
@@ -18462,7 +18462,7 @@ MonoBehaviour:
   _state: 0
   _followingRadius: 2.8
   _maxSpeed: 6
-  _accelerationMultiplier: 4
+  _accelerationMultiplier: 24
   _renderer: {fileID: 233897322202896796}
   _changeStep: 0.75
   _visibleDistance: 7

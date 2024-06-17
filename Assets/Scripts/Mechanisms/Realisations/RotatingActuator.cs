@@ -43,18 +43,14 @@ namespace Monoliths.Mechanisms
         {         
             if (_isRotating)
             {
-                Debug.Log("Is rotating: " + _isRotating);
                 return;
             }
 
-            Debug.Log("Rotating...");
             _currentRotationIndex++;
-            Debug.Log("Rotation index is: " + _currentRotationIndex + "out of" + _rotations.Count + "rotations");
             if (_currentRotationIndex >= _rotations.Count)
                 _currentRotationIndex = 0;
 
             _desiredRotation.localEulerAngles = _rotations[_currentRotationIndex];
-            Debug.Log("Desired rotation is" + _rotations[_currentRotationIndex]);
         }
     }
 }
