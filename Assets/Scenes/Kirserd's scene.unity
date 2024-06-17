@@ -906,15 +906,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3baec892e563fb4c988d8df02e60e8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _musicTracks:
-  - {fileID: 11400000, guid: 8f33f3d3948d64c4f94bf1abe25c9d65, type: 2}
-  - {fileID: 11400000, guid: ac55a740c9daadc4ca0c606c0cd80f04, type: 2}
-  _sounds:
-  - {fileID: 11400000, guid: 539a5eeef33bf914994e87b37da5b313, type: 2}
-  _ambientSounds: []
-  _musicSource: {fileID: 498254228}
-  _sfxSource: {fileID: 498254227}
-  _ambientSource: {fileID: 498254226}
+  musicTracks:
+  - {fileID: 0}
+  sounds:
+  - {fileID: 0}
+  ambientSounds:
+  - {fileID: 0}
+  musicSource: {fileID: 498254228}
+  sfxSource: {fileID: 498254227}
+  ambientSource: {fileID: 498254226}
 --- !u!4 &498254230
 Transform:
   m_ObjectHideFlags: 0
