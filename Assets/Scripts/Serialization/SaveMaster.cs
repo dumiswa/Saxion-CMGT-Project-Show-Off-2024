@@ -52,7 +52,7 @@
             "LevelDevDumi",
             snowflakeAmount: 3,
             collectedSnowflakes: 0,
-            id: 3,
+            id: 4,
             completed: false
         ).Serialize());
 
@@ -63,7 +63,7 @@
             "LevelDevKirserd",
             snowflakeAmount: 3,
             collectedSnowflakes: 0,
-            id: 3,
+            id: 5,
             completed: false
         ).Serialize());
     }

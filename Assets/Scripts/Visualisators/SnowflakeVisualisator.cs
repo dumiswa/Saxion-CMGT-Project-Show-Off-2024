@@ -1,7 +1,5 @@
 ﻿using Monoliths.Visualisators;
 using UnityEngine;
-
-
 public class SnowflakeVisualisator : AbstractVisualisator<byte>
 {
     public const string SNOWFLAKE_AMOUNT_DATA_ID = "SnowflakeAmount";

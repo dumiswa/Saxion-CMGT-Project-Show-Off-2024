@@ -88,6 +88,7 @@ public class LevelProgressObserver : Monolith
         }
 
         var levelBuffer = new LevelInfo(selectedLevelInfo.EncodedData);
+        DataBridge.UpdateData<byte>(CURRENT_SNOWFLAKES_DATA_ID, 0);
         DataBridge.UpdateData(LEVEL_INFO_BUFFER_DATA_ID, levelBuffer);
         DataBridge.UpdateData(BOSS_LEVEL_FINISHED_ID, false);
     }

@@ -10,7 +10,6 @@ public class LevelFinishState : LevelSubState
     {
         base.Enter();
 
-
         var player = GameObject.FindGameObjectWithTag("Player").transform;
         DataBridge.UpdateData(CameraActions.TARGET_DATA_ID, new CameraTarget(player, player, player));
         MonolithMaster.Instance.StartCoroutine(FinishSequence());

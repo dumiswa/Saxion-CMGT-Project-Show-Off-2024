@@ -1,36 +1,52 @@
 ﻿using Monoliths;
 using Monoliths.Player;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelSelectionState : GameState
 {
     public const string SELECTED_LEVEL_DATA_ID = "SelectedLevel";
 
-    private List<LevelDisplay> _levels = new();
-
-    private Transform _screen;
+    private LevelSelectionScreen _screen;
     public override void Enter()
     {
-        var screen = Resources.Load<GameObject>("Prefabs/Screens/LevelSelection");
-        var prefab = Resources.Load<GameObject>("Prefabs/Visualisators/LevelDisplay");
+        if (GameStateMachine.Instance.Previous is not MenuState && 
+            GameStateMachine.Instance.Previous is not IntroCutsceneState && 
+            GameStateMachine.Instance.Previous is not EndingCutsceneState)
+        {
+            var selectedLevel = DataBridge.TryGetData<LevelInfo>(SELECTED_LEVEL_DATA_ID);
+            if (!selectedLevel.IsEmpty)
+            {
+                if (selectedLevel.EncodedData.LevelID == 0)
+                {
+                    GameStateMachine.Instance.Next<IntroCutsceneState>();
+                    return;
+                }
+                else if (selectedLevel.EncodedData.LevelID == 3)
+                {
+                    GameStateMachine.Instance.Next<EndingCutsceneState>();
+                    return;
+                }
+            }
+        }
 
-        _screen = Object.Instantiate(screen, GameObject.FindGameObjectWithTag("GUI").transform.GetChild(0)).transform;
-        var content = _screen.GetChild(1).GetChild(0).GetChild(0);
+        var screen = Resources.Load<LevelSelectionScreen>("Prefabs/Screens/LevelSelection");
+        bool intro = false;
+        LevelInfo introLevel = new();
+
+        _screen = Object.Instantiate(screen, GameObject.FindGameObjectWithTag("GUI").transform.GetChild(0));
         foreach (var data in FileManager.Instance.GetAllSaveDataOfExtension("leveldata"))
         {
             var levelInfo = new LevelInfo();
             levelInfo.Deserialize(data);
 
-            var levelDisplay = Object.Instantiate(prefab,content).GetComponent<LevelDisplay>();
+            if(levelInfo.LevelID == 0 && !levelInfo.IsCompleted)
+            {
+                introLevel = levelInfo;
+                intro = true;
+                break;
+            }
 
-            levelDisplay.Index = _levels.Count;
-            levelDisplay.LevelInfo = levelInfo;
-            levelDisplay.Display();
-
-            levelDisplay.OnLevelSelected += OnLevelSelected;
-
-            _levels.Add(levelDisplay);
+            _screen.AddLevelInfo(levelInfo);
         }
 
         MonolithMaster.Instance.Monoliths[typeof(PlayerMovement)]?.SetActive(false);
@@ -39,35 +55,24 @@ public class LevelSelectionState : GameState
 
         DataBridge.UpdateData<byte>(SnowflakeVisualisator.SNOWFLAKE_AMOUNT_DATA_ID, 0);
 
-        if (AudioManager.Instance != null && !AudioManager.Instance.IsPlaying("MainMenuMusic"))
+        if (intro)
         {
-            AudioManager.Instance.PlayMainMenuMusic();
+            DataBridge.UpdateData(SELECTED_LEVEL_DATA_ID, introLevel);
+            GameStateMachine.Instance.Next<LevelState>();
+            return;
         }
 
-        base.Enter();
-    }
-    private void OnLevelSelected(int index)
-    {
-        if (_levels.Count <= index)
-            return;
+        if (AudioManager.Instance != null && !AudioManager.Instance.IsPlaying("MainMenuMusic"))
+            AudioManager.Instance.PlayMainMenuMusic();
 
-        DataBridge.UpdateData(SELECTED_LEVEL_DATA_ID, _levels[index].LevelInfo);
-        GameStateMachine.Instance.Next<LevelState>();
+        base.Enter();
     }
 
     public override void Exit()
     {
-        ClearLevels();
-        Object.Destroy(_screen.gameObject);
+        if (_screen != null)
+            Object.Destroy(_screen.gameObject);
 
         base.Exit();
-    }
-
-    private void ClearLevels()
-    {
-        foreach (var level in _levels)
-            level.Clear();
-
-        _levels.Clear();
     }
 }
