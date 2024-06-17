@@ -39,6 +39,11 @@ public class LevelSelectionState : GameState
 
         DataBridge.UpdateData<byte>(SnowflakeVisualisator.SNOWFLAKE_AMOUNT_DATA_ID, 0);
 
+        if (AudioManager.Instance != null && !AudioManager.Instance.IsPlaying("MainMenuMusic"))
+        {
+            AudioManager.Instance.PlayMainMenuMusic();
+        }
+
         base.Enter();
     }
     private void OnLevelSelected(int index)

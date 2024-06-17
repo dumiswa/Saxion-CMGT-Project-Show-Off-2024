@@ -18,7 +18,9 @@ public class MenuState : GameState
             Resources.Load<GameObject>("Prefabs/Screens/Menu"), 
             GameObject.FindGameObjectWithTag("GUI").transform.GetChild(0)
         );
-        
+
+        AudioManager.Instance.PlayMainMenuMusic();
+
         base.Enter();
     }
 

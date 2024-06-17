@@ -7,7 +7,6 @@ namespace Monoliths.Mechanisms
         public override void Interact(GameObject caller)
         {
             Invoke();
-            AudioManager.Instance.PlaySound("SwitchSfx");
         }          
     }
 }

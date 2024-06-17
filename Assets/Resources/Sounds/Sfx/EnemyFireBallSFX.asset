@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5cf97075d04901b4e8f2d82aeeab04da, type: 3}
-  m_Name: Level0MusicTrackSO
+  m_Script: {fileID: 11500000, guid: db28cd9da6800e04eaece607251e5bcb, type: 3}
+  m_Name: EnemyFireBallSFX
   m_EditorClassIdentifier: 
-  Name: Level0MusicTrack
-  Clip: {fileID: 8300000, guid: 617c544e0713c8a40b67678a8a7eeb8c, type: 3}
-  Loop: 1
+  Name: EnemyFireBallSFX
+  Clip: {fileID: 0}
+  Volume: 1

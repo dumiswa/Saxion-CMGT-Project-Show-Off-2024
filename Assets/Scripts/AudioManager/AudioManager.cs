@@ -1,17 +1,20 @@
 using UnityEngine;
 using System.Linq;
+using System.Collections.Generic;
 
-public partial class AudioManager : MonoBehaviour
+public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance { get; private set; }
 
-    [SerializeField] private MusicTrack[] _musicTracks;
-    [SerializeField] private Sound[] _sounds;
-    [SerializeField] private AmbientSound[] _ambientSounds ;
+    private Dictionary<string, AudioSource> _audioSources;
 
-    [SerializeField] private AudioSource _musicSource;
-    [SerializeField] private AudioSource _sfxSource;
-    [SerializeField] private AudioSource _ambientSource;
+    [SerializeField] private MusicTrack[] musicTracks;
+    [SerializeField] private Sound[] sounds;
+    [SerializeField] private AmbientSound[] ambientSounds;
+
+    [SerializeField] private AudioSource musicSource;
+    [SerializeField] private AudioSource sfxSource;
+    [SerializeField] private AudioSource ambientSource;
 
     private void Awake()
     {
@@ -25,32 +28,52 @@ public partial class AudioManager : MonoBehaviour
 
     public void PlayMusic(string name)
     {
-        AudioClip clip = Resources.Load<AudioClip>("Audio/Music/" + name);
-        if (clip)
+        var track = musicTracks.FirstOrDefault(m => m.Name == name);
+        if (track != null && track.Clip != null)
         {
-            _musicSource.clip = clip;
-            _musicSource.loop = true;
-            _musicSource.Play();
-        }
-    }
-    public void PlaySound(string name) 
-    {
-        Sound sound = _sounds.FirstOrDefault(s => s.name == name);
-        if (sound != null && sound.Clip != null)
-             _sfxSource.PlayOneShot(sound.Clip, sound.Volume);      
-    }
-    public void PlayAmbient(string name) 
-    {
-        AudioClip clip = Resources.Load<AudioClip>("Audio/Ambient/" + name);
-        if (clip)
-        {
-            _ambientSource.clip = clip;
-            _ambientSource.loop = true;
-            _ambientSource.Play();
+            musicSource.clip = track.Clip;
+            musicSource.loop = track.Loop;
+            musicSource.Play();
         }
     }
 
-    public void SetMusicVolume(float volume) => _musicSource.volume = volume;
-    public void SetSFXVolume(float volume) => _sfxSource.volume = volume;
-    public void SetAmbientVolume(float volume) => _ambientSource.volume = volume;
+    public void PlayMainMenuMusic()
+        =>PlayMusic("MainMenuMT");
+    public void PlayLevelMusic(string levelName)
+        =>PlayMusic(levelName);
+
+    public void PlaySound(string name)
+    {
+        var sound = sounds.FirstOrDefault(s => s.Name == name);
+        if (sound != null && sound.Clip != null)
+            sfxSource.PlayOneShot(sound.Clip, sound.Volume);
+    }
+
+    public void PlayAmbient(string name)
+    {
+        var ambient = ambientSounds.FirstOrDefault(a => a.Name == name);
+        if (ambient != null && ambient.Clip != null)
+        {
+            ambientSource.clip = ambient.Clip;
+            ambientSource.loop = ambient.Loop;
+            ambientSource.Play();
+        }
+    }
+
+    public void StopMusic() => musicSource.Stop();
+    
+     public void Stop(string name)
+     {
+        if (musicSource.isPlaying && musicSource.clip != null && musicSource.clip.name == name)     
+            musicSource.Stop();
+     }
+
+    public void SetMusicVolume(float volume) => musicSource.volume = volume;
+    public void SetSFXVolume(float volume) => sfxSource.volume = volume;
+    public void SetAmbientVolume(float volume) => ambientSource.volume = volume;
+
+    public bool IsPlaying(string soundName)
+    {
+        return _audioSources[soundName].isPlaying;
+    }
 }

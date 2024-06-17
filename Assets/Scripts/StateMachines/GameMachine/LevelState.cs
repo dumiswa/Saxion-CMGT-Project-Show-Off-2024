@@ -14,6 +14,8 @@ public class LevelState : GameState<LevelSubState>
     }
     public override void Enter()
     {
+        AudioManager.Instance.Stop("Level0MT");
+
         base.Enter();
 
         (MonolithMaster.Instance.Monoliths[typeof(PlayerMovement)] as PlayerMovement).ResetPosition();
