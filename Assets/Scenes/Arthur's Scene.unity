@@ -411,7 +411,7 @@ MonoBehaviour:
   priority: 0
   blendDistance: 0
   weight: 1
-  sharedProfile: {fileID: 11400000, guid: 6c808411006d17d45807379de13d3ffd, type: 2}
+  sharedProfile: {fileID: 11400000, guid: c58b24d45ff93c14f80b554d0578648d, type: 2}
 --- !u!4 &1160234427
 Transform:
   m_ObjectHideFlags: 0
@@ -427,7 +427,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1676407963
+--- !u!1001 &1404887521
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -485,6 +485,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 459877347458543928, guid: ab4036b0a59f2884294056414f6e3e67,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7aad602704a70154daf91ccf4b2d24f6, type: 2}
     - target: {fileID: 919132149155446097, guid: ab4036b0a59f2884294056414f6e3e67,
         type: 3}
       propertyPath: m_Name
@@ -502,4 +507,4 @@ SceneRoots:
   - {fileID: 961739753}
   - {fileID: 203844589}
   - {fileID: 1160234427}
-  - {fileID: 1676407963}
+  - {fileID: 1404887521}
