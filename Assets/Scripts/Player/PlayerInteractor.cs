@@ -74,11 +74,20 @@ namespace Monoliths.Player
 
             if (_closest is not null)
             {
-                _popUpId = stack.EncodedData.Add(new PopUpData(
-                   PopUpStackPacket.PopUpTypes.IN_WORLD,
-                   "InteractButtonPopUp",
-                   _closest
-               ));
+                if (typeof(TwoBActuator).IsAssignableFrom(_closest.GetType()))
+                {
+                    _popUpId = stack.EncodedData.Add(new PopUpData(
+                        PopUpStackPacket.PopUpTypes.IN_WORLD,
+                        "InteractButton2PopUp",
+                        _closest
+                     ));
+                }
+                else
+                    _popUpId = stack.EncodedData.Add(new PopUpData(
+                       PopUpStackPacket.PopUpTypes.IN_WORLD,
+                       "InteractButtonPopUp",
+                       _closest
+                    ));
             }
             else
                 _popUpId = ushort.MaxValue;
@@ -107,6 +116,14 @@ namespace Monoliths.Player
             closest.Interact(_player);
         }
 
+        public void Interact2WithObject(Actuator closest)
+        {
+            if (closest is null)
+                return;
+
+            closest.Interact2(_player);
+        }
+
         private void Update()
         {
             Scan();
@@ -117,12 +134,14 @@ namespace Monoliths.Player
             Defaults();
 
             Controls.Profile.Map.FirstContextualButton.started += ctx => InteractWithObject(_closest);
+            Controls.Profile.Map.SecondContextualButton.started += ctx => Interact2WithObject(_closest);
         }
         private void OnDisable()
         {
             Defaults();
 
             Controls.Profile.Map.FirstContextualButton.started -= ctx => InteractWithObject(_closest);
+            Controls.Profile.Map.SecondContextualButton.started -= ctx => Interact2WithObject(_closest);
         }
     }
 }

@@ -77,12 +77,17 @@ public class Ameba : Actuator
                 if (collider)
                     collider.enabled = true;
 
+                _passenger.TryGetComponent(out Rigidbody rb);
+                if (rb)
+                {
+                    rb.WakeUp();
+                }
                 _nextFrameUnlock = true;
                 Locked = false;
                 return;
             }
         }
-        _passenger.position = new Vector3(transform.position.x, _passenger.position.y, transform.position.z);
+        _passenger.position = new Vector3(transform.position.x, transform.position.y + _seatingOffsetY, transform.position.z);
     }
 
     public override void Invoke()
@@ -94,6 +99,12 @@ public class Ameba : Actuator
             collider.enabled = false;
 
         MonolithMaster.Instance.Monoliths[typeof(PlayerMovement)]?.SetActive(false);
+
+        _passenger.TryGetComponent(out Rigidbody rb);
+        if (rb)
+        {
+            rb.Sleep();
+        }
 
         _parentBuffer = _passenger.parent;
         _passenger.SetParent(transform);

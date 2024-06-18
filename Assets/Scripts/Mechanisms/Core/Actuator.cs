@@ -24,7 +24,8 @@ namespace Monoliths.Mechanisms
         }
         private void OnDisable() => MechanismsObserver.Remove(Identifier);
 
-        public virtual void Interact(GameObject caller) {}
-        public virtual void Collide(GameObject caller) {}
+        public virtual void Interact(GameObject caller) { }
+        public virtual void Interact2(GameObject caller) { }
+        public virtual void Collide(GameObject caller) { }
     }
 }
