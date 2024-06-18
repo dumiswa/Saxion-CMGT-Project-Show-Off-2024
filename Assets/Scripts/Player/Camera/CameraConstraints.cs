@@ -12,16 +12,23 @@ namespace Monoliths.Player
 
         public Vector2Int Distance;
 
+        public float Interpolation;
+        public float FOV;
+
         public CameraConstraints(
             Vector2Int rotationHorizontalConstraints, 
             Vector2Int rotationVerticalConstraints,
             Vector2Int distance,
+            float interpolation = 0.025f,
+            float fov = 24,
             byte initialLockInfo = 0b0000_0000)
         {
             _movementLockInfo = initialLockInfo;
             RotationHorizontal = rotationHorizontalConstraints;
             RotationVertical = rotationVerticalConstraints;
             Distance = distance;
+            Interpolation = interpolation;
+            FOV = fov;
         }
 
         public CameraConstraints(bool _ = false)
@@ -30,6 +37,8 @@ namespace Monoliths.Player
             RotationHorizontal = Vector2Int.zero;
             RotationVertical = Vector2Int.zero;
             Distance = Vector2Int.zero;
+            Interpolation = 0.025f;
+            FOV = 24;
         }
 
         public bool IsXAxisLocked() => (_movementLockInfo & 0b0000_0001) != 0;

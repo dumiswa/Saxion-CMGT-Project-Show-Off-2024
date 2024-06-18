@@ -23,12 +23,14 @@ public class LevelStartState : LevelSubState
         cameraSequence.Add(new Vector3(0, 2, 0), 0.75f);
         cameraSequence.Add(new Vector3(0, 0, 0), 0.75f);
 
-        cameraSequence.Add(new Vector2(45, -45), 0.75f);
-        cameraSequence.Add(new Vector2(30, -45), 0.75f);
+        cameraSequence.Add(new Vector2Int(45, -45), 0.75f);
+        cameraSequence.Add(new Vector2Int(30, -45), 0.75f);
+
+        cameraSequence.Add(new Vector2(1, 24), 0f);
 
         cameraSequence.Play();
 
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(1.5f);
 
         MonolithMaster.Instance.Monoliths[typeof(PlayerMovement)]?.SetActive(true);
         MonolithMaster.Instance.Monoliths[typeof(PlayerInteractor)]?.SetActive(true);

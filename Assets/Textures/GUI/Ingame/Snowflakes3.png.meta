@@ -154,8 +154,8 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 783.6667
-        height: 767
+        width: 533.3333
+        height: 500
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -173,10 +173,10 @@ TextureImporter:
       name: Snowflakes3_1
       rect:
         serializedVersion: 2
-        x: 783
+        x: 533
         y: 0
-        width: 783.6667
-        height: 767
+        width: 533.3333
+        height: 500
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -194,10 +194,10 @@ TextureImporter:
       name: Snowflakes3_2
       rect:
         serializedVersion: 2
-        x: 1566
+        x: 1066
         y: 0
-        width: 783.6667
-        height: 767
+        width: 533.3333
+        height: 500
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

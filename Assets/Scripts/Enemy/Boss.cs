@@ -42,15 +42,20 @@ public class Boss : MonoBehaviour
     private float _counter;
     private Attack _current;
 
-    private void Awake() => Instance = this;
-    private void Start() 
-        => _current = _attacks[UnityEngine.Random.Range(0, _attacks.Count)];
+    private Animator _animator;
 
+    private void Awake() => Instance = this;
+    private void Start()
+    {
+        _animator = transform.Find("Display").GetComponent<Animator>();
+        _current = _attacks[UnityEngine.Random.Range(0, _attacks.Count)];
+    }
     private void Update()
     {
         _counter += Time.deltaTime;
         if (_current.SpawnPredicate(_counter))
         {
+            _animator.SetTrigger("Attack");
             _current.Spawn(transform);
             _counter = 0;
             _current = _attacks[UnityEngine.Random.Range(0, _attacks.Count)];
@@ -59,6 +64,7 @@ public class Boss : MonoBehaviour
 
     public void DealDamage()
     {
+        _animator.SetTrigger("TakeDamage");
         _HP--;
         if (_HP == 0)
             DataBridge.UpdateData(LevelProgressObserver.BOSS_LEVEL_FINISHED_ID, true);

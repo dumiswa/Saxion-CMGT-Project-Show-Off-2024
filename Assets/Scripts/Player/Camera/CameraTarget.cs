@@ -13,8 +13,8 @@ namespace Monoliths.Player
         public CameraTarget(
             Transform x = null,
             Transform y = null,
-            Transform z = null)
-        {
+            Transform z = null
+        ){
             X = x;
             Y = y;
             Z = z;

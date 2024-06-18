@@ -15,17 +15,17 @@ namespace Monoliths.Mechanisms
         private float _rotationCompleteThreshold = 0.1f;
 
         private Transform _desiredRotation;
-        private bool _isRotating = false;
+        protected bool _isRotating = false;
         private int _currentRotationIndex = 0;
 
-        private void Start()
+        protected virtual void Start()
         {
             _desiredRotation = new GameObject(gameObject.name + "_desiredRotation").transform;
             _desiredRotation.SetParent(transform);
             _desiredRotation.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
         }
 
-        private void Update()
+        protected virtual void Update()
         {
             transform.rotation = Quaternion.Lerp(
                 transform.rotation, 
@@ -33,7 +33,6 @@ namespace Monoliths.Mechanisms
                 _rotationLerpFactor
             );
 
-            //_isRotating = transform.rotation != _desiredRotation.localRotation;
             if (Quaternion.Angle(transform.rotation, _desiredRotation.rotation) < _rotationCompleteThreshold)    
                 _isRotating = false; 
             
@@ -42,9 +41,7 @@ namespace Monoliths.Mechanisms
         public override void Invoke()
         {         
             if (_isRotating)
-            {
                 return;
-            }
 
             _currentRotationIndex++;
             if (_currentRotationIndex >= _rotations.Count)

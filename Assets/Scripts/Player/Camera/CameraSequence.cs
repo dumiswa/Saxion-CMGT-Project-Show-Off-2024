@@ -8,24 +8,25 @@ namespace Monoliths.Player
     {
         public bool IsPlaying { get; private set; }
 
-        private bool _isPlayingRotation, _isPlayingTarget;
+        private bool _isPlayingRotation, _isPlayingTarget, _isPlayingAdds;
 
-        private readonly List<(float delay, Vector2 rotation)> _rotationSequence = new();
+        private readonly List<(float delay, Vector2Int rotation)> _rotationSequence = new();
         private readonly List<(float delay, Vector3 target)> _targetSequence = new();
+        private readonly List<(float delay, Vector2 interpolationAndFov)> _addsSequence = new();
 
         public Vector3 CurrentTargetDestination { get; private set; }
-        public Vector2 CurrentRotationDestination { get; private set; }
+        public Vector2Int CurrentRotationDestination { get; private set; }
+        public Vector2 CurrentAddsDestination { get; private set; }
 
-        public (float delay, Vector2 rotation) GetNextRotation()
+        public (float delay, Vector2Int rotation) GetNextRotation()
         {
             if (_targetSequence.Count == 0)
-                return (-1, Vector2.zero);
+                return (-1, Vector2Int.zero);
 
             var result = _rotationSequence[0];
             _rotationSequence.RemoveAt(0);
             return result;
         }
-
         public (float delay, Vector3 target) GetNextTarget()
         {
             if (_targetSequence.Count == 0)
@@ -35,12 +36,22 @@ namespace Monoliths.Player
             _targetSequence.RemoveAt(0);
             return result;
         }
+        public (float delay, Vector2 adds) GetNextAdds()
+        {
+            if (_addsSequence.Count == 0)
+                return (-1, Vector2.zero);
 
-        public void Add(Vector2 rotation, float delay) 
+            var result = _addsSequence[0];
+            _addsSequence.RemoveAt(0);
+            return result;
+        }
+
+        public void Add(Vector2Int rotation, float delay) 
             => _rotationSequence.Add((delay, rotation));
-
         public void Add(Vector3 target, float delay)
             => _targetSequence.Add((delay, target));
+        public void Add(Vector2 adds, float delay)
+            => _addsSequence.Add((delay, adds));
 
         public void Play() 
         {
@@ -50,12 +61,13 @@ namespace Monoliths.Player
             IsPlaying = true;
             MonolithMaster.Instance.StartCoroutine(SequenceRotation());
             MonolithMaster.Instance.StartCoroutine(SequenceTarget());
+            MonolithMaster.Instance.StartCoroutine(SequenceAdds());
         }
         public void Stop() => IsPlaying = false;
         
         private IEnumerator SequenceRotation()
         {
-            (float delay, Vector2 rotation) = GetNextRotation();
+            (float delay, Vector2Int rotation) = GetNextRotation();
 
             if (delay == -1)
                 yield break;
@@ -74,7 +86,32 @@ namespace Monoliths.Player
                 }
                 CurrentRotationDestination = rotation;
             }
-            if (!_isPlayingTarget)
+            if (!_isPlayingTarget && !_isPlayingAdds)
+                IsPlaying = false;
+        }
+
+        private IEnumerator SequenceAdds()
+        {
+            (float delay, Vector2 adds) = GetNextAdds();
+
+            if (delay == -1)
+                yield break;
+
+            CurrentAddsDestination = adds;
+
+            _isPlayingRotation = true;
+            while (IsPlaying)
+            {
+                yield return new WaitForSeconds(delay);
+                (delay, adds) = GetNextAdds();
+                if (delay == -1)
+                {
+                    _isPlayingAdds = false;
+                    break;
+                }
+                CurrentAddsDestination = adds;
+            }
+            if (!_isPlayingTarget && !_isPlayingRotation)
                 IsPlaying = false;
         }
 
@@ -99,7 +136,7 @@ namespace Monoliths.Player
                 }
                 CurrentTargetDestination = target;
             }
-            if (!_isPlayingRotation)
+            if (!_isPlayingRotation && !_isPlayingAdds)
                 IsPlaying = false;
         }
     }

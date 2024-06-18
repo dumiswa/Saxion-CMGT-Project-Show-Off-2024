@@ -9,6 +9,23 @@ public class LevelSelectionState : GameState
     private LevelSelectionScreen _screen;
     public override void Enter()
     {
+        // AUTORUN
+
+        foreach (var data in FileManager.Instance.GetAllSaveDataOfExtension("leveldata"))
+        {
+            var levelInfo = new LevelInfo();
+            levelInfo.Deserialize(data);
+
+            if (levelInfo.LevelID == 2)
+            {
+                DataBridge.UpdateData(SELECTED_LEVEL_DATA_ID, levelInfo);
+                GameStateMachine.Instance.Next<LevelState>();
+                return;
+            }
+        }
+
+        // AUTORUN
+
         if (GameStateMachine.Instance.Previous is not MenuState && 
             GameStateMachine.Instance.Previous is not IntroCutsceneState && 
             GameStateMachine.Instance.Previous is not EndingCutsceneState)

@@ -13,7 +13,6 @@ namespace Monoliths.Player
         private CameraTarget _target;
         private CameraSequence _sequence;
 
-        private float _interpolationFactor = 0.025f;
         private float _rotationSpeed = 78f;
 
         private Transform _cameraOrigin;
@@ -54,33 +53,39 @@ namespace Monoliths.Player
             Rotate();
             Move();
             Zoom();
+            FOV();
         }
 
         private void Zoom()
-        { 
-            _cameraZoom.transform.localPosition = new Vector3(
+        {
+            if (!_sequence.IsPlaying)
+                _cameraZoom.transform.localPosition = new Vector3(
                 _cameraZoom.transform.localPosition.x,
                 _cameraZoom.transform.localPosition.y,
                 Mathf.Lerp(
                     _cameraZoom.transform.localPosition.z,
                     _zoomedOut ? _constraints.Distance.y : _constraints.Distance.x,
-                    _interpolationFactor
+                    _constraints.Interpolation
                 ));
         }
 
         private void Move()
         {
+            float interpolation = _constraints.Interpolation;
             Vector3 destination;
+
             if (!_sequence.IsPlaying)
                 destination = _target.GetTargetPosition();
             else
+            {
                 destination = _sequence.CurrentTargetDestination;
-
+                interpolation = _sequence.CurrentAddsDestination.x;
+            }
             _cameraOrigin.transform.position = Vector3.Lerp
             (
                 _cameraOrigin.transform.position,
                 destination,
-                _interpolationFactor
+                interpolation
             );
         }
 
@@ -96,18 +101,18 @@ namespace Monoliths.Player
 
                 var pitch = _cameraPitch.localEulerAngles.x;
                 ClampAngle(ref pitch, _constraints.RotationVertical.x, _constraints.RotationVertical.y);
-                _cameraPitch.localEulerAngles = new(Mathf.LerpAngle(_cameraPitch.localEulerAngles.x, pitch, _interpolationFactor), 0, 0);
+                _cameraPitch.localEulerAngles = new(Mathf.LerpAngle(_cameraPitch.localEulerAngles.x, pitch, _constraints.Interpolation), 0, 0);
 
                 var yaw = _cameraOrigin.localEulerAngles.y;
                 ClampAngle(ref yaw, _constraints.RotationHorizontal.x, _constraints.RotationHorizontal.y);
-                _cameraOrigin.localEulerAngles = new(0, Mathf.LerpAngle(_cameraOrigin.localEulerAngles.y, yaw, _interpolationFactor), 0);
+                _cameraOrigin.localEulerAngles = new(0, Mathf.LerpAngle(_cameraOrigin.localEulerAngles.y, yaw, _constraints.Interpolation), 0);
             }
             else
             {
                 _cameraPitch.localEulerAngles = new(Mathf.LerpAngle(_cameraPitch.localEulerAngles.x, 
-                    _sequence.CurrentRotationDestination.x, _interpolationFactor * 0.4f), 0, 0);
+                    _sequence.CurrentRotationDestination.x, _sequence.CurrentAddsDestination.x), 0, 0);
                 _cameraOrigin.localEulerAngles = new(0, Mathf.LerpAngle(_cameraOrigin.localEulerAngles.y, 
-                    _sequence.CurrentRotationDestination.y, _interpolationFactor * 0.4f), 0);
+                    _sequence.CurrentRotationDestination.y, _sequence.CurrentAddsDestination.x), 0);
             }
 
             void ClampAngle(ref float angle, int min, int max)
@@ -135,6 +140,14 @@ namespace Monoliths.Player
                 float distance = Mathf.Abs(to - from) % 360f;
                 return distance > 180f ? 360f - distance : distance;
             }
+        }
+
+        private void FOV()
+        {
+            if (_sequence.IsPlaying)
+                _cameraZoom.fieldOfView = Mathf.Lerp(_cameraZoom.fieldOfView, _sequence.CurrentAddsDestination.y, _sequence.CurrentAddsDestination.x);
+            else 
+                _cameraZoom.fieldOfView = Mathf.Lerp(_cameraZoom.fieldOfView, _constraints.FOV, _constraints.Interpolation);
         }
 
         private void TrySyncData()
