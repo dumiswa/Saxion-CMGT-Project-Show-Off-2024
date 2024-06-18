@@ -55,6 +55,13 @@ public class Ameba : Actuator
                 if (collider)
                     collider.enabled = true;
 
+                _passenger.TryGetComponent(out Rigidbody rb);
+                if (rb)
+                {
+                    rb.WakeUp();
+                    rb.position = transform.position;
+                }
+
                 _nextFrameUnlock = true;
                 Locked = false;
                 return;
@@ -81,6 +88,7 @@ public class Ameba : Actuator
                 if (rb)
                 {
                     rb.WakeUp();
+                    rb.position = transform.position;
                 }
                 _nextFrameUnlock = true;
                 Locked = false;

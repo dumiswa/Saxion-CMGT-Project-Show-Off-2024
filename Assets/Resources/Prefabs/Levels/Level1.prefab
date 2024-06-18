@@ -1661,6 +1661,8 @@ MonoBehaviour:
     RotationHorizontal: {x: 270, y: 270}
     RotationVertical: {x: 12, y: 12}
     Distance: {x: -26, y: -48}
+    Interpolation: 0.025
+    FOV: 18
   _target:
     X: {fileID: 0}
     Y: {fileID: 0}
@@ -5620,6 +5622,8 @@ MonoBehaviour:
     RotationHorizontal: {x: -140, y: 60}
     RotationVertical: {x: -1, y: 30}
     Distance: {x: -28, y: -48}
+    Interpolation: 0.025
+    FOV: 24
   _target:
     X: {fileID: 0}
     Y: {fileID: 0}
@@ -7905,6 +7909,8 @@ MonoBehaviour:
     RotationHorizontal: {x: 0, y: 0}
     RotationVertical: {x: -1, y: 1}
     Distance: {x: -26, y: -48}
+    Interpolation: 0.025
+    FOV: 18
   _target:
     X: {fileID: 0}
     Y: {fileID: 0}
@@ -8176,6 +8182,8 @@ MonoBehaviour:
     RotationHorizontal: {x: -90, y: -90}
     RotationVertical: {x: -1, y: 1}
     Distance: {x: -26, y: -48}
+    Interpolation: 0.025
+    FOV: 18
   _target:
     X: {fileID: 0}
     Y: {fileID: 0}
@@ -10300,6 +10308,8 @@ MonoBehaviour:
     RotationHorizontal: {x: 0, y: 0}
     RotationVertical: {x: -1, y: 1}
     Distance: {x: -24, y: -30}
+    Interpolation: 0.025
+    FOV: 18
   _target:
     X: {fileID: 0}
     Y: {fileID: 0}
@@ -13534,6 +13544,8 @@ MonoBehaviour:
     RotationHorizontal: {x: 180, y: 180}
     RotationVertical: {x: 12, y: 12}
     Distance: {x: -22, y: -48}
+    Interpolation: 0.025
+    FOV: 18
   _target:
     X: {fileID: 0}
     Y: {fileID: 0}
@@ -20586,6 +20598,8 @@ MonoBehaviour:
     RotationHorizontal: {x: 180, y: 180}
     RotationVertical: {x: 25, y: 25}
     Distance: {x: -38, y: -48}
+    Interpolation: 0.025
+    FOV: 18
   _target:
     X: {fileID: 8279787721162141347}
     Y: {fileID: 0}

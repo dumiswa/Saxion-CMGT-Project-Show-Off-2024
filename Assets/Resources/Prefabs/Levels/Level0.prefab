@@ -1491,6 +1491,8 @@ MonoBehaviour:
     RotationHorizontal: {x: -180, y: 180}
     RotationVertical: {x: -1, y: 30}
     Distance: {x: -28, y: -48}
+    Interpolation: 0.025
+    FOV: 24
   _target:
     X: {fileID: 0}
     Y: {fileID: 0}
