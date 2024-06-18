@@ -6,7 +6,7 @@ TextureImporter:
   serializedVersion: 12
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
@@ -37,13 +37,13 @@ TextureImporter:
     filterMode: 1
     aniso: 1
     mipBias: 0
-    wrapU: 0
-    wrapV: 0
+    wrapU: 1
+    wrapV: 1
     wrapW: 0
-  nPOTScale: 1
+  nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 0
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -52,9 +52,9 @@ TextureImporter:
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
-  alphaIsTransparency: 0
+  alphaIsTransparency: 1
   spriteTessellationDetail: -1
-  textureType: 0
+  textureType: 8
   textureShape: 1
   singleChannelComponent: 0
   flipbookRows: 1
@@ -147,18 +147,194 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Cube_Dog_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1302
+        height: 702
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9bb272a068047cf46b09a583f8d54829
+      internalID: -1294751630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cube_Dog_1
+      rect:
+        serializedVersion: 2
+        x: 1302
+        y: 0
+        width: 1302
+        height: 702
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c43ee355a8254eb4e89a5c6acd010a9d
+      internalID: -171566004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cube_Dog_2
+      rect:
+        serializedVersion: 2
+        x: 2604
+        y: 0
+        width: 1302
+        height: 702
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1945b8ffbf97f2e4b941306688a8e4de
+      internalID: 579664633
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cube_Dog_3
+      rect:
+        serializedVersion: 2
+        x: 3906
+        y: 0
+        width: 1302
+        height: 702
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 440111c50bbc723448972017fa21c2a6
+      internalID: -897073377
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cube_Dog_4
+      rect:
+        serializedVersion: 2
+        x: 5208
+        y: 0
+        width: 1302
+        height: 702
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7a94d399743f8654ebc032f6a2b0679e
+      internalID: 1375676320
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cube_Dog_5
+      rect:
+        serializedVersion: 2
+        x: 6510
+        y: 0
+        width: 1302
+        height: 702
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5723f5de9e4bb6b4c8fdb043f18d8672
+      internalID: 1597368763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cube_Dog_6
+      rect:
+        serializedVersion: 2
+        x: 7812
+        y: 0
+        width: 1302
+        height: 702
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 803cb9faf22379b49957d44c71829ddb
+      internalID: 1257412493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cube_Dog_7
+      rect:
+        serializedVersion: 2
+        x: 9114
+        y: 0
+        width: 1302
+        height: 702
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a33364993b1b141448254f5b8f860584
+      internalID: -1221127987
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Cube_Dog_0: -1294751630
+      Cube_Dog_1: -171566004
+      Cube_Dog_2: 579664633
+      Cube_Dog_3: -897073377
+      Cube_Dog_4: 1375676320
+      Cube_Dog_5: 1597368763
+      Cube_Dog_6: 1257412493
+      Cube_Dog_7: -1221127987
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
