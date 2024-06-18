@@ -14,7 +14,7 @@ public class LevelState : GameState<LevelSubState>
     }
     public override void Enter()
     {
-        AudioManager.Instance.Stop("Level0MT");
+        AudioManager.Instance.Stop("Level0MT"); //Actually main menu music!
 
         base.Enter();
 
@@ -28,6 +28,8 @@ public class LevelState : GameState<LevelSubState>
         var prefab = selectedLevel.EncodedData.GetAsset();
         _levelInstance = Object.Instantiate(prefab);
 
+        AudioManager.Instance.PlayLevelMusic(selectedLevel.EncodedData.GetAsset().ToString());
+        AudioManager.Instance.PlayAmbient(selectedLevel.EncodedData.GetAsset().ToString());
 
         DataBridge.UpdateData(SnowflakeVisualisator.SNOWFLAKE_AMOUNT_DATA_ID, selectedLevel.EncodedData.SnowflakeAmount);
 
@@ -43,6 +45,9 @@ public class LevelState : GameState<LevelSubState>
 
         DataBridge.UpdateData(PlayerMovement.SIMULATION_ENABLED_DATA_ID, false);
         Object.Destroy(_levelInstance);
+
+        AudioManager.Instance.StopMusic();
+        AudioManager.Instance.StopAmbient();
 
         base.Exit();
     }

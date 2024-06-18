@@ -6,4 +6,5 @@ public class MusicTrack : ScriptableObject
     public string Name;
     public AudioClip Clip;
     public bool Loop = true;
+    public float Volume = 1.0f;
 }

@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: InteractSFX
   m_EditorClassIdentifier: 
   Name: InteractSFX
-  Clip: {fileID: 8300000, guid: 5082acb20e9a92541b6065273f403e01, type: 3}
-  Volume: 1
+  Clip: {fileID: 8300000, guid: 4376c340fcc355a48b1b74deef633879, type: 3}
+  Volume: 0.5

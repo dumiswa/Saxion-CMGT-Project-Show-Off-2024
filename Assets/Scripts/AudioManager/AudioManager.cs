@@ -33,6 +33,7 @@ public class AudioManager : MonoBehaviour
         {
             _musicSource.clip = track.Clip;
             _musicSource.loop = track.Loop;
+            SetMusicVolume(track.Volume);
             _musicSource.Play();
         }
     }
@@ -46,7 +47,11 @@ public class AudioManager : MonoBehaviour
     {
         var sound = _sounds.FirstOrDefault(s => s.Name == name);
         if (sound != null && sound.Clip != null)
+        {
+            SetSFXVolume(sound.Volume);
             _sfxSource.PlayOneShot(sound.Clip, sound.Volume);
+        }
+            
     }
     public void PlayAmbient(string name)
     {
@@ -55,11 +60,13 @@ public class AudioManager : MonoBehaviour
         {
             _ambientSource.clip = ambient.Clip;
             _ambientSource.loop = ambient.Loop;
+            SetAmbientVolume(ambient.Volume);
             _ambientSource.Play();
         }
     }
 
     public void StopMusic() => _musicSource.Stop();
+    public void StopAmbient() => _ambientSource.Stop();
     public void Stop(string name)
     {
         try

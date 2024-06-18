@@ -122,4 +122,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: 100
   MovementSpeed: 4
-  waypoints: []
+  Waypoints: []
+  IsBeingEdited: 0
+  ChaseRange: 1.5

@@ -1084,12 +1084,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3baec892e563fb4c988d8df02e60e8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _musicTracks: []
-  _sounds: []
-  _ambientSounds: []
-  _musicSource: {fileID: 0}
-  _sfxSource: {fileID: 0}
-  _ambientSource: {fileID: 0}
+  _musicTracks:
+  - {fileID: 11400000, guid: d3af50bd1eb350348baa6f2058bbbc40, type: 2}
+  - {fileID: 11400000, guid: 246604667b12c3242846b51f8fdc5dd9, type: 2}
+  - {fileID: 11400000, guid: 979d0c192cbf1ff438ac2bd4e58ee576, type: 2}
+  - {fileID: 11400000, guid: 6eedb5179b50fc342b23aa1233145e7e, type: 2}
+  _sounds:
+  - {fileID: 11400000, guid: 539a5eeef33bf914994e87b37da5b313, type: 2}
+  _ambientSounds:
+  - {fileID: 11400000, guid: 374545d539ac7f247bf501e2579828b0, type: 2}
+  - {fileID: 11400000, guid: 7aa40721b05bb8d4592dc5811cc1d081, type: 2}
+  - {fileID: 11400000, guid: 8fbd90ff1d1e15841bd6a094e3b89fbe, type: 2}
+  - {fileID: 11400000, guid: 21fbe05cdc6ac8e44886c0606ddfd752, type: 2}
+  _musicSource: {fileID: 1032455663}
+  _sfxSource: {fileID: 1032455662}
+  _ambientSource: {fileID: 1032455661}
 --- !u!4 &1032455665
 Transform:
   m_ObjectHideFlags: 0
