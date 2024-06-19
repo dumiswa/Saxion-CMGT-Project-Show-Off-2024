@@ -71,7 +71,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _identifier: Meteor
-  _calibratingTime: 1.2
+  _calibratingTime: 0.75
   _clearTime: 28
 --- !u!135 &8746725061632664664
 SphereCollider:
