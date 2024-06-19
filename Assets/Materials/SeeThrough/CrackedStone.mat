@@ -118,7 +118,7 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _Intensity: -2
+    - _Intensity: -10
     - _Metalicness: -5.05
     - _Metallic: 0
     - _MinimumOpacity: 2
@@ -137,7 +137,7 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 0.42138356, g: 0.33231977, b: 0.23189344, a: 1}
-    - _Color: {r: 0.5377358, g: 0.4810411, b: 0.45910463, a: 1}
+    - _Color: {r: 0.45373887, g: 0.24510503, b: 0.6415094, a: 1}
     - _CutoutPosition: {r: 0.5, g: 0.5, b: 0, a: 0}
     - _Emission: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0.011764706, g: 0.025633816, b: 0.06666667, a: 1}

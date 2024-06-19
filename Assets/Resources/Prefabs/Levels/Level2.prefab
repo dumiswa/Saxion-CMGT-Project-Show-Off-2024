@@ -7502,7 +7502,7 @@ MonoBehaviour:
   _constraints:
     RotationHorizontal: {x: 90, y: 90}
     RotationVertical: {x: 10, y: 15}
-    Distance: {x: -20, y: -20}
+    Distance: {x: -16, y: -16}
     Interpolation: 0.025
     FOV: 30
   _target:
