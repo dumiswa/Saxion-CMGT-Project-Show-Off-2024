@@ -23,7 +23,7 @@ AnimationClip:
     - time: 0
       value: {fileID: 1907804231, guid: e2af58832a8204d42bdcef7a1a143236, type: 3}
     - time: 0.016666668
-      value: {fileID: 38420948, guid: e2af58832a8204d42bdcef7a1a143236, type: 3}
+      value: {fileID: 1907804231, guid: e2af58832a8204d42bdcef7a1a143236, type: 3}
     - time: 0.033333335
       value: {fileID: -1609580484, guid: e2af58832a8204d42bdcef7a1a143236, type: 3}
     - time: 0.05
@@ -51,7 +51,7 @@ AnimationClip:
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
     - {fileID: 1907804231, guid: e2af58832a8204d42bdcef7a1a143236, type: 3}
-    - {fileID: 38420948, guid: e2af58832a8204d42bdcef7a1a143236, type: 3}
+    - {fileID: 1907804231, guid: e2af58832a8204d42bdcef7a1a143236, type: 3}
     - {fileID: -1609580484, guid: e2af58832a8204d42bdcef7a1a143236, type: 3}
     - {fileID: -793756094, guid: e2af58832a8204d42bdcef7a1a143236, type: 3}
   m_AnimationClipSettings:
@@ -78,4 +78,18 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events: []
+  m_Events:
+  - time: 0
+    functionName: PlayStepSounds
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.033333335
+    functionName: PlayStepSounds
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
