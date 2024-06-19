@@ -28,8 +28,11 @@ public class LevelState : GameState<LevelSubState>
         var prefab = selectedLevel.EncodedData.GetAsset();
         _levelInstance = Object.Instantiate(prefab);
 
-        AudioManager.Instance.PlayLevelMusic(selectedLevel.EncodedData.GetAsset().ToString());
-        AudioManager.Instance.PlayAmbient(selectedLevel.EncodedData.GetAsset().ToString());
+        AudioManager.Instance.SetMusicGroup(selectedLevel.EncodedData.LevelName);
+        AudioManager.Instance.PlayLevelMusic(selectedLevel.EncodedData.LevelName);
+        AudioManager.Instance.PlayAmbient(selectedLevel.EncodedData.LevelName);
+        Debug.Log("Level name is " + selectedLevel.EncodedData.LevelName);
+        Debug.Log("Level id is " + selectedLevel.EncodedData.LevelID);
 
         DataBridge.UpdateData(SnowflakeVisualisator.SNOWFLAKE_AMOUNT_DATA_ID, selectedLevel.EncodedData.SnowflakeAmount);
 
@@ -48,6 +51,7 @@ public class LevelState : GameState<LevelSubState>
 
         AudioManager.Instance.StopMusic();
         AudioManager.Instance.StopAmbient();
+        AudioManager.Instance.SetDefaultMusicGroup();
 
         base.Exit();
     }
