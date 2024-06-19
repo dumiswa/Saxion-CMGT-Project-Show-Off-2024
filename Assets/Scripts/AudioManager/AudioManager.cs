@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
-using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
@@ -16,21 +15,6 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource _musicSource;
     [SerializeField] private AudioSource _sfxSource;
     [SerializeField] private AudioSource _ambientSource;
-
-    [Header("Music Group")]
-    [SerializeField] private AudioMixerGroup musicGroup; 
-    [SerializeField] private AudioMixerGroup level0MusicGroup; 
-    [SerializeField] private AudioMixerGroup level1MusicGroup; 
-    [SerializeField] private AudioMixerGroup level2MusicGroup; 
-    [SerializeField] private AudioMixerGroup level3MusicGroup;
-
-    [Header("Ambient Group")]
-    [SerializeField] private AudioMixerGroup ambienceGroup;
-    [SerializeField] private AudioMixerGroup level0AmbienceGroup;
-    [SerializeField] private AudioMixerGroup level1AmbienceGroup;
-    [SerializeField] private AudioMixerGroup level2AmbienceGroup;
-    [SerializeField] private AudioMixerGroup level3AmbienceGroup;
-
 
     private void Awake()
     {
@@ -102,36 +86,4 @@ public class AudioManager : MonoBehaviour
 
     public bool IsPlaying(string soundName) 
         => _audioSources.ContainsKey(soundName) && _audioSources[soundName].isPlaying;
-
-    public void SetMusicGroup(string levelName)
-    {
-        switch (levelName)
-        {
-            case "Tutorial":
-                _musicSource.outputAudioMixerGroup = level0MusicGroup;
-                _ambientSource.outputAudioMixerGroup = level0AmbienceGroup;
-                break;
-            case "Level 1":
-                _musicSource.outputAudioMixerGroup = level1MusicGroup;
-                _ambientSource.outputAudioMixerGroup = level1AmbienceGroup;
-                break;
-            case "Level 2":
-                _musicSource.outputAudioMixerGroup = level2MusicGroup;
-                _ambientSource.outputAudioMixerGroup = level2AmbienceGroup;
-                break;
-            case "Level 3":
-                _musicSource.outputAudioMixerGroup = level3MusicGroup;
-                _ambientSource.outputAudioMixerGroup = level3AmbienceGroup;
-                break;
-            default:
-                _musicSource.outputAudioMixerGroup = musicGroup;
-                _ambientSource.outputAudioMixerGroup = ambienceGroup;
-                break;
-        }
-    }
-    public void SetDefaultMusicGroup()
-    {
-        _musicSource.outputAudioMixerGroup = musicGroup;
-        _ambientSource.outputAudioMixerGroup = ambienceGroup;
-    }
 }
