@@ -13,6 +13,7 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
+  - _USEEMISSIONFLOAT
   - _USEMETALICNESSFLOAT
   - _USESMOOTHNESSFLOAT
   m_InvalidKeywords:
@@ -69,6 +70,7 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: -1
     - _Smoothness: 0.4
+    - _USEEMISSIONFLOAT: 1
     - _USEEMISSIONMAP: 1
     - _USEMETALICNESSFLOAT: 1
     - _USESMOOTHNESSFLOAT: 1
