@@ -24,6 +24,7 @@ public class LevelSelectionState : GameState
                 else if (selectedLevel.EncodedData.LevelID == 3 && 
                     DataBridge.TryGetData<bool>(LevelProgressObserver.BOSS_LEVEL_FINISHED_ID).EncodedData)
                 {
+                    DataBridge.UpdateData(LevelProgressObserver.BOSS_LEVEL_FINISHED_ID, false);
                     GameStateMachine.Instance.Next<EndingCutsceneState>();
                     return;
                 }

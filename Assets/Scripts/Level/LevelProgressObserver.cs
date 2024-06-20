@@ -50,7 +50,6 @@ public class LevelProgressObserver : Monolith
         var bossData = DataBridge.TryGetData<bool>(BOSS_LEVEL_FINISHED_ID);
         if (bossData.EncodedData)
         {
-            DataBridge.UpdateData(BOSS_LEVEL_FINISHED_ID, false);
             UpdateLevelInfo(levelAccomplished: true);
             FinalizeLevel();
         }
