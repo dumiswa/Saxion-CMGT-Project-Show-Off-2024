@@ -3837,6 +3837,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _stepClips:
   - {fileID: 8300000, guid: 95bfef0f8103ca041a29a16c387f5e12, type: 3}
+  _ladderClimbingClips: []
+  _damageClip: {fileID: 0}
+  _deathClip: {fileID: 0}
   _playerAudioSource: {fileID: 5556014243526651210}
 --- !u!82 &5556014243526651210
 AudioSource:
@@ -6263,6 +6266,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _stepClips:
   - {fileID: 8300000, guid: 95bfef0f8103ca041a29a16c387f5e12, type: 3}
+  _ladderClimbingClips: []
+  _damageClip: {fileID: 0}
+  _deathClip: {fileID: 0}
   _playerAudioSource: {fileID: 5080810075993339141}
 --- !u!82 &5080810075993339141
 AudioSource:
@@ -6635,7 +6641,6 @@ GameObject:
   - component: {fileID: 6535318033448494030}
   - component: {fileID: 1721268873401436253}
   - component: {fileID: 2378163357674372184}
-  - component: {fileID: 3625143317939763048}
   m_Layer: 0
   m_Name: RangedFireSpirit (3)
   m_TagString: Untagged
@@ -6750,104 +6755,6 @@ MonoBehaviour:
   _shootingFrequency: 2
   _projectilePrefab: {fileID: 2308075407291081639, guid: 82faadfbdfb56cf4d8ba9dbaf2d0aa1e,
     type: 3}
-  _audioSource: {fileID: 3625143317939763048}
-  _shootingClip: {fileID: 8300000, guid: 0b349ea4e6348224aa001888c0bc8e02, type: 3}
---- !u!82 &3625143317939763048
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2365524511379557610}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 0
-  m_Volume: 0.2
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 100
-  Pan2D: 0
-  rolloffMode: 1
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!1 &2396567623961215855
 GameObject:
   m_ObjectHideFlags: 0
@@ -10254,6 +10161,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _stepClips:
   - {fileID: 8300000, guid: 95bfef0f8103ca041a29a16c387f5e12, type: 3}
+  _ladderClimbingClips: []
+  _damageClip: {fileID: 0}
+  _deathClip: {fileID: 0}
   _playerAudioSource: {fileID: 7636679976507941496}
 --- !u!82 &7636679976507941496
 AudioSource:
@@ -12269,6 +12179,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _stepClips:
   - {fileID: 8300000, guid: 95bfef0f8103ca041a29a16c387f5e12, type: 3}
+  _ladderClimbingClips: []
+  _damageClip: {fileID: 0}
+  _deathClip: {fileID: 0}
   _playerAudioSource: {fileID: 7636679976507941496}
 --- !u!1 &4818392483390438124
 GameObject:
@@ -14320,6 +14233,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _stepClips:
   - {fileID: 8300000, guid: 95bfef0f8103ca041a29a16c387f5e12, type: 3}
+  _ladderClimbingClips: []
+  _damageClip: {fileID: 0}
+  _deathClip: {fileID: 0}
   _playerAudioSource: {fileID: 6835507500907832864}
 --- !u!82 &6835507500907832864
 AudioSource:
@@ -16553,6 +16469,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _stepClips:
   - {fileID: 8300000, guid: 95bfef0f8103ca041a29a16c387f5e12, type: 3}
+  _ladderClimbingClips: []
+  _damageClip: {fileID: 0}
+  _deathClip: {fileID: 0}
   _playerAudioSource: {fileID: 7191434251932687234}
 --- !u!82 &7191434251932687234
 AudioSource:
@@ -16794,6 +16713,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _stepClips:
   - {fileID: 8300000, guid: 95bfef0f8103ca041a29a16c387f5e12, type: 3}
+  _ladderClimbingClips: []
+  _damageClip: {fileID: 0}
+  _deathClip: {fileID: 0}
   _playerAudioSource: {fileID: 7636679976507941496}
 --- !u!1 &6338016128817853946
 GameObject:
@@ -17300,6 +17222,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _stepClips:
   - {fileID: 8300000, guid: 95bfef0f8103ca041a29a16c387f5e12, type: 3}
+  _ladderClimbingClips: []
+  _damageClip: {fileID: 0}
+  _deathClip: {fileID: 0}
   _playerAudioSource: {fileID: 7636679976507941496}
 --- !u!1 &6436116407790151291
 GameObject:
@@ -21203,6 +21128,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _stepClips:
   - {fileID: 8300000, guid: 95bfef0f8103ca041a29a16c387f5e12, type: 3}
+  _ladderClimbingClips: []
+  _damageClip: {fileID: 0}
+  _deathClip: {fileID: 0}
   _playerAudioSource: {fileID: 7142192250030523143}
 --- !u!82 &7142192250030523143
 AudioSource:

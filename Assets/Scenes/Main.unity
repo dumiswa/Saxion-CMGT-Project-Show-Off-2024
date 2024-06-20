@@ -1094,6 +1094,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b15a50f8838f76945a52f0dff762de6c, type: 2}
   - {fileID: 11400000, guid: fe7ee1d894c71a94c9fea7c6c6a6fc86, type: 2}
   - {fileID: 11400000, guid: fec544bac00843f4a92b6ddbfd98946d, type: 2}
+  - {fileID: 11400000, guid: 14bcf0fd01670c948a87c16a9e092bec, type: 2}
   _ambientSounds:
   - {fileID: 11400000, guid: 374545d539ac7f247bf501e2579828b0, type: 2}
   - {fileID: 11400000, guid: 7aa40721b05bb8d4592dc5811cc1d081, type: 2}
@@ -1948,7 +1949,7 @@ AudioSource:
   MinDistance: 1
   MaxDistance: 500
   Pan2D: 0
-  rolloffMode: 1
+  rolloffMode: 0
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -2051,6 +2052,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: fb509ba102a87a24dac16f0c53bc85ff, type: 3}
   - {fileID: 8300000, guid: 0a6bdd09f4c566e4bb99a5b488e3e1d5, type: 3}
   _damageClip: {fileID: 8300000, guid: 4dcdf163218c6644780b46d074921c8b, type: 3}
+  _deathClip: {fileID: 8300000, guid: 3e66eed2a5a3a864aabfbf22cfab5028, type: 3}
   _playerAudioSource: {fileID: 1650219587}
 --- !u!1 &1690784859
 GameObject:

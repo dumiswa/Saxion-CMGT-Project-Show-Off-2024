@@ -13,6 +13,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private List<Sound> _sounds = new();
     [SerializeField] private List<AmbientSound> _ambientSounds = new();
 
+    [SerializeField] private List<Sound> _amebaSouinds = new();
+
     [SerializeField] private AudioSource _musicSource;
     [SerializeField] private AudioSource _sfxSource;
     [SerializeField] private AudioSource _ambientSource;
@@ -57,6 +59,8 @@ public class AudioManager : MonoBehaviour
         =>PlayMusic("MainMenuMT");
     public void PlayLevelMusic(string levelName)
         =>PlayMusic(levelName);
+
+
 
     public void PlaySound(string name)
     {

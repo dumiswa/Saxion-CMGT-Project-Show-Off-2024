@@ -4,7 +4,6 @@
     private const float GLIDING_GRAVITY_MULTIPLIER = 0.025f;
     public override void Enter()
     {
-        //AudioManager.Instance.PlaySound("MainCharacterFalling");
         _playerMovement.ResetVelocity();
         _playerMovement.SetFriction(0f);
 
@@ -31,7 +30,6 @@
     }
     public override void Exit()
     {       
-        //AudioManager.Instance.Stop("MainCharacterFalling");
         _playerMovement.SetFriction(1f);
     }
 }

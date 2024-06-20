@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: db28cd9da6800e04eaece607251e5bcb, type: 3}
-  m_Name: New Sound 1
+  m_Name: MainCherecterDeath
   m_EditorClassIdentifier: 
-  Name: 
-  Clip: {fileID: 0}
-  Volume: 1
+  Name: MainCherecterDeath
+  Clip: {fileID: 8300000, guid: 3e66eed2a5a3a864aabfbf22cfab5028, type: 3}
+  Volume: 0.5

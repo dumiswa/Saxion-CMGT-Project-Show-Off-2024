@@ -100,6 +100,7 @@ public class Ameba : Actuator
 
     public override void Invoke()
     {
+        AudioManager.Instance.PlaySound("Ameba");
         Locked = true;
 
         _passenger.TryGetComponent(out Collider collider);

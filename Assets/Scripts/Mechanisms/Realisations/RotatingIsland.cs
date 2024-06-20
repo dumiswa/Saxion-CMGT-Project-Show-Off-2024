@@ -51,6 +51,7 @@ namespace Monoliths.Mechanisms
             base.Invoke();
 
             _animator.SetTrigger("Rotation");
+            AudioManager.Instance.PlaySound("RotatingIsland");
 
             var cameraSequence = DataBridge.TryGetData<CameraSequence>(CameraActions.SEQUENCE_DATA_ID).EncodedData;
 
