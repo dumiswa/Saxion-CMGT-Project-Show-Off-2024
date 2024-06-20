@@ -12,7 +12,10 @@ Material:
     type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - _USEEMISSIONFLOAT
+  - _USEMETALICNESSFLOAT
+  - _USESMOOTHNESSFLOAT
   m_InvalidKeywords: []
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
@@ -24,12 +27,24 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: 94b2cc8372dbf0e45853c3c95ddf5ef4, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Metalicness_Map:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Normal:
         m_Texture: {fileID: 2800000, guid: 4fc68357aa5150945ac55bb2ca2d2163, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Smoothness_Map:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -54,6 +69,9 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: -1
     - _Smoothness: 0.4
+    - _USEEMISSIONFLOAT: 1
+    - _USEMETALICNESSFLOAT: 1
+    - _USESMOOTHNESSFLOAT: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _CutoutPosition: {r: 0.5, g: 0.5, b: 0, a: 0}
