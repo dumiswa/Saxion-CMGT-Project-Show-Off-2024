@@ -1,10 +1,12 @@
 ﻿using Monoliths;
 using Monoliths.Player;
+using Monoliths.Visualisators;
 using UnityEngine;
 
 public class LevelState : GameState<LevelSubState>
 {
     private GameObject _levelInstance;
+    private GameObject _legendaGUI;
     public void FinalizeLevel()
     {
         if (!SubStateMachine.CurrentIs<MidLevelState>())
@@ -38,6 +40,10 @@ public class LevelState : GameState<LevelSubState>
 
         DataBridge.UpdateData(PlayerMovement.SIMULATION_ENABLED_DATA_ID, true);
         SubStateMachine.NextNoExit<LevelStartState>();
+
+        if (DataBridge.TryGetData<LevelInfo>(LevelSelectionState.SELECTED_LEVEL_DATA_ID).EncodedData.LevelID != 0)
+            _legendaGUI = Object.Instantiate(Resources.Load<GameObject>("Prefabs/PopUps/Legenda"),
+                   GameObject.FindGameObjectWithTag("GUI").transform.GetChild((int)RenderingLayer.LAYER2));
     }
 
     public override void Exit()
@@ -47,6 +53,10 @@ public class LevelState : GameState<LevelSubState>
         MonolithMaster.Instance.Monoliths[typeof(LevelProgressObserver)]?.SetActive(false);
 
         DataBridge.UpdateData(PlayerMovement.SIMULATION_ENABLED_DATA_ID, false);
+
+        if (_legendaGUI != null)
+            Object.Destroy(_legendaGUI);
+
         Object.Destroy(_levelInstance);
 
         AudioManager.Instance.StopMusic();

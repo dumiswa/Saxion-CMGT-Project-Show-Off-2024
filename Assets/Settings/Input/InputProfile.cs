@@ -62,6 +62,15 @@ public partial class @InputProfile: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Menu"",
+                    ""type"": ""Button"",
+                    ""id"": ""ec6b2310-9d49-4bb4-a717-41b02db60a93"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -328,6 +337,28 @@ public partial class @InputProfile: IInputActionCollection2, IDisposable
                     ""action"": ""RightDirectional"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8b3ecb71-6008-4ae4-bf06-3142f638267f"",
+                    ""path"": ""<DualShockGamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Menu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2d16eca0-7cb8-416b-896c-e3646f1f6331"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Menu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -340,6 +371,7 @@ public partial class @InputProfile: IInputActionCollection2, IDisposable
         m_Map_RightDirectional = m_Map.FindAction("RightDirectional", throwIfNotFound: true);
         m_Map_FirstContextualButton = m_Map.FindAction("FirstContextualButton", throwIfNotFound: true);
         m_Map_SecondContextualButton = m_Map.FindAction("SecondContextualButton", throwIfNotFound: true);
+        m_Map_Menu = m_Map.FindAction("Menu", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -405,6 +437,7 @@ public partial class @InputProfile: IInputActionCollection2, IDisposable
     private readonly InputAction m_Map_RightDirectional;
     private readonly InputAction m_Map_FirstContextualButton;
     private readonly InputAction m_Map_SecondContextualButton;
+    private readonly InputAction m_Map_Menu;
     public struct MapActions
     {
         private @InputProfile m_Wrapper;
@@ -413,6 +446,7 @@ public partial class @InputProfile: IInputActionCollection2, IDisposable
         public InputAction @RightDirectional => m_Wrapper.m_Map_RightDirectional;
         public InputAction @FirstContextualButton => m_Wrapper.m_Map_FirstContextualButton;
         public InputAction @SecondContextualButton => m_Wrapper.m_Map_SecondContextualButton;
+        public InputAction @Menu => m_Wrapper.m_Map_Menu;
         public InputActionMap Get() { return m_Wrapper.m_Map; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -434,6 +468,9 @@ public partial class @InputProfile: IInputActionCollection2, IDisposable
             @SecondContextualButton.started += instance.OnSecondContextualButton;
             @SecondContextualButton.performed += instance.OnSecondContextualButton;
             @SecondContextualButton.canceled += instance.OnSecondContextualButton;
+            @Menu.started += instance.OnMenu;
+            @Menu.performed += instance.OnMenu;
+            @Menu.canceled += instance.OnMenu;
         }
 
         private void UnregisterCallbacks(IMapActions instance)
@@ -450,6 +487,9 @@ public partial class @InputProfile: IInputActionCollection2, IDisposable
             @SecondContextualButton.started -= instance.OnSecondContextualButton;
             @SecondContextualButton.performed -= instance.OnSecondContextualButton;
             @SecondContextualButton.canceled -= instance.OnSecondContextualButton;
+            @Menu.started -= instance.OnMenu;
+            @Menu.performed -= instance.OnMenu;
+            @Menu.canceled -= instance.OnMenu;
         }
 
         public void RemoveCallbacks(IMapActions instance)
@@ -473,5 +513,6 @@ public partial class @InputProfile: IInputActionCollection2, IDisposable
         void OnRightDirectional(InputAction.CallbackContext context);
         void OnFirstContextualButton(InputAction.CallbackContext context);
         void OnSecondContextualButton(InputAction.CallbackContext context);
+        void OnMenu(InputAction.CallbackContext context);
     }
 }

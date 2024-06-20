@@ -9,6 +9,8 @@ public class LevelFinishState : LevelSubState
     public override void Enter()
     {
         base.Enter();
+        Controls.Profile.Map.Menu.started -= QuickLevelFinish;
+
 
         var player = GameObject.FindGameObjectWithTag("Player").transform;
         DataBridge.UpdateData(CameraActions.TARGET_DATA_ID, new CameraTarget(player, player, player));

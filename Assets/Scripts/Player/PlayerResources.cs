@@ -8,6 +8,7 @@ namespace Monoliths.Player
         public const string SAVED_LIVES_DATA_ID = "svdplrlives";
         public const string CURRENT_LIVES_DATA_ID = "CurrentPlayerLives";
 
+        private const byte MINIMAL_LIVES = 5;
         private const float INVULNERABILITY_TIME = 0.8f;
 
         private HPContainer _managed;
@@ -51,7 +52,7 @@ namespace Monoliths.Player
 
         public override void Defaults()
         {
-            _currentLives = 3;
+            _currentLives = MINIMAL_LIVES;
             _invulnerabilityCounter = INVULNERABILITY_TIME;
             base.Defaults();
         }
@@ -84,9 +85,9 @@ namespace Monoliths.Player
         private void OnLevelStart()
         {
             var data = DataBridge.TryGetData<byte>(SAVED_LIVES_DATA_ID);
-            if (data.IsEmpty || data.EncodedData < 3)
+            if (data.IsEmpty || data.EncodedData < MINIMAL_LIVES)
             {
-                DataBridge.UpdateData<byte>(SAVED_LIVES_DATA_ID, 3);
+                DataBridge.UpdateData(SAVED_LIVES_DATA_ID, MINIMAL_LIVES);
                 data = DataBridge.TryGetData<byte>(SAVED_LIVES_DATA_ID);
             }
             _managed = Object.Instantiate

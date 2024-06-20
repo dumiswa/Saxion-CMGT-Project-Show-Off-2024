@@ -40,5 +40,7 @@ public class LevelStartState : LevelSubState
         (GameStateMachine.Instance.Current as LevelState).SubStateMachine.Next<MidLevelState>();
 
         DataBridge.TryGetData<PopUpStackPacket>(PopUpVisualisator.POP_UP_STACK_DATA_ID).EncodedData.SetLock(false);
+
+        Controls.Profile.Map.Menu.started += QuickLevelFinish;
     }
 }
