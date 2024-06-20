@@ -38,6 +38,8 @@ public class MeteorBreakable : MonoBehaviour
 
         if (collision.transform.parent.parent.TryGetComponent(out Meteor meteor))
             Destroy(meteor.gameObject);
+
+        AudioManager.Instance.PlaySound("BossAttack");
     }
 
     private void Update()
