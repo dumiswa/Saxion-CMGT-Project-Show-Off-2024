@@ -154,6 +154,20 @@ namespace Monoliths.Player
             _animator.SetBool("IsGliding", IsGlidingUnlocked && IsGliding);
         }
 
+        public override bool SetActive(bool state)
+        {
+            StopAnimations();
+            return base.SetActive(state);
+        }
+
+        private void StopAnimations()
+        {
+            _animator.SetFloat("Velocity", 0f);
+            _animator.SetBool("IsClimbing", false);
+            _animator.SetBool("IsFalling", false);
+            _animator.SetBool("IsGliding", false);
+        }
+
         private void FixedUpdate()
         {
             if (!_simulationEnabled)

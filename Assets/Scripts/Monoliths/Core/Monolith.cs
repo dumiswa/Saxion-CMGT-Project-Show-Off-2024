@@ -26,7 +26,7 @@ namespace Monoliths
             return true;
         }
 
-        public bool SetActive(bool state)
+        public virtual bool SetActive(bool state)
             => IsActive = state;
     }
 }
