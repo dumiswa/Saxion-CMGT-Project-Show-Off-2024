@@ -30,12 +30,16 @@ public class LevelProgressObserver : Monolith
         {
             (star.GetComponent<Collectable>() ??
              star.AddComponent<Collectable>()).OnCollison += HandleSnowflakeAcquired;
+
+            star.AddComponent<Rotating>();
         }
 
         foreach (var target in _iceCrystals)
         {
             (target.GetComponent<Collectable>() ??
              target.AddComponent<Collectable>()).OnCollison += HandleIceCrystalAcquired;
+
+            target.AddComponent<Rotating>();
         }
 
         InitializeLevelInfo();
