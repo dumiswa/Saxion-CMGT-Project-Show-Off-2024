@@ -13,7 +13,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private List<Sound> _sounds = new();
     [SerializeField] private List<AmbientSound> _ambientSounds = new();
 
-    [SerializeField] private List<Sound> _amebaSouinds = new();
+    [SerializeField] private List<Sound> _amebaSounds = new();
+    private int _currentAmebaClipIndex = 0;
 
     [SerializeField] private AudioSource _musicSource;
     [SerializeField] private AudioSource _sfxSource;
@@ -60,7 +61,18 @@ public class AudioManager : MonoBehaviour
     public void PlayLevelMusic(string levelName)
         =>PlayMusic(levelName);
 
+    public void PlayAmebaClips()
+    {
+        Sound currentSound = _amebaSounds[_currentAmebaClipIndex];
 
+        _sfxSource.clip = currentSound.Clip;
+        _sfxSource.volume = currentSound.Volume;
+        _sfxSource.pitch = currentSound.Pitch;
+        _sfxSource.Play();
+
+        _currentAmebaClipIndex = (_currentAmebaClipIndex + 1) % _amebaSounds.Count;
+        Debug.Log(_currentAmebaClipIndex);
+    }
 
     public void PlaySound(string name)
     {
@@ -68,6 +80,7 @@ public class AudioManager : MonoBehaviour
         if (sound != null && sound.Clip != null)
         {
             SetSFXVolume(sound.Volume);
+            SetSFXPitch(sound.Pitch);
             _sfxSource.PlayOneShot(sound.Clip, sound.Volume);
         }
             
@@ -102,6 +115,8 @@ public class AudioManager : MonoBehaviour
     public void SetMusicVolume(float volume) => _musicSource.volume = volume;
     public void SetSFXVolume(float volume) => _sfxSource.volume = volume;
     public void SetAmbientVolume(float volume) => _ambientSource.volume = volume;
+
+    public void SetSFXPitch(float pitch) => _sfxSource.pitch = pitch;
 
     public bool IsPlaying(string soundName) 
         => _audioSources.ContainsKey(soundName) && _audioSources[soundName].isPlaying;

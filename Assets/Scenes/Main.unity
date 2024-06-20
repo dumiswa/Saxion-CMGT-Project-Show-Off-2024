@@ -1100,6 +1100,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7aa40721b05bb8d4592dc5811cc1d081, type: 2}
   - {fileID: 11400000, guid: 8fbd90ff1d1e15841bd6a094e3b89fbe, type: 2}
   - {fileID: 11400000, guid: 21fbe05cdc6ac8e44886c0606ddfd752, type: 2}
+  _amebaSounds:
+  - {fileID: 11400000, guid: 5bbddf43ff09bfc4e9c05068242aeb8f, type: 2}
+  - {fileID: 11400000, guid: 24c17843e5e76bc48bd498efd9ab8523, type: 2}
   _musicSource: {fileID: 1032455663}
   _sfxSource: {fileID: 1032455662}
   _ambientSource: {fileID: 1032455661}
