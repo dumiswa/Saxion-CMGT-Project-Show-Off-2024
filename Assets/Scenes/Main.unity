@@ -1091,6 +1091,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6eedb5179b50fc342b23aa1233145e7e, type: 2}
   _sounds:
   - {fileID: 11400000, guid: 539a5eeef33bf914994e87b37da5b313, type: 2}
+  - {fileID: 11400000, guid: b15a50f8838f76945a52f0dff762de6c, type: 2}
+  - {fileID: 11400000, guid: fe7ee1d894c71a94c9fea7c6c6a6fc86, type: 2}
+  - {fileID: 11400000, guid: fec544bac00843f4a92b6ddbfd98946d, type: 2}
   _ambientSounds:
   - {fileID: 11400000, guid: 374545d539ac7f247bf501e2579828b0, type: 2}
   - {fileID: 11400000, guid: 7aa40721b05bb8d4592dc5811cc1d081, type: 2}
@@ -2039,6 +2042,15 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 205950fbd36f4d54395cc0629a8e0fdf, type: 3}
   - {fileID: 8300000, guid: 1b3c5f2ee32b089439c5b466d6670155, type: 3}
   - {fileID: 8300000, guid: 6e36ab4ae42ca774ea8f9163c50a912e, type: 3}
+  _ladderClimbingClips:
+  - {fileID: 8300000, guid: ab5043cdaeaa4b94f8ee18ad500601ba, type: 3}
+  - {fileID: 8300000, guid: 6b5511155f469e0418b738dd3ccec0e3, type: 3}
+  - {fileID: 8300000, guid: 546daa7e2b6e04d4d9f932de1ab70236, type: 3}
+  - {fileID: 8300000, guid: 06392a5d90c114f45a79ad74ddaa6db8, type: 3}
+  - {fileID: 8300000, guid: 57e9821f48317f54d8ca48ff616f2e65, type: 3}
+  - {fileID: 8300000, guid: fb509ba102a87a24dac16f0c53bc85ff, type: 3}
+  - {fileID: 8300000, guid: 0a6bdd09f4c566e4bb99a5b488e3e1d5, type: 3}
+  _damageClip: {fileID: 8300000, guid: 4dcdf163218c6644780b46d074921c8b, type: 3}
   _playerAudioSource: {fileID: 1650219587}
 --- !u!1 &1690784859
 GameObject:

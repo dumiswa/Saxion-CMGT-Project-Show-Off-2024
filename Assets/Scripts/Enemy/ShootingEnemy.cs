@@ -14,7 +14,8 @@ public class ShootingEnemy : Enemy
         StateMachine.ChangeState(new ShootingState(this, 
             _shootingDirection.normalized,
             _shootingFrequency, 
-            _projectilePrefab)
+            _projectilePrefab
+            )
         );
     }
     private void OnDrawGizmosSelected()
@@ -31,6 +32,8 @@ public class ShootingState : EnemyState
     private float _shootingFrequency;
 
     private Projectile _projectilePrefab;
+    private AudioSource _audioSource;
+    private AudioClip _shootingClip;
 
     private float _counter;
 

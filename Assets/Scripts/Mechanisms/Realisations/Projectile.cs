@@ -9,10 +9,19 @@ public class Projectile : Damaging
     [SerializeField]
     private float _maxLifeTime = -1f;
 
+    [SerializeField]
+    private AudioSource _audioSource;
+    [SerializeField]
+    private AudioClip _audioClip;
+
     private float _distanceCounter;
     private float _timeCounter;
 
     private Vector3 _initialPosition;
+    private void Awake()
+    {
+        _audioSource.PlayOneShot(_audioClip);
+    }
 
     private void Start() 
         => _initialPosition = transform.position;
