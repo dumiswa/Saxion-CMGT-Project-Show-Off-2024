@@ -30,7 +30,7 @@ public class FootStepSystem : MonoBehaviour
                 break;
             case ActionType.ClimbingLadder:
                 selectedClips = _ladderClimbingClips;
-                _audioSource.volume = 0.1f;
+                _audioSource.volume = 0.18f;
                 break;
         }
         

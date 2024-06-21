@@ -15,4 +15,4 @@ MonoBehaviour:
   Name: Level0 (UnityEngine.GameObject)
   Clip: {fileID: 8300000, guid: ee499c6127d664f45aa26d06fdb5f63d, type: 3}
   Loop: 1
-  Volume: 0.1
+  Volume: 0.2
