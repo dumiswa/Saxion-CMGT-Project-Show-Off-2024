@@ -7,14 +7,15 @@ public class FootStepSystem : MonoBehaviour
 {
     [SerializeField] private AudioClip[] _stepClips;
     [SerializeField] private AudioClip[] _ladderClimbingClips;
+    [SerializeField] private AudioClip[] _bossTakingDmgClips;
     [SerializeField] private AudioClip _damageClip;
     [SerializeField] private AudioClip _deathClip;
-    [SerializeField] private AudioSource _playerAudioSource;
+    [SerializeField] private AudioSource _audioSource;
 
     public enum ActionType
     {
         Walking,
-        ClimbingLadder
+        ClimbingLadder,
     }
 
     public void PlayStepSounds(ActionType actionType)
@@ -25,30 +26,36 @@ public class FootStepSystem : MonoBehaviour
         {
             case ActionType.Walking:
                 selectedClips = _stepClips;
-                _playerAudioSource.volume = 0.25f;
+                _audioSource.volume = 0.25f;
                 break;
             case ActionType.ClimbingLadder:
                 selectedClips = _ladderClimbingClips;
-                _playerAudioSource.volume = 0.1f;
+                _audioSource.volume = 0.1f;
                 break;
         }
         
-        if (selectedClips != null || selectedClips.Length == 0)
+        if (selectedClips != null && selectedClips.Length > 0)
         {
             AudioClip stepSound = _stepClips[Random.Range(0, _stepClips.Length)];
-            _playerAudioSource.pitch = Random.Range(0.7f, 1.0f);
-            _playerAudioSource.PlayOneShot(stepSound);
+            _audioSource.pitch = Random.Range(0.7f, 1.0f);
+            _audioSource.PlayOneShot(stepSound);
         }
         
     }
 
     public void PlayDmgSound()
     {
-        _playerAudioSource.PlayOneShot(_damageClip);
+        _audioSource.PlayOneShot(_damageClip);
     }
     public void PlayDeathSound()
     {
-        _playerAudioSource.PlayOneShot(_deathClip);
+        _audioSource.PlayOneShot(_deathClip);
+    }
+
+    public void BossTakesDmg()
+    {
+        AudioClip dmgSound = _bossTakingDmgClips[Random.Range(0, _bossTakingDmgClips.Length)]; 
+        _audioSource.PlayOneShot(dmgSound);
     }
 }
 

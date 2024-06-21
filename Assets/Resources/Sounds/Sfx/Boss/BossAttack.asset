@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2123ea8cea51de74892bed530aee8f35, type: 3}
-  m_Name: Level3Ambient
+  m_Script: {fileID: 11500000, guid: db28cd9da6800e04eaece607251e5bcb, type: 3}
+  m_Name: BossAttack
   m_EditorClassIdentifier: 
-  Name: Level 3
-  Clip: {fileID: 8300000, guid: f1815ef5c9acca5488f95a73519f7354, type: 3}
-  Loop: 1
-  Volume: 0.1
+  Name: BossAttack
+  Clip: {fileID: 8300000, guid: 4b1b7b82eb6516e4f8464afd144b5e51, type: 3}
+  Volume: 0.5
+  Pitch: 1
