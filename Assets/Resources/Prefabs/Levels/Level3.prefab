@@ -8746,7 +8746,7 @@ MonoBehaviour:
   _constraints:
     RotationHorizontal: {x: 24, y: 24}
     RotationVertical: {x: 36, y: 36}
-    Distance: {x: -28, y: -42}
+    Distance: {x: -42, y: -50}
     Interpolation: 0.025
     FOV: 18
   _target:
@@ -9200,7 +9200,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: fd49f8aba7fad1d4ba6050da3d290986, type: 3}
   - {fileID: 8300000, guid: f211cffe5e6aed84bb5d1d349e6c1ed8, type: 3}
   - {fileID: 8300000, guid: e348a2d108eccdd44820b0cbe4d738c7, type: 3}
-  _damageClip: {fileID: 0}
+  _damageClip: {fileID: 8300000, guid: 2432b1878d6062f46af496ed28d5185c, type: 3}
   _deathClip: {fileID: 0}
   _audioSource: {fileID: 2317394348468133109}
 --- !u!82 &2317394348468133109
@@ -9214,7 +9214,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
