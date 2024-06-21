@@ -2,11 +2,13 @@
 using Monoliths.Player;
 using Monoliths.Visualisators;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class LevelState : GameState<LevelSubState>
 {
     private GameObject _levelInstance;
     private GameObject _legendaGUI;
+    private GameObject _tutorialsScreen;
     public void FinalizeLevel()
     {
         if (!SubStateMachine.CurrentIs<MidLevelState>())
@@ -24,17 +26,36 @@ public class LevelState : GameState<LevelSubState>
 
         var selectedLevel = DataBridge.TryGetData<LevelInfo>(LevelSelectionState.SELECTED_LEVEL_DATA_ID);
 
-        if (selectedLevel.IsEmpty)
-            return;
-
-        var prefab = selectedLevel.EncodedData.GetAsset();
-        _levelInstance = Object.Instantiate(prefab);
-
         AudioManager.Instance.SetMusicGroup(selectedLevel.EncodedData.LevelName);
         AudioManager.Instance.PlayLevelMusic(selectedLevel.EncodedData.LevelName);
         AudioManager.Instance.PlayAmbient(selectedLevel.EncodedData.LevelName);
-        Debug.Log("Level name is " + selectedLevel.EncodedData.LevelName);
-        Debug.Log("Level id is " + selectedLevel.EncodedData.LevelID);
+
+        if(selectedLevel.EncodedData.LevelID == 0)
+            FinalizeInitialization();        
+        else
+        {
+            _tutorialsScreen = Object.Instantiate(Resources.Load<GameObject>
+                ("Prefabs/Tutorials/" + selectedLevel.EncodedData.LevelID),
+                GameObject.FindGameObjectWithTag("GUI").transform.GetChild((int)RenderingLayer.LAYER3));
+
+            Controls.Profile.Map.FirstContextualButton.started += OnTutorialFinished;
+        }
+    }
+
+    private void OnTutorialFinished(InputAction.CallbackContext ctx)
+    {
+        Controls.Profile.Map.FirstContextualButton.started -= OnTutorialFinished;
+
+        Object.Destroy(_tutorialsScreen);
+
+        FinalizeInitialization();
+    }
+
+    private void FinalizeInitialization()
+    {
+        var selectedLevel = DataBridge.TryGetData<LevelInfo>(LevelSelectionState.SELECTED_LEVEL_DATA_ID);
+        var prefab = selectedLevel.EncodedData.GetAsset();
+        _levelInstance = Object.Instantiate(prefab);
 
         DataBridge.UpdateData(SnowflakeVisualisator.SNOWFLAKE_AMOUNT_DATA_ID, selectedLevel.EncodedData.SnowflakeAmount);
 

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: MainMenuMT
   m_EditorClassIdentifier: 
   Name: MainMenuMT
-  Clip: {fileID: 8300000, guid: 70e7c0ca00d4fcf4c97674494b800b67, type: 3}
+  Clip: {fileID: 8300000, guid: ff12223541ce66c4ca0e7b5b7700ef6a, type: 3}
   Loop: 1
-  Volume: 0.1
+  Volume: 0.5
