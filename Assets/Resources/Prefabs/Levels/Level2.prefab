@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8221935067667749350}
   - component: {fileID: 4613182606081859625}
   - component: {fileID: 2156882311312720800}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Crate1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1982,7 +1982,7 @@ GameObject:
   - component: {fileID: 9012327955978991888}
   - component: {fileID: 2044622573311183529}
   - component: {fileID: 5694143851835471267}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Crate5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3203,7 +3203,7 @@ GameObject:
   - component: {fileID: 2160784955943744554}
   - component: {fileID: 8524905863553002557}
   - component: {fileID: 3703581134600837384}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Crate3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4726,7 +4726,7 @@ MonoBehaviour:
   _rotationLerpFactor: 0.015
   _rotationCompleteThreshold: 0.1
   _cameraPositions:
-  - position: {x: 0, y: 1, z: 0}
+  - position: {x: 1, y: 1, z: 0}
     delay: 3
   _cameraRotations:
   - rotation: {x: 355, y: 90}
@@ -8748,7 +8748,7 @@ GameObject:
   - component: {fileID: 4483462459465456138}
   - component: {fileID: 4459154816882202158}
   - component: {fileID: 6230351271821814218}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Crate4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8986,7 +8986,7 @@ Transform:
   m_GameObject: {fileID: 7711381713496052405}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.00012207049, y: 2418.9636, z: -0.000015257334}
+  m_LocalPosition: {x: -0, y: 2418.9636, z: 16}
   m_LocalScale: {x: 1, y: 8.063216, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9800,7 +9800,7 @@ GameObject:
   - component: {fileID: 4435755335951478542}
   - component: {fileID: 2927774680058317608}
   - component: {fileID: 3243551692546917241}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Crate2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10306,7 +10306,7 @@ GameObject:
   - component: {fileID: 6120392368446224718}
   - component: {fileID: 9019425460249419549}
   - component: {fileID: 4165024595470931472}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Crate6
   m_TagString: Untagged
   m_Icon: {fileID: 0}

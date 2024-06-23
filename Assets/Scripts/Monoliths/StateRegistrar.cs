@@ -18,11 +18,8 @@ namespace Monoliths
 
         public override bool Init()
         {
-
-#if UNITY_EDITOR
             SaveMaster.ResetSaveData();
             GameStateMachine.Instance = new();
-#endif
 
             Assembly assembly = Assembly.GetExecutingAssembly();
             Type gameStateType = typeof(GameState);

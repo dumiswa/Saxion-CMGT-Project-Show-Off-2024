@@ -15,4 +15,4 @@ MonoBehaviour:
   Name: MainMenuMT
   Clip: {fileID: 8300000, guid: ff12223541ce66c4ca0e7b5b7700ef6a, type: 3}
   Loop: 1
-  Volume: 0.2
+  Volume: 0.4

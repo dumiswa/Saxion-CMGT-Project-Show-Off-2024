@@ -18,12 +18,14 @@ public class Meteor : Actuator
 
     private bool _clearing;
     private bool _isInAction;
+    private bool _acted;
     private void Start()
     {
         _player = GameObject.FindGameObjectWithTag("Player").transform;
         _animator = GetComponent<Animator>();
 
         _clearing = false;
+        _acted = false;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -43,7 +45,7 @@ public class Meteor : Actuator
             return;
 
         var data = DataBridge.TryGetData<bool>(Cutyzilo.IS_ATTACKING);
-        if (!data.IsEmpty) Locked = data.EncodedData;
+        if (!data.IsEmpty) Locked = data.EncodedData && !_acted;
 
         _counter += Time.deltaTime;
         if (_calibratingTime > _counter)
@@ -78,6 +80,7 @@ public class Meteor : Actuator
     private IEnumerator ReturnToSender()
     {
         Locked = false;
+        _acted = true;
         DataBridge.UpdateData<bool>(Cutyzilo.IS_ATTACKING, true);
         _isInAction = true;
         _animator?.SetTrigger("Act");

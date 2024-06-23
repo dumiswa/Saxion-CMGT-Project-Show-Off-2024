@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Level2MT
   m_EditorClassIdentifier: 
   Name: Level 2
-  Clip: {fileID: 8300000, guid: 6e9a41fdc89f59d40847902bf426cef5, type: 3}
+  Clip: {fileID: 8300000, guid: 70de5aa15c13c6f4da9fea2af95d6801, type: 3}
   Loop: 1
-  Volume: 0.07
+  Volume: 0.2
