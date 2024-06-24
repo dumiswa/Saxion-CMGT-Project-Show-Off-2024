@@ -31,7 +31,7 @@ namespace Monoliths
                 Destroy(this);
                 return;
             }
-
+            Application.targetFrameRate = 144;
             List<Monolith> priorityBuffer = new();
 
             Assembly assembly = Assembly.GetExecutingAssembly();

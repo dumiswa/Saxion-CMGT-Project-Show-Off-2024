@@ -15,4 +15,4 @@ MonoBehaviour:
   Name: Tutorial
   Clip: {fileID: 8300000, guid: 3da6113b6dead5343b6c45ce4da21ce5, type: 3}
   Loop: 1
-  Volume: 0.6
+  Volume: 1

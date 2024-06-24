@@ -106,6 +106,8 @@ namespace Monoliths.Player
                 var yaw = _cameraOrigin.localEulerAngles.y;
                 ClampAngle(ref yaw, _constraints.RotationHorizontal.x, _constraints.RotationHorizontal.y);
                 _cameraOrigin.localEulerAngles = new(0, Mathf.LerpAngle(_cameraOrigin.localEulerAngles.y, yaw, _constraints.Interpolation), 0);
+            
+                _cameraPitch.localPosition = Vector3.zero;                   
             }
             else
             {
