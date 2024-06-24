@@ -19,16 +19,6 @@ namespace Monoliths.Player
         private Rigidbody _rigidbody;
         private Collider _collider;
 
-        private Transform _castPoint1;
-        private Transform _castPoint2;
-        private Transform _castPoint3;
-        private Transform _castPoint4;
-
-        private Vector2 _directionLock1;
-        private Vector2 _directionLock2;
-        private Vector2 _directionLock3;
-        private Vector2 _directionLock4;
-
         private Transform _playerOrigin;
         private Transform _cameraOrigin;
 
@@ -97,10 +87,6 @@ namespace Monoliths.Player
             _animator = _player.transform.Find("Display").GetComponent<Animator>();
 
             var casts = _player.transform.Find("ColliderCasts");
-            _castPoint1 = casts.GetChild(0);
-            _castPoint2 = casts.GetChild(1);
-            _castPoint3 = casts.GetChild(2);
-            _castPoint4 = casts.GetChild(3);
 
             InitializeStates();
             return base.Init();
@@ -130,8 +116,6 @@ namespace Monoliths.Player
 
             var isLanded = IsLanded();
 
-            DefineDirectionLocks();
-
             Move();
             Animate(isLanded);
 
@@ -152,24 +136,6 @@ namespace Monoliths.Player
             }
 
             _stateMachine.Current?.Update();
-        }
-
-        private void DefineDirectionLocks()
-        {
-            var solids1 = Physics.OverlapSphere(_castPoint1.position, 0.2f)
-                                .Where(result => !result.isTrigger);
-            var solids2 = Physics.OverlapSphere(_castPoint2.position, 0.2f)
-                                .Where(result => !result.isTrigger);
-            var solids3 = Physics.OverlapSphere(_castPoint3.position, 0.2f)
-                                .Where(result => !result.isTrigger);
-            var solids4 = Physics.OverlapSphere(_castPoint4.position, 0.2f)
-                                .Where(result => !result.isTrigger);
-
-
-            _directionLock1 = solids1.Any() ? _castPoint1.forward : Vector2.zero;
-            _directionLock2 = solids2.Any() ? _castPoint2.forward : Vector2.zero;
-            _directionLock3 = solids3.Any() ? _castPoint3.forward : Vector2.zero;
-            _directionLock4 = solids4.Any() ? _castPoint4.forward : Vector2.zero;
         }
 
         private void Animate(bool isLanded)
@@ -269,27 +235,6 @@ namespace Monoliths.Player
                     Vector2 direction = Controls.LeftDirectional;
                     Vector2 newAccelerationMultiplier = _accelerationMultiplier;
 
-                    if (_directionLock1 != Vector2.zero && Vector2.Dot(direction, _directionLock1) > 0)
-                    {
-                        newAccelerationMultiplier.x = Mathf.Min(newAccelerationMultiplier.x, 0);
-                        newAccelerationMultiplier.y = Mathf.Min(newAccelerationMultiplier.y, 0);
-                    }
-                    if (_directionLock2 != Vector2.zero && Vector2.Dot(direction, _directionLock2) > 0)
-                    {
-                        newAccelerationMultiplier.x = Mathf.Min(newAccelerationMultiplier.x, 0);
-                        newAccelerationMultiplier.y = Mathf.Min(newAccelerationMultiplier.y, 0);
-                    }
-                    if (_directionLock3 != Vector2.zero && Vector2.Dot(direction, _directionLock3) > 0)
-                    {
-                        newAccelerationMultiplier.x = Mathf.Min(newAccelerationMultiplier.x, 0);
-                        newAccelerationMultiplier.y = Mathf.Min(newAccelerationMultiplier.y, 0);
-                    }
-                    if (_directionLock4 != Vector2.zero && Vector2.Dot(direction, _directionLock4) > 0)
-                    {
-                        newAccelerationMultiplier.x = Mathf.Min(newAccelerationMultiplier.x, 0);
-                        newAccelerationMultiplier.y = Mathf.Min(newAccelerationMultiplier.y, 0);
-                    }
-
                     _accelerationMultiplier = newAccelerationMultiplier / (1f + _acceleration);
                     _accelerationMultiplier += _acceleration * 2f * direction;
 
@@ -297,8 +242,6 @@ namespace Monoliths.Player
                         Mathf.Clamp(_accelerationMultiplier.x, -1f, 1f),
                         Mathf.Clamp(_accelerationMultiplier.y, -1f, 1f)
                     );
-
-                    Debug.Log(_accelerationMultiplier);
 
                     _animator.SetFloat("Velocity", _accelerationMultiplier.magnitude * 2f);
                 }
