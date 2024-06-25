@@ -1342,7 +1342,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Angry, she knew he needed more ice crystals to defeat the fire demon and
+  m_text: Angry, she knew she needed more ice crystals to defeat the fire demon and
     save her friends.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d4e402d21ac48164995715c7ab830f56, type: 2}
@@ -1822,7 +1822,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: ff12223541ce66c4ca0e7b5b7700ef6a, type: 3}
+  m_audioClip: {fileID: 8300000, guid: e97180f4b80e9a44ea6b3189b13b7a32, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1

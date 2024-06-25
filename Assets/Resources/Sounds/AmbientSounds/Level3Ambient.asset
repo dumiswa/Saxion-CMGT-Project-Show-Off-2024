@@ -15,4 +15,4 @@ MonoBehaviour:
   Name: Level 3
   Clip: {fileID: 8300000, guid: f1815ef5c9acca5488f95a73519f7354, type: 3}
   Loop: 1
-  Volume: 0.1
+  Volume: 0.5

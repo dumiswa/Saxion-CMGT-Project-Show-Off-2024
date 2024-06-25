@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: InvizilibiloEatSFX
   m_EditorClassIdentifier: 
   Name: InvizilibiloEatSFX
-  Clip: {fileID: 0}
-  Volume: 1
+  Clip: {fileID: 8300000, guid: fa8ec0cf5b3a41c4799c753e1aee085f, type: 3}
+  Volume: 2
+  Pitch: 1

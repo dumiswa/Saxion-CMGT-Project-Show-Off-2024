@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: SnowflakeSFX
   m_EditorClassIdentifier: 
   Name: SnowflakeSFX
-  Clip: {fileID: 0}
+  Clip: {fileID: 8300000, guid: 71ffc332f691f1e4ca56a235b3186dde, type: 3}
   Volume: 1
+  Pitch: 1

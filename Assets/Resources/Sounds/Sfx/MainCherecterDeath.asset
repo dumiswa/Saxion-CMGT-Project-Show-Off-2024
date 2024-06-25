@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: MainCherecterDeath
   Clip: {fileID: 8300000, guid: 3e66eed2a5a3a864aabfbf22cfab5028, type: 3}
-  Volume: 0.5
+  Volume: 1
+  Pitch: 1

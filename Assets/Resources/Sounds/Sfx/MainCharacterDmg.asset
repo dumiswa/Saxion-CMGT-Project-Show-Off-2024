@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: MainCharacterDmg
   Clip: {fileID: 8300000, guid: 4dcdf163218c6644780b46d074921c8b, type: 3}
-  Volume: 0.5
+  Volume: 1
+  Pitch: 1

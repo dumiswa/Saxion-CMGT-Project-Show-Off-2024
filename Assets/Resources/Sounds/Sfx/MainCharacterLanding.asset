@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: MainCharacterLanding
   Clip: {fileID: 8300000, guid: 0b9208edaf69627489b0369c4eac3a58, type: 3}
-  Volume: 0.5
+  Volume: 1
+  Pitch: 1

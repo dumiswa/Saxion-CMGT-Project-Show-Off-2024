@@ -15,4 +15,4 @@ MonoBehaviour:
   Name: Level1Wind
   Clip: {fileID: 8300000, guid: 0b82fc60ae785cf46a987898ea77e8eb, type: 3}
   Loop: 1
-  Volume: 0.1
+  Volume: 0.5

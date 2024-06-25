@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: RotatingIsland
   Clip: {fileID: 8300000, guid: 01e688b741aa42b46be406ae9a50561b, type: 3}
-  Volume: 0.5
+  Volume: 1
+  Pitch: 1

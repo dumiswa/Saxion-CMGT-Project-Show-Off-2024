@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Collectable
   m_EditorClassIdentifier: 
   Name: Collectable
-  Clip: {fileID: 8300000, guid: 4d14bc9a5883ef64c98f5a8f54242b7d, type: 3}
-  Volume: 0.3
+  Clip: {fileID: 8300000, guid: 71ffc332f691f1e4ca56a235b3186dde, type: 3}
+  Volume: 0.55
   Pitch: 1

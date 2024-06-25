@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Avis_End
   Clip: {fileID: 8300000, guid: 0c90671b4622803488cf5d52aad031e9, type: 3}
-  Volume: 0.5
+  Volume: 1
   Pitch: 1

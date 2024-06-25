@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2123ea8cea51de74892bed530aee8f35, type: 3}
   m_Name: Level0Ambient
   m_EditorClassIdentifier: 
-  Name: Level0 (UnityEngine.GameObject)
+  Name: Level0
   Clip: {fileID: 8300000, guid: ee499c6127d664f45aa26d06fdb5f63d, type: 3}
   Loop: 1
-  Volume: 0.2
+  Volume: 1

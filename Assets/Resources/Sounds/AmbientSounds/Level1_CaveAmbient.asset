@@ -15,4 +15,4 @@ MonoBehaviour:
   Name: Level1Cave
   Clip: {fileID: 8300000, guid: c4525863241d59f4fae53f863449ef89, type: 3}
   Loop: 1
-  Volume: 0.1
+  Volume: 0.5

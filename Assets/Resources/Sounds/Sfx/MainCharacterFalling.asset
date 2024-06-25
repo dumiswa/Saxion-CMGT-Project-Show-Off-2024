@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: MainCharacterFalling
   Clip: {fileID: 8300000, guid: 79526b905d4cf63428e8c20c96d3af58, type: 3}
-  Volume: 0.5
+  Volume: 1
+  Pitch: 1
