@@ -31,6 +31,8 @@ namespace Monoliths
                 Destroy(this);
                 return;
             }
+            Instance = this;
+
             Application.targetFrameRate = 144;
             List<Monolith> priorityBuffer = new();
 
@@ -76,7 +78,6 @@ namespace Monoliths
                 Monoliths.Add(monolith.GetType(), monolith);
 
             _onAwake?.Invoke();
-            Instance = this;
         }
 
         private void SubscribeToPlayerLoop(Monolith monolith)

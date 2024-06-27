@@ -1,5 +1,7 @@
 ﻿using Monoliths.Visualisators;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Monoliths.Player
 {
@@ -26,7 +28,10 @@ namespace Monoliths.Player
                 DataBridge.UpdateData(CURRENT_LIVES_DATA_ID, value);
 
                 if (value < _currentLivesBuffer)
+                {
                     _invulnerabilityCounter = 0;
+                    MonolithMaster.Instance.StartCoroutine(Rumble());
+                }
 
                 if (_managed)
                     _managed.SetCurrent(value);
@@ -133,6 +138,17 @@ namespace Monoliths.Player
                     break;
                 default:
                     break;
+            }
+        }
+
+        private IEnumerator Rumble()
+        {
+            var pad = Gamepad.current;
+            if (pad != null)
+            {
+                pad.SetMotorSpeeds(0.25f, 0.45f);
+                yield return new WaitForSecondsRealtime(0.4f);
+                pad.SetMotorSpeeds(0f,0f);
             }
         }
 

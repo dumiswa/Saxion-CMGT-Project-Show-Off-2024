@@ -1,14 +1,22 @@
-﻿using Monoliths.Player;
+﻿using Monoliths;
+using Monoliths.Player;
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class MenuState : GameState
 {
-    private GameObject _screen;
+    private const float SECONDS_TILL_INACTIVE = 90f;
+    private float _inactivityCounter = 0f;
 
+    private GameObject _screen;
+    private Coroutine _activityObserver;
     public override void Enter()
     {
+        if (_activityObserver == null)
+            _activityObserver = MonolithMaster.Instance.StartCoroutine(ActivityObserver());
+
         LoadData();
 
         Controls.Profile.Map.FirstContextualButton.performed += Next;
@@ -45,5 +53,32 @@ public class MenuState : GameState
 
         Object.Destroy(_screen);
         base.Exit();
+    }
+    
+    private IEnumerator ActivityObserver()
+    {
+        Controls.Profile.Map.FirstContextualButton.performed += ctx => _inactivityCounter = 0;
+        Controls.Profile.Map.SecondContextualButton.performed += ctx => _inactivityCounter = 0;
+        Controls.Profile.Map.RightDirectional.performed += ctx => _inactivityCounter = 0;
+        Controls.Profile.Map.LeftDirectional.performed += ctx => _inactivityCounter = 0;
+        Controls.Profile.Map.Menu.performed += ctx => _inactivityCounter = 0;
+
+        while (true)
+        {
+            yield return new WaitForEndOfFrame();
+            _inactivityCounter += Time.deltaTime;
+
+            if(_inactivityCounter >= SECONDS_TILL_INACTIVE)
+            {
+                _inactivityCounter = 0;
+                if (GameStateMachine.Instance.CurrentIs<LevelState>())
+                {
+                    (GameStateMachine.Instance.Current as LevelState).SubStateMachine.Next<LevelFinishState>();
+                    yield return new WaitForSeconds(0.9f);
+                }
+                SaveMaster.ResetSaveData();
+                GameStateMachine.Instance.Next<MenuState>();
+            }
+        }
     }
 }
