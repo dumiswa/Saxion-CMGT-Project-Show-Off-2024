@@ -42,9 +42,13 @@ Created an Initiator and StateRegistrar system to auto-register and initialize a
 🧰 Technologies
 
 Unity (HDRP)
+
 C# (OOP, events, interfaces)
+
 Git for version control
+
 Blender (team collaboration for models)
+
 Custom sound and texture pipelines
 
 
@@ -52,7 +56,9 @@ Custom sound and texture pipelines
 🧠 What I Learned
 
 Architecting large-scale modular systems in Unity
+
 Working with creative clients (children!) to translate drawings into interactive elements
+
 Effective teamwork across disciplines (design, audio, art, code)
 
 
