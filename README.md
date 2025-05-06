@@ -16,20 +16,20 @@ Developed by a team of 7, the project was built from the ground up: game design,
 
 
 👨‍💻 My Role: Engineering
-
 As an engineer, my contributions focused on:
 
-
-
 🔧 Core Architecture Design
-
 Designed and implemented a Monolith-based architecture to modularize gameplay logic across systems like Player Movement, Interactions, Resources, and GUI.
+
 🎮 State Machine System
 Developed a generic, extensible state machine framework using C# generics and interfaces to manage gameplay and object states.
+
 🔄 DataBridge System
 Built a centralized data synchronization layer to enable modular UI updates and cross-system communication via data packets.
+
 🧱 Mechanism System
 Engineered a flexible world interaction system using "Mechanisms" and observers, supporting plug-and-play logic for environmental triggers.
+
 🧪 Initialization + Runtime Registration
 Created an Initiator and StateRegistrar system to auto-register and initialize all game states and monolith components at runtime.
 
